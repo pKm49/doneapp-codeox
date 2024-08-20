@@ -49,7 +49,7 @@ String? checkIfArabicNameValid(String? value, String fieldName, bool isErrorMess
     switch(fieldName){
       case "first_name_ar":return isErrorMessageShort?  "firstname_ar_validation_message_short".tr: "firstname_ar_validation_message".tr;
       case "last_name_ar":return isErrorMessageShort?  "lastname_ar_validation_message_short".tr: "lastname_ar_validation_message".tr;
-       default:return "input_validation_message".tr;
+      default:return "input_validation_message".tr;
     }
   }
 
@@ -82,11 +82,11 @@ String? checkIfEmailFormValid(String? email) {
   String validOtpPattern = r'(^$)|(^.*@.*\..*$)';
   RegExp validOtpRegex = new RegExp(validOtpPattern);
 
-  if(email ==""){
+  if(email =="" || email!.isEmpty ){
     return null;
   }
 
-  if (email!.isEmpty || !validOtpRegex.hasMatch(email)) {
+  if (email.isNotEmpty && !validOtpRegex.hasMatch(email)) {
     return "email_validation_message".tr;
   }
 
