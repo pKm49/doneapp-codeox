@@ -172,6 +172,7 @@ class PlanPurchaseController extends GetxController {
           paymentData.value.redirectUrl == "") {
         if ((total.value == 0 || total.value == 0.0) && (paymentData.value.refId!='' && paymentData.value.orderId!='')) {
           showSnackbar(Get.context!, "payment_capture_success".tr, "info");
+          activatePlan(paymentData.value.subscriptionId );
           Get.toNamed(AppRouteNames.otpVerificationSuccessRoute,arguments: [
             ASSETS_SUCCESSMARK,"subscription_success","subscription_success_info",
             'home',false,AppRouteNames.homeRoute,""
