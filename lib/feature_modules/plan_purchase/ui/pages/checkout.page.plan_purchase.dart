@@ -271,7 +271,7 @@ class _CheckoutPage_PlanPurchaseState
                                                       Localizations.localeOf(context)
                                                           .languageCode
                                                           .toString() ==
-                                                          'ar'?Icons.chevron_right :Icons.chevron_left
+                                                          'ar'?Icons.chevron_left  :Icons.chevron_right
                                                       ,color: APPSTYLE_BackgroundWhite),
                                                 ),
                                               ),
