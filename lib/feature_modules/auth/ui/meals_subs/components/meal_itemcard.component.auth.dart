@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:doneapp/feature_modules/auth/models/meal_item.model.auth.dart';
 import 'package:doneapp/feature_modules/my_subscription/models/subscription_dailymeal.model.my_subscription.dart';
 import 'package:doneapp/feature_modules/my_subscription/models/subscription_dailymeal_item.model.my_subscription.dart';
 import 'package:doneapp/feature_modules/my_subscription/services/meal_selection.helper.services.dart';
@@ -11,25 +12,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
-class MealSelectionItemCardSelectedComponent_MySubscription extends StatefulWidget {
-  SubscriptoinDailyMealItem subscriptoinDailyMealItem;
+class MealItemCardComponent_Auth extends StatefulWidget {
+  MealItem subscriptoinDailyMealItem;
   final Function(int count) onAdded;      // <------------|
   int selectedCount;
   bool isSelectable;
-  MealSelectionItemCardSelectedComponent_MySubscription({super.key, required this.subscriptoinDailyMealItem,
+  MealItemCardComponent_Auth({super.key, required this.subscriptoinDailyMealItem,
     required this.selectedCount,    required this.isSelectable,
 
     required this.onAdded});
 
   @override
-  State<MealSelectionItemCardSelectedComponent_MySubscription> createState() => _MealSelectionItemCardSelectedComponent_MySubscriptionState();
+  State<MealItemCardComponent_Auth> createState() => _MealItemCardComponent_AuthState();
 }
 
-class _MealSelectionItemCardSelectedComponent_MySubscriptionState extends State<MealSelectionItemCardSelectedComponent_MySubscription> {
+class _MealItemCardComponent_AuthState extends State<MealItemCardComponent_Auth> {
 
-  late Timer _timer;
-  bool isLongPressed = false;
-  bool isFlipped = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,33 +36,9 @@ class _MealSelectionItemCardSelectedComponent_MySubscriptionState extends State<
     double screenheight = MediaQuery.of(context).size.height;
 
     return InkWell(
-      onTapDown: (_) {
-        if(widget.isSelectable){
-          _startOperation();
-        }
-      },
-      onTapUp: (_) {
-        if(widget.isSelectable) {
-          _timer.cancel();
-          if(!isLongPressed)
-          {
-            if(widget.isSelectable){
-              print("widget selectable");
-              print(widget.selectedCount);
-              if(widget.selectedCount==0){
-                widget.onAdded(1);
-              }else{
-                widget.onAdded(-1);
-              }
-            }
-          }else{
-            isLongPressed = false;
-            setState(() {
-            });
-          }
-        }
-
-      },
+       onTap: (){
+         widget.onAdded(1);
+       },
       child: AnimatedContainer(
         decoration:
         APPSTYLE_BorderedContainerSmallDecoration
@@ -77,44 +51,7 @@ class _MealSelectionItemCardSelectedComponent_MySubscriptionState extends State<
         duration: Duration(milliseconds: 500),
         margin: EdgeInsets.only(bottom: APPSTYLE_SpaceMedium),
         padding: APPSTYLE_SmallPaddingAll,
-        child: isFlipped?
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    InkWell(
-                        onTap: (){
-                          isFlipped = false;
-                          setState(() {
-
-                          });
-                        },
-                        child: Icon(Ionicons.close_circle,color: APPSTYLE_Grey60,size: APPSTYLE_FontSize24,)),
-                ],),
-                Expanded(child: Container()),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    InkWell(
-                        onTap: (){
-                          widget.onAdded(-1);
-                        },
-                        child: Icon(Ionicons.remove_circle,color: APPSTYLE_GuideRed,size: APPSTYLE_FontSize24*2,)),
-                    addHorizontalSpace(APPSTYLE_SpaceSmall),
-                    Text(widget.selectedCount.toString(),style: getHeadlineLargeStyle(context)),
-                    addHorizontalSpace(APPSTYLE_SpaceSmall),
-                    InkWell(
-                        onTap: (){
-                          widget.onAdded(1);
-                        },child: Icon(Ionicons.add_circle,color: APPSTYLE_GuideGreen,size: APPSTYLE_FontSize24*2,)),
-
-                  ],
-                ),
-                Expanded(child: Container()),
-              ],
-            ):
+        child:
         Stack(
           children: [
             Column(
@@ -134,7 +71,7 @@ class _MealSelectionItemCardSelectedComponent_MySubscriptionState extends State<
                         color:
                         APPSTYLE_Grey20,
                         image: DecorationImage(image: getProductImage(widget.subscriptoinDailyMealItem
-                            .image),fit: BoxFit.cover),
+                            .imageUrl),fit: BoxFit.cover),
                         border: Border.all(
                             color:
                             APPSTYLE_BackgroundWhite,
@@ -153,7 +90,7 @@ class _MealSelectionItemCardSelectedComponent_MySubscriptionState extends State<
                       ? widget.subscriptoinDailyMealItem
                       .arabicName
                       : widget.subscriptoinDailyMealItem
-                      .name} - ${widget.subscriptoinDailyMealItem.rating}⭐ (${widget.subscriptoinDailyMealItem.ratingCount})',
+                      .name} - ${widget.subscriptoinDailyMealItem.rating}⭐ (${widget.subscriptoinDailyMealItem.rating_count})',
                   maxLines: 2,
                   textAlign: TextAlign.center,
                   style: getBodyMediumStyle(
@@ -183,7 +120,7 @@ class _MealSelectionItemCardSelectedComponent_MySubscriptionState extends State<
                           alignment: Alignment.centerRight,
                           fit: BoxFit.scaleDown,
                           child: Text(
-                              '${widget.subscriptoinDailyMealItem.protien} ${'protein'.tr}',
+                              '${widget.subscriptoinDailyMealItem.protein}  ${'protein'.tr}',
                               style: getLabelLargeStyle(
                                   context) ),
                         )),
@@ -204,18 +141,7 @@ class _MealSelectionItemCardSelectedComponent_MySubscriptionState extends State<
 
                     addHorizontalSpace(
                         APPSTYLE_SpaceSmall),
-                    // Expanded(
-                    //     child: FittedBox(
-                    //       alignment: Alignment.centerRight,
-                    //       fit: BoxFit.scaleDown,
-                    //       child: Text(
-                    //           '${widget.subscriptoinDailyMealItem.rating}(${widget.subscriptoinDailyMealItem.ratingCount}) ⭐',
-                    //           style: getBodyMediumStyle(
-                    //               context)
-                    //               .copyWith(
-                    //               fontWeight:
-                    //               APPSTYLE_FontWeightBold)),
-                    //     )),
+
                     Expanded(
                         child: FittedBox(
                           alignment: Alignment.centerRight,
@@ -249,14 +175,4 @@ class _MealSelectionItemCardSelectedComponent_MySubscriptionState extends State<
     );
   }
 
-  void _startOperation() {
-    _timer = Timer(const Duration(seconds: 1), () {
-      print('LongPress Event');
-      isLongPressed = true;
-      isFlipped = !isFlipped;
-      setState(() {
-
-      });
-    });
-  }
 }

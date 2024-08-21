@@ -470,18 +470,53 @@ class _MealSelectionPage_MySubscriptionState
                                         onAdded: (int count){
                                         if( mySubscriptionController.selectedDate.value.isAfter(
                                             DateTime.now().add(Duration(days: 1)))){
-                                          mySubscriptionController.addOrRemoveMeal(
-                                              index, mySubscriptionController
-                                              .subscriptoinMealConfig
-                                              .value
-                                              .meals[
-                                          index].id, mySubscriptionController
-                                              .subscriptoinMealConfig
-                                              .value
-                                              .meals[
-                                          index]
-                                              .items[indx]
-                                              .id, count);
+                                          if(count<=0){
+                                            mySubscriptionController.addOrRemoveMeal(
+                                                index, mySubscriptionController
+                                                .subscriptoinMealConfig
+                                                .value
+                                                .meals[
+                                            index].id, mySubscriptionController
+                                                .subscriptoinMealConfig
+                                                .value
+                                                .meals[
+                                            index]
+                                                .items[indx]
+                                                .id, count);
+                                          }else{
+                                            if(mySubscriptionController
+                                                .subscriptoinMealConfig
+                                                .value
+                                                .meals[
+                                            index]
+                                                .items[indx].isDislike){
+                                              openDislikeConfirm( index, mySubscriptionController
+                                                  .subscriptoinMealConfig
+                                                  .value
+                                                  .meals[
+                                              index].id, mySubscriptionController
+                                                  .subscriptoinMealConfig
+                                                  .value
+                                                  .meals[
+                                              index]
+                                                  .items[indx]
+                                                  .id, count,context);
+                                            }else{
+                                              mySubscriptionController.addOrRemoveMeal(
+                                                  index, mySubscriptionController
+                                                  .subscriptoinMealConfig
+                                                  .value
+                                                  .meals[
+                                              index].id, mySubscriptionController
+                                                  .subscriptoinMealConfig
+                                                  .value
+                                                  .meals[
+                                              index]
+                                                  .items[indx]
+                                                  .id, count);
+                                            }
+                                          }
+
                                         }
 
                                         });
@@ -879,4 +914,67 @@ class _MealSelectionPage_MySubscriptionState
       },
     );
   }
+
+  void openDislikeConfirm(int index, int categoryId, int itemId, int count,BuildContext context) async {
+    final dialogTitleWidget = Text( 'confirm_selection'.tr,
+        style: getHeadlineMediumStyle(context).copyWith(
+            color: APPSTYLE_Grey80, fontWeight: APPSTYLE_FontWeightBold));
+    final dialogTextWidget = Text( 'confirm_selection_message'.tr,
+      style: getBodyMediumStyle(context),
+    );
+
+    final updateButtonTextWidget = Text(
+      'yes'.tr,
+      style: TextStyle(color: APPSTYLE_PrimaryColor),
+    );
+    final updateButtonCancelTextWidget = Text(
+      'no'.tr,
+      style: TextStyle(color: APPSTYLE_Black),
+    );
+
+    updateLogoutAction() async {
+      mySubscriptionController.addOrRemoveMeal(
+          index,categoryId,itemId, count);
+      Get.back();
+    }
+
+    updateAction() {
+      Navigator.pop(context);
+    }
+
+    List<Widget> actions = [
+      TextButton(
+          onPressed: updateAction,
+          style: APPSTYLE_TextButtonStylePrimary.copyWith(
+              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                  EdgeInsets.symmetric(
+                      horizontal: APPSTYLE_SpaceLarge,
+                      vertical: APPSTYLE_SpaceSmall))),
+          child: updateButtonCancelTextWidget),
+      TextButton(
+          onPressed: updateLogoutAction,
+          style: APPSTYLE_TextButtonStylePrimary.copyWith(
+              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                  EdgeInsets.symmetric(
+                      horizontal: APPSTYLE_SpaceLarge,
+                      vertical: APPSTYLE_SpaceSmall))),
+          child: updateButtonTextWidget),
+    ];
+
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return WillPopScope(
+            child: AlertDialog(
+              title: dialogTitleWidget,
+              content: dialogTextWidget,
+              actions: actions,
+            ),
+            onWillPop: () => Future.value(false));
+      },
+    );
+  }
+
+
 }

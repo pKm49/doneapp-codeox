@@ -364,9 +364,12 @@ class MySubscriptionController extends GetxController {
         List<SubscriptoinDailyMealItem> mealItems = [];
 
         for (var item in element.items) {
-          if(item.isSelected){
-            recommendedCalories += item.calories;
-            mealItems.add(item);
+          if(item.selectedCount>0){
+            for(var i=0;i<item.selectedCount;i++){
+              recommendedCalories += item.calories;
+              mealItems.add(item);
+            }
+
           }
         }
         print("initializeMealSelection data recieved");
@@ -466,6 +469,7 @@ class MySubscriptionController extends GetxController {
     print(selectedMealConfig.value.meals.length);
     print(index);
     print(index+1);
+    print(isMealMaximumCountReached(categoryId));
     if(selectedMealConfig.value.meals.length> (index+1) &&  isMealMaximumCountReached(categoryId)) {
       itemScrollController.scrollTo(index: index+1, duration: Duration(milliseconds: 500));
     }

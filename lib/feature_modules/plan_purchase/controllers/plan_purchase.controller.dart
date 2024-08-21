@@ -82,8 +82,6 @@ class PlanPurchaseController extends GetxController {
     }
   }
 
-
-
   changeCategory(SubscriptionPlanCategory subscriptionPlanCategory) {
     currentCategory.value = subscriptionPlanCategory;
   }
@@ -206,7 +204,7 @@ class PlanPurchaseController extends GetxController {
       var planPurchaseHttpService = PlanPurchaseHttpService();
       String dateString = DateFormat("yyyy-MM-dd").format(selectedDate.value);
       bool isSuccess = await planPurchaseHttpService
-          .checkDateAvailability(dateString,mobile);
+          .checkDateAvailability(dateString,mobile,currentSubscription.value.id);
       isDateChecking.value = false;
 
       if (isSuccess) {
@@ -369,5 +367,18 @@ class PlanPurchaseController extends GetxController {
   }
 
   DateTime getDate(DateTime d) => DateTime(d.year, d.month, d.day);
+
+  Future<void> planChoiceSelected() async {
+    var sharedPreferences = await SharedPreferences.getInstance();
+    final String? mobile = sharedPreferences.getString('mobile');
+
+    if (mobile != null && mobile != "") {
+      Get.toNamed(AppRouteNames.planPurchaseSetInitialDateRoute);
+    }else{
+      showSnackbar(Get.context!, "login_message".tr, "info");
+      Get.toNamed(AppRouteNames.loginRoute);
+    }
+
+  }
 
 }

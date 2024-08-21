@@ -229,8 +229,7 @@ class _SelectPlanPage_PlanPurchaseState
                               if(planPurchaseController.currentSubscription.value.id == -1){
                                 showSnackbar(Get.context!, "choose_package_message".tr, "info");
                               }else{
-                                Get.toNamed(AppRouteNames.planPurchaseSetInitialDateRoute);
-
+                                planPurchaseController.planChoiceSelected();
                               }
                             }else{
                               planPurchaseController.getSubscriptionsByCategory();
