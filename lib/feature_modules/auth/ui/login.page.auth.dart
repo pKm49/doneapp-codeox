@@ -43,7 +43,7 @@ class _LoginPage_AuthState extends State<LoginPage_Auth> {
         backgroundColor: APPSTYLE_WhatsappGreen,
         shape: const CircleBorder(),
       ),
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body:Obx(
             () => Container(
           width: screenwidth,
@@ -77,7 +77,7 @@ class _LoginPage_AuthState extends State<LoginPage_Auth> {
                         child: ListView(
                           children: [
                             Center(
-                              child:             Image.asset(ASSETS_NAMELOGO, width: screenwidth*.3),
+                              child:             Image.asset(ASSETS_NAMELOGO, width: screenwidth*.2),
                             ),
                             addVerticalSpace(APPSTYLE_SpaceLarge),
 
