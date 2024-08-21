@@ -23,6 +23,8 @@ const String ASSETS_OFFDAY = "assets/images/off_day.svg";
 const String ASSETS_WELCOME_LOGIN_BG = "assets/images/bg_welcome.jpg";
 const String ASSETS_HOME_BG = "assets/images/home_bg.jpg";
 const String ASSETS_SELECTHAND = "assets/images/select_hand.svg";
+const String ASSETS_MEALS = "assets/images/meals.png";
+const String ASSETS_SUBSCRIPTIONS = "assets/images/subscriptions.png";
 const String ASSETS_SPLASH_ANIMATION = "assets/animations/splash_animation.gif";
 const String ASSETS_SUCCESS_ANIMATION =
     "assets/animations/success_animation.gif";
