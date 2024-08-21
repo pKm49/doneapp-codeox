@@ -272,7 +272,13 @@
       "check_input_and_try_again": "Please check the input & try again",
       "days": "Days",
       "evening_shift_string": "1 Day before Delivery",
-      "morning_shift_string": "Same Day Delivery"
+      "morning_shift_string": "Same Day Delivery",
+      "view_meals": "Browse Menu",
+      "view_subscriptions": "View Subscriptions",
+      "no_meals_found": "No Meals found",
+      "confirm_selection": "Confirm Meal Selection",
+      "confirm_selection_message": "Are you sure to select this meal? This item contains ingredients you marked as 'Dislike'"
+
     }
   },
   {
@@ -551,7 +557,12 @@
       "check_input_and_try_again": "يرجى التحقق من الإدخال والمحاولة مرة أخرى",
       "days": "Days",
       "evening_shift_string": "يوم واحد قبل التسليم",
-      "morning_shift_string": "التسليم في نفس اليوم"
+      "morning_shift_string": "التسليم في نفس اليوم",
+      "view_meals": "تصفح قائمتنا",
+      "view_subscriptions": "عرض الاشتراكات",
+      "no_meals_found": "لم يتم العثور على وجبات",
+      "confirm_selection": "تأكيد اختيار الوجبة",
+      "confirm_selection_message": "هل أنت متأكد من اختيار هذه الوجبة؟ يحتوي هذا العنصر على المكونات التي قمت بوضع علامة \"لا تحبها\"."
     }
   }
 ]
