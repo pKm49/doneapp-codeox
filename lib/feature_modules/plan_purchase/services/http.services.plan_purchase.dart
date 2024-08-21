@@ -119,12 +119,13 @@ class PlanPurchaseHttpService {
     }
   }
 
-  Future<bool> checkDateAvailability(String date, String mobile) async {
+  Future<bool> checkDateAvailability(String date, String mobile, int planChoiceId) async {
 
     try{
       Map<String, dynamic> params = {};
-      params["date"]=date;
+      params["start_date"]=date;
       params["mobile"]=mobile;
+      params["plan_choice"]=planChoiceId;
       AppHttpResponse response =
       await getRequest(SubscriptionsHttpRequestEndpoint_CheckDateAvailability, params);
 
