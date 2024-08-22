@@ -36,13 +36,9 @@ MySubscription mapMySubscription(dynamic payload) {
 
   return MySubscription(
     id: payload["id"] ?? -1,
-
-    planName: payload["plan"] ?? "",
-     status: payload["state"] ?? "",
-    planArabicName: payload["plan_arabic"] != null
-        ? payload["plan_arabic"].toString()
-        : "",
-
+    status: payload["state"]!=null && payload["state"] != false?payload["state"] : "",
+    planName: payload["plan"]!=null && payload["plan"] != false?payload["plan"] : "",
+    planArabicName: payload["plan_arabic"]!=null && payload["plan_arabic"] != false?payload["plan_arabic"] : "",
     fromDate: payload["start_date"] != null
         ? DateTime.parse(payload["start_date"].toString())
         : DateTime.now(),

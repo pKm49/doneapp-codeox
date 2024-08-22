@@ -75,7 +75,6 @@ class PushNotificationService {
       Map<String, dynamic> data) async {
     debugPrint("onActionReceivedImplementationMethod triggered");
     debugPrint(data.toString());
-
   }
 
   Future<String> _downloadAndSaveFile(String url, String fileName) async {
@@ -96,7 +95,7 @@ class PushNotificationService {
     final AndroidNotification? android = message.notification?.android;
     final AppleNotification? apple = message.notification?.apple;
     String logoPath =
-        "https://lh3.googleusercontent.com/4h2XkERxolE4FL97S1AwPucH48MwqbrLc63B5PvunkPoVHd_X1bKPfILsmzy-ZHTEuQ";
+        "https://lh3.googleusercontent.com/cvAnXU2xZQg7m0mAXgZzSlVH2hfjxzOBWHuxHTXwEAR7_r-p5OfBfZe2muSEL9DZmLq7";
     String imageUrl = logoPath;
 
     if(android != null){

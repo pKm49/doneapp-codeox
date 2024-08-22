@@ -53,19 +53,18 @@ MealItem mapMealItem(dynamic payload){
   return MealItem(
     id :payload["id"]??-1,
     imageUrl :payload["image"]!= null?payload["image"].toString():ASSETS_SAMPLEFOOD,
-    name :payload["name"]??"",
-    arabicName :payload["arabic_name"]??"",
-    description :payload["description"]??"",
-    arabicDescription :payload["arabic_description"]??"",
+    name :payload["name"]!= null && payload["name"]!= false?payload["name"] :"",
+    arabicName :payload["arabic_name"]!= null && payload["arabic_name"]!= false?payload["arabic_name"] :"",
+    description :payload["description"]!= null && payload["description"]!= false?payload["description"] :"",
+    arabicDescription :payload["arabic_description"]!= null && payload["arabic_description"]!= false?payload["arabic_description"] :"",
     calories :payload["calories"]??0.0,
     protein :payload["protein"]??0.0,
     carbs :payload["carbs"]??0.0,
     fat :payload["fat"]??0.0,
     rating :payload["rating"] !=null?int.parse(payload["rating"].toString()):0,
-      rating_count :payload["rating_count"] !=null?int.parse(payload["rating_count"].toString()):0,
-
+    rating_count :payload["rating_count"] !=null?int.parse(payload["rating_count"].toString()):0,
     price :payload["price"]??0.0,
-      ingredients:ingredients
+    ingredients:ingredients
   );
 }
 
@@ -90,7 +89,7 @@ MealIngredient mapMealIngredient(dynamic payload){
 
   return MealIngredient(
       imageUrl :payload["image"]!= null?payload["image"].toString():ASSETS_SAMPLEFOOD,
-      name :payload["name"]??"",
-      arabicName :payload["arabic_name"]??""
+      name :payload["name"]!= null && payload["name"]!= false?payload["name"] :"",
+      arabicName :payload["arabic_name"]!= null && payload["arabic_name"]!= false?payload["arabic_name"] :""
   );
 }

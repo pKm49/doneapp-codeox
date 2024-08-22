@@ -72,7 +72,7 @@ Address mapAddress(dynamic payload) {
       id: (payload["id"] != null && payload["id"] != false)
           ? payload["id"]
           : -1,
-      name: (payload["name"]&& payload["name"] != false)?payload["name"] : "",
+      name: (payload["name"]!= null && payload["name"] != false)?payload["name"] : "",
       comments:
          ( payload["comments"] != null && payload["comments"] != false) ? payload["comments"].toString() : "",
     nickname:

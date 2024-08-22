@@ -36,12 +36,11 @@ SubscriptoinDailyMeal mapSubscriptoinDailyMeal(dynamic payload) {
 
 
   return SubscriptoinDailyMeal(
-      id: payload["id"] ?? -1,
+    id: payload["id"] ?? -1,
     itemCount:itemCount,
-    arabicName: payload["arabic_name"] ?? "",
-    name: payload["name"] ?? "",
-      items:items,
-      isAlreadySelected: itemCount==selectedCount
-
+    arabicName: payload["arabic_name"]!=null && payload["arabic_name"] != false?payload["arabic_name"] : "",
+    name: payload["name"]!=null && payload["name"] != false?payload["name"] : "",
+    items:items,
+    isAlreadySelected: itemCount==selectedCount
   );
 }

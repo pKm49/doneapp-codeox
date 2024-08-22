@@ -106,10 +106,11 @@ UserData mapUserData(dynamic payload) {
         : payload["email"].toString()
         : "",
 
-    firstName: payload["first_name"] != null ? payload["first_name"].toString() : "",
-    firstNameArabic: payload["first_name_arabic"] != null ? payload["first_name_arabic"].toString() : "",
-    lastName: payload["last_name"] != null ? payload["last_name"].toString() : "",
-    lastNameArabic: payload["last_name_arabic"] != null ? payload["last_name_arabic"].toString() : "",
+    firstName: payload["first_name"]!=null && payload["first_name"] != false?payload["plan_arabic"] : "",
+    firstNameArabic: payload["first_name_arabic"]!=null && payload["first_name_arabic"] != false?payload["first_name_arabic"] : "",
+    lastName: payload["last_name"]!=null && payload["last_name"] != false?payload["last_name"] : "",
+    lastNameArabic: payload["last_name_arabic"]!=null && payload["last_name_arabic"] != false?payload["last_name_arabic"] : "",
+
     gender: payload["gender"] != null ? payload["gender"].toString() : "",
     birthday: payload["date_of_birth"] != null ? payload["date_of_birth"].toString() : "",
     height: payload["height"] !=null ? double.parse(payload["height"].toString()):0.0,
