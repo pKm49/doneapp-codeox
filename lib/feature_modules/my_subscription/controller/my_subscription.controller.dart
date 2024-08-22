@@ -695,7 +695,7 @@ class MySubscriptionController extends GetxController {
           sharedController.userData.value.mobile,
           mealId, currentSelectedRating.value);
       isRatingSubmitting.value = false;
-
+      Get.back();
       if(isSuccess){
         showSnackbar(Get.context!, "rating_saved".tr, "info");
       }

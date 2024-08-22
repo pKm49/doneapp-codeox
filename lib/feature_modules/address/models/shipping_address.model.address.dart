@@ -72,25 +72,26 @@ Address mapAddress(dynamic payload) {
       id: (payload["id"] != null && payload["id"] != false)
           ? payload["id"]
           : -1,
-      name: payload["name"] ?? "",
+      name: (payload["name"]&& payload["name"] != false)?payload["name"] : "",
       comments:
-          payload["comments"] != null ? payload["comments"].toString() : "",
+         ( payload["comments"] != null && payload["comments"] != false) ? payload["comments"].toString() : "",
     nickname:
-    payload["name"] != null ? payload["name"].toString() : "",
-      jedha: payload["jedha"] != null ? payload["jedha"].toString() : "",
-      street: payload["street"] != null ? payload["street"].toString() : "",
+   ( payload["name"] != null && payload["name"] != false) ? payload["name"].toString() : "",
+      jedha:( payload["jedha"] != null && payload["jedha"] != false)? payload["jedha"].toString() : "",
+      street: (payload["street"] != null && payload["street"] != false)? payload["street"].toString() : "",
 
       areaId: payload["area_id"] ?? -1,
       areaName:
-          payload["area_name"] != null ? payload["area_name"].toString() : "",
-      areaNameArabic: payload["area_name_arabic"] != null
+          payload["area_name"] != null && payload["area_name"] != false
+              ? payload["area_name"].toString() : "",
+      areaNameArabic: payload["area_name_arabic"] != null && payload["area_name_arabic"] != false
           ? payload["area_name_arabic"].toString()
           : "",
       blockId: payload["block_id"] ?? -1,
-      blockNameArabic: payload["block_name_arabic"] != null
+      blockNameArabic: payload["block_name_arabic"] != null && payload["block_name_arabic"] != false
           ? payload["block_name_arabic"].toString()
           : "",
-      blockName: payload["block_name"] != null
+      blockName: payload["block_name"] != null && payload["block_name"] != false
           ? payload["block_name"].toString()
           : "",
 

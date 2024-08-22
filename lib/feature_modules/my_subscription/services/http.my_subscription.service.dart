@@ -133,8 +133,10 @@ class MySubsHttpService {
     try{
       AppHttpResponse response =
       await postRequest(MySubscriptionHttpRequestEndpoint_RateMeal,
-          {"params": {"mobile": mobile,"meal_id":mealId,"rating":rating}});
-
+          {"mobile": mobile,"meal_id":mealId,"rating":rating});
+      if(response.statusCode != 200){
+        showSnackbar(Get.context!, response.message, "error");
+      }
       return response.statusCode == 200;
 
     }catch (e){
