@@ -43,9 +43,12 @@ class WelcomePage_Auth extends StatelessWidget {
                 children: [
                   addVerticalSpace(APPSTYLE_SpaceLarge),
 
-                  Expanded(child: Center(
-                    child:             Image.asset(ASSETS_NAMELOGO, width: screenwidth*.3),
-                  )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(ASSETS_NAMELOGO, width: screenwidth*.25),
+                    ],
+                  ),
                   addVerticalSpace(APPSTYLE_SpaceLarge ),
                   Text("welcome_message_title".tr,
                       textAlign: TextAlign.center,
