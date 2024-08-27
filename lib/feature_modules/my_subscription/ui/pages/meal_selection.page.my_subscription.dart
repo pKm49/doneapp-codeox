@@ -37,6 +37,7 @@ class _MealSelectionPage_MySubscriptionState
   final mySubscriptionController = Get.find<MySubscriptionController>();
   ScrollController _scrollController = ScrollController();
   bool isScrolled = false;
+  DateTime threeDaysBefore = DateTime.now().add(Duration(days: -3));
 
   @override
   void initState() {
@@ -651,17 +652,21 @@ class _MealSelectionPage_MySubscriptionState
                                 itemBuilder: (context, indx) {
                                   return MealSelectionItemCardSelectedComponent_MySubscription(
                                       isSelectable: true,
-                                      selectedCount:-1,
-                                      subscriptoinDailyMealItem:
+                                      selectedCount:mySubscriptionController.selectedDate.value
+                                          .isBefore(threeDaysBefore) ?-1:1,                                      subscriptoinDailyMealItem:
                                       mySubscriptionController
                                           .subscriptoinMealConfig
                                           .value
                                           .meals[index].items[indx],
                                       onAdded: (int count){
-                                        showRateDialog( mySubscriptionController
-                                            .subscriptoinMealConfig
-                                            .value
-                                            .meals[index].items[indx].id);
+                                        if(mySubscriptionController.selectedDate.value
+                                            .isBefore(threeDaysBefore)){
+                                          showRateDialog( mySubscriptionController
+                                              .subscriptoinMealConfig
+                                              .value
+                                              .meals[index].items[indx].id);
+                                        }
+
                                       });
                                 },
                               ),
