@@ -79,7 +79,7 @@ class _PaymentGatewayWebView_SharedState extends State<PaymentGatewayWebView_Sha
                 },
                 onUpdateVisitedHistory: (InAppWebViewController controller, Uri? url, bool? flag) {
 
-                  if(url.toString().contains("https://erp.doneappkw.com/subscription/payment/status") ){
+                  if(url.toString().contains("https://vertexlabs.online/subscription/payment/status") ){
                     isConfirmationReached = true;
                     setState(() {
 
