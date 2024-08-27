@@ -373,7 +373,7 @@ class _HomePage_CoreState extends State<HomePage_Core> {
                                                       .mySubscriptions
                                                       .where((p0) =>
                                                           p0.status ==
-                                                          "not_paid")
+                                                          "not paid")
                                                       .isNotEmpty
                                                   ? "subscription_payment_complete_message"
                                                       .tr
@@ -580,7 +580,7 @@ class _HomePage_CoreState extends State<HomePage_Core> {
                                                         .mySubscriptions
                                                         .where((p0) =>
                                                             p0.status ==
-                                                            "not_paid")
+                                                            "not paid")
                                                         .isNotEmpty
                                                     ? "complete_payment".tr
                                                     : "purchase_subscription"
@@ -603,6 +603,16 @@ class _HomePage_CoreState extends State<HomePage_Core> {
                                             .where((p0) =>
                                         p0.status == "paid").toList()[0].id);
                                       }
+                                    }else if(sharedController.mySubscriptions
+                                        .where((p0) =>
+                                    p0.status == "not paid").toList()
+                                        .isNotEmpty){
+                                      // if (!sharedController
+                                      //     .isOrderDetailsFetching.value) {
+                                      //   sharedController.getPaymentLink(sharedController.mySubscriptions
+                                      //       .where((p0) =>
+                                      //   p0.status == "not paid").toList()[0].id);
+                                      // }
                                     }else{
                                       Get.toNamed(AppRouteNames
                                           .planPurchaseSubscriptionPlansCategoryListRoute);
