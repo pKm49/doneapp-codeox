@@ -55,24 +55,13 @@ class MealCalendarDateComponent_MySubscription extends StatelessWidget {
               ],
             ),
             Expanded(child: Container()),
-            Visibility(
-                visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.offDay ) &&  (isMonthDay && isSubscriptionDay) ,
-                child: SvgPicture.asset(ASSETS_OFFDAY,height: 13,color:isSelected?APPSTYLE_BackgroundWhite: APPSTYLE_PrimaryColor)
-            ),
-            Visibility(
-              visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.offDay ) &&  (isMonthDay && isSubscriptionDay) ,
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text("off-day_single".tr,style: getLabelSmallStyle(context).copyWith(
-                  color:isSelected?APPSTYLE_BackgroundWhite: APPSTYLE_PrimaryColor
-                ),),
-              ),
-            ),
+
+            // Delivered & Before 3 days - rating enabled
             Visibility(
                 visible: status==VALIDSUBSCRIPTIONDAY_STATUS.delivered &&
                     dateTime.isBefore(threeDaysBefore)
                     &&  (isMonthDay && isSubscriptionDay) ,
-                child:   Icon(Ionicons.star,color:isSelected?APPSTYLE_BackgroundWhite: APPSTYLE_GuideRed,size: 15)
+                child:   Icon(Ionicons.star,color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_GuideRed,size: 15)
             ),
             Visibility(
               visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.delivered ) &&
@@ -84,6 +73,8 @@ class MealCalendarDateComponent_MySubscription extends StatelessWidget {
                 ),),
               ),
             ),
+
+            // Delivered & After 3 days - no action
             Visibility(
                 visible:  status==VALIDSUBSCRIPTIONDAY_STATUS.delivered  && dateTime.isAfter(threeDaysBefore)&&  (isMonthDay && isSubscriptionDay) ,
                 child: SvgPicture.asset(ASSETS_FOODTRUCK,height: 13,color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_WhatsappGreen)
@@ -98,6 +89,7 @@ class MealCalendarDateComponent_MySubscription extends StatelessWidget {
               ),
             ),
 
+            // Frozen
             Visibility(
                 visible: status==VALIDSUBSCRIPTIONDAY_STATUS.freezed  &&  (isMonthDay && isSubscriptionDay)  ,
                 child: SvgPicture.asset(ASSETS_PAUSE,height: 13,color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_GuideOrange)
@@ -111,6 +103,8 @@ class MealCalendarDateComponent_MySubscription extends StatelessWidget {
                 ),),
               ),
             ),
+
+            // Meal Selected
             Visibility(
                 visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ) &&  (isMonthDay && isSubscriptionDay) ,
                 child: SvgPicture.asset(ASSETS_FOODPLATE,height: 13,color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_WhatsappGreen)
@@ -124,12 +118,35 @@ class MealCalendarDateComponent_MySubscription extends StatelessWidget {
                 ),),
               ),
             ),
+
+            // Today And Tomorrow
             Visibility(
-              visible: status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected  &&  (isMonthDay && isSubscriptionDay)  ,
-              child: SvgPicture.asset(ASSETS_SELECTHAND,height: 13,color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_PrimaryColor,)
+                visible: (dateTime.isBefore(DateTime.now().add(Duration(days: 2)))) &&
+                    status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected
+                    &&  (isMonthDay && isSubscriptionDay)  ,
+                child: SvgPicture.asset(ASSETS_FOODPLATE,height: 13,color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_WhatsappGreen)
             ),
             Visibility(
-              visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected ) &&  (isMonthDay && isSubscriptionDay) ,
+              visible: (dateTime.isBefore(DateTime.now().add(Duration(days: 2))))&&
+                  status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected
+                  &&  (isMonthDay && isSubscriptionDay) ,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text("meal-selected_single".tr,style: getLabelSmallStyle(context).copyWith(
+                    color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_WhatsappGreen
+                ),),
+              ),
+            ),
+
+            // Meal Not Selected & After tommorrow
+            Visibility(
+                visible: (dateTime.isAfter(DateTime.now().add(Duration(days: 2)))) &&
+                    status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected  &&  (isMonthDay && isSubscriptionDay)  ,
+                child: SvgPicture.asset(ASSETS_SELECTHAND,height: 13,color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_PrimaryColor,)
+            ),
+            Visibility(
+              visible: (dateTime.isAfter(DateTime.now().add(Duration(days: 2))))  &&
+                  (status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected ) &&  (isMonthDay && isSubscriptionDay) ,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text("meal-not-selected_single".tr,style: getLabelSmallStyle(context).copyWith(
@@ -137,6 +154,7 @@ class MealCalendarDateComponent_MySubscription extends StatelessWidget {
                 ),),
               ),
             ),
+
           ],
         ));
   }

@@ -101,9 +101,9 @@ Address mapAddress(dynamic payload) {
     houseNumber: payload["house_number"] != null
         ? payload["house_number"] != ""? int.parse(payload["house_number"].toString())
         :-1 : -1,
-      apartmentNo: payload["apartment_no"] != null
-          ? payload["apartment_no"] != ""? int.parse(payload["apartment_no"].toString())
-          :-1 : -1,
+    apartmentNo: payload["apartment_no"] != null
+        ? payload["apartment_no"] != ""? int.parse(payload["apartment_no"].toString())
+        :-1 : -1,
 
 
   );

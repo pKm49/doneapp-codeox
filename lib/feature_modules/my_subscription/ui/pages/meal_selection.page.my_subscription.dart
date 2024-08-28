@@ -10,6 +10,7 @@ import 'package:doneapp/shared_module/constants/style_params.constants.shared.da
 import 'package:doneapp/shared_module/constants/valid_addressauthor_modes.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/valid_subscription_day_status.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
+import 'package:doneapp/shared_module/controllers/controller.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/calendar_utilities.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/date_conversion.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
@@ -38,6 +39,7 @@ class _MealSelectionPage_MySubscriptionState
   ScrollController _scrollController = ScrollController();
   bool isScrolled = false;
   DateTime threeDaysBefore = DateTime.now().add(Duration(days: -3));
+  final sharedController = Get.find<SharedController>();
 
   @override
   void initState() {
@@ -67,36 +69,11 @@ class _MealSelectionPage_MySubscriptionState
         if (didPop) {
           return;
         }else{
-          if(!mySubscriptionController.isMealsFetching.value &&
-              !mySubscriptionController.isFreezing.value &&
-              mySubscriptionController
-                  .subscriptoinMealConfig.value.meals.isNotEmpty &&
-              mySubscriptionController.subscriptionDates[
-              mySubscriptionController.selectedDate.value] !=
-                  VALIDSUBSCRIPTIONDAY_STATUS.offDay &&
-              ( mySubscriptionController.subscriptionDates[
-              mySubscriptionController.selectedDate.value] !=
-                  VALIDSUBSCRIPTIONDAY_STATUS.freezed ||
-                  (mySubscriptionController.subscriptionDates[
-                  mySubscriptionController.selectedDate.value] ==
-                      VALIDSUBSCRIPTIONDAY_STATUS.freezed && mySubscriptionController.selectedDate.value.isAfter(
-                      DateTime.now().add(Duration(days: 1)))) ) &&
-              mySubscriptionController.subscriptionDates[
-              mySubscriptionController
-                  .selectedDate.value] !=
-                  VALIDSUBSCRIPTIONDAY_STATUS.delivered  &&
-              mySubscriptionController.selectedDate.value.isAfter(
-                  DateTime.now().add(Duration(days: 1)))){
-            if (!mySubscriptionController
-                .isDayMealSaving.value &&
-                !mySubscriptionController
-                    .isMealsFetching.value) {
-              mySubscriptionController.setMealsByDate(false);
-              Navigator.pop(context);
-
-            }else{
-              Navigator.pop(context);
-            }
+          if(ifSaveOperationAllowed() ){
+            int subscriptionId = sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList().isNotEmpty?
+            sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList()[0].id:-1;
+            mySubscriptionController.setMealsByDate(false,subscriptionId);
+            Navigator.pop(context);
           }else{
             Navigator.pop(context);
 
@@ -116,43 +93,14 @@ class _MealSelectionPage_MySubscriptionState
                 CustomBackButton(
 
                     onDeleteSelected:(){
-                      print("onPopInvoked");
-
-                        if(!mySubscriptionController.isMealsFetching.value &&
-                            !mySubscriptionController.isFreezing.value &&
-                            mySubscriptionController
-                                .subscriptoinMealConfig.value.meals.isNotEmpty &&
-                            mySubscriptionController.subscriptionDates[
-                            mySubscriptionController.selectedDate.value] !=
-                                VALIDSUBSCRIPTIONDAY_STATUS.offDay &&
-                            ( mySubscriptionController.subscriptionDates[
-                            mySubscriptionController.selectedDate.value] !=
-                                VALIDSUBSCRIPTIONDAY_STATUS.freezed ||
-                                (mySubscriptionController.subscriptionDates[
-                                mySubscriptionController.selectedDate.value] ==
-                                    VALIDSUBSCRIPTIONDAY_STATUS.freezed && mySubscriptionController.selectedDate.value.isAfter(
-                                    DateTime.now().add(Duration(days: 1)))) ) &&
-                            mySubscriptionController.subscriptionDates[
-                            mySubscriptionController
-                                .selectedDate.value] !=
-                                VALIDSUBSCRIPTIONDAY_STATUS.delivered  &&
-                            mySubscriptionController.selectedDate.value.isAfter(
-                                DateTime.now().add(Duration(days: 1)))){
-                          if (!mySubscriptionController
-                              .isDayMealSaving.value &&
-                              !mySubscriptionController
-                                  .isMealsFetching.value) {
-                            mySubscriptionController.setMealsByDate(false);
-                            Navigator.pop(context);
-
-                          }else{
-                            Navigator.pop(context);
-                          }
-                        }else{
-                          Navigator.pop(context);
-
-                        }
-
+                      if(ifSaveOperationAllowed() ){
+                        int subscriptionId = sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList().isNotEmpty?
+                        sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList()[0].id:-1;
+                        mySubscriptionController.setMealsByDate(false,subscriptionId);
+                        Navigator.pop(context);
+                      }else{
+                        Navigator.pop(context);
+                      }
                     },
                     isPrimaryMode: false),
                 Expanded(
@@ -863,7 +811,9 @@ class _MealSelectionPage_MySubscriptionState
                                             .isDayMealSaving.value &&
                                         !mySubscriptionController
                                             .isMealsFetching.value) {
-                                      mySubscriptionController.setMealsByDate(true);
+                                      int subscriptionId = sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList().isNotEmpty?
+                                      sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList()[0].id:-1;
+                                      mySubscriptionController.setMealsByDate(true,subscriptionId);
                                     }
                                   })),
                         ),
@@ -1141,6 +1091,26 @@ class _MealSelectionPage_MySubscriptionState
     );
   }
 
+
+
+  bool ifSaveOperationAllowed(){
+    final selectedDate = mySubscriptionController.selectedDate.value;
+    final subscriptionDates = mySubscriptionController.subscriptionDates[selectedDate];
+    final isDateBeforeTwoDays = selectedDate.isBefore(DateTime.now().add(const Duration(days: 2)));
+    print("ifSaveOperationAllowed 1");
+    if (mySubscriptionController.isDayMealSaving.value ||
+        mySubscriptionController.isMealsFetching.value ||
+        mySubscriptionController.isFreezing.value ||
+        mySubscriptionController.subscriptoinMealConfig.value.meals.isEmpty ||
+        subscriptionDates == VALIDSUBSCRIPTIONDAY_STATUS.offDay ||
+        subscriptionDates == VALIDSUBSCRIPTIONDAY_STATUS.delivered ||
+        (subscriptionDates == VALIDSUBSCRIPTIONDAY_STATUS.freezed && isDateBeforeTwoDays) ||
+        isDateBeforeTwoDays) {
+      return false;
+    }
+    print("ifSaveOperationAllowed 2");
+    return true;
+  }
 
 
 
