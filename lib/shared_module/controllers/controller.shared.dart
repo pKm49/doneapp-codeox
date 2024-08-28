@@ -171,6 +171,7 @@ class SharedController extends GetxController {
           if(targetRoute==AppRouteNames.dislikeAuditRoute){
             Get.offAllNamed(targetRoute,arguments: [true]);
           }else{
+            showSnackbar(Get.context!, "successfully_loggedin".tr, "info");
             Get.offAllNamed(targetRoute);
           }
         }
