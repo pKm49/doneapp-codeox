@@ -365,24 +365,24 @@ class SharedController extends GetxController {
   }
 
   void getPaymentLink(int subscriptionId) async {
-    showSnackbar(Get.context!, "customer_support_message".tr, "error");
+    // showSnackbar(Get.context!, "customer_support_message".tr, "error");
 
-    // if(!isOrderDetailsFetching.value){
-    //   if(subscriptionId != -1){
-    //     isOrderDetailsFetching.value = true;
-    //     var sharedHttpService = SharedHttpService();
-    //      paymentCompletionData.value =  await sharedHttpService.getPaymentLink( subscriptionId);
-    //     isOrderDetailsFetching.value = false;
-    //
-    //     if (paymentCompletionData.value.transactionUrl == "" ||
-    //         paymentCompletionData.value.orderReference == "") {
-    //       showSnackbar(Get.context!, "customer_support_message".tr, "error");
-    //     } else{
-    //       Get.toNamed(AppRouteNames.paymentCompleteCheckoutRoute);
-    //     }
-    //   }
-    // }
-    //
+    if(!isOrderDetailsFetching.value){
+      if(subscriptionId != -1){
+        isOrderDetailsFetching.value = true;
+        var sharedHttpService = SharedHttpService();
+         paymentCompletionData.value =  await sharedHttpService.getPaymentLink( subscriptionId);
+        isOrderDetailsFetching.value = false;
+
+        if (paymentCompletionData.value.transactionUrl == "" ||
+            paymentCompletionData.value.orderReference == "") {
+          showSnackbar(Get.context!, "customer_support_message".tr, "error");
+        } else{
+          Get.toNamed(AppRouteNames.paymentCompleteCheckoutRoute);
+        }
+      }
+    }
+
 
   }
 

@@ -603,16 +603,17 @@ class _HomePage_CoreState extends State<HomePage_Core> {
                                             .where((p0) =>
                                         p0.status == "paid").toList()[0].id);
                                       }
-                                    }else if(sharedController.mySubscriptions
+                                    }
+                                    else if(sharedController.mySubscriptions
                                         .where((p0) =>
                                     p0.status == "not paid").toList()
                                         .isNotEmpty){
-                                      // if (!sharedController
-                                      //     .isOrderDetailsFetching.value) {
-                                      //   sharedController.getPaymentLink(sharedController.mySubscriptions
-                                      //       .where((p0) =>
-                                      //   p0.status == "not paid").toList()[0].id);
-                                      // }
+                                      if (!sharedController
+                                          .isOrderDetailsFetching.value) {
+                                        sharedController.getPaymentLink(sharedController.mySubscriptions
+                                            .where((p0) =>
+                                        p0.status == "not paid").toList()[0].id);
+                                      }
                                     }else{
                                       Get.toNamed(AppRouteNames
                                           .planPurchaseSubscriptionPlansCategoryListRoute);
