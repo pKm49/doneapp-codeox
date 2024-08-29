@@ -56,6 +56,21 @@ class MealCalendarDateComponent_MySubscription extends StatelessWidget {
             ),
             Expanded(child: Container()),
 
+            // Off Day  - no data & no action
+            Visibility(
+                visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.offDay ) &&  (isMonthDay && isSubscriptionDay) ,
+                child: SvgPicture.asset(ASSETS_OFFDAY,height: 13,color:isSelected?APPSTYLE_BackgroundWhite: APPSTYLE_GuideRed)
+            ),
+            Visibility(
+              visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.offDay ) &&  (isMonthDay && isSubscriptionDay) ,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text("off-day_single".tr,style: getLabelSmallStyle(context).copyWith(
+                    color:isSelected?APPSTYLE_BackgroundWhite: APPSTYLE_GuideRed
+                ),),
+              ),
+            ),
+
             // Delivered & Before 3 days - rating enabled
             Visibility(
                 visible: status==VALIDSUBSCRIPTIONDAY_STATUS.delivered &&

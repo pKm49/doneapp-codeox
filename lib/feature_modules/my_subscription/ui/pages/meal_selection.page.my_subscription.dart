@@ -38,7 +38,7 @@ class _MealSelectionPage_MySubscriptionState
   final mySubscriptionController = Get.find<MySubscriptionController>();
   ScrollController _scrollController = ScrollController();
   bool isScrolled = false;
-  DateTime threeDaysBefore = DateTime.now().add(Duration(days: -3));
+  DateTime threeDaysBefore = DateTime.now().add(Duration(hours: -72));
   final sharedController = Get.find<SharedController>();
 
   @override
@@ -81,7 +81,7 @@ class _MealSelectionPage_MySubscriptionState
         }
       },
       child: Obx(
-        () => Scaffold(
+            () => Scaffold(
           resizeToAvoidBottomInset: true,
           appBar: AppBar(
             automaticallyImplyLeading: false,
@@ -124,10 +124,10 @@ class _MealSelectionPage_MySubscriptionState
                     mySubscriptionController.selectedDate.value
                         .isAfter(DateTime.now().add(const Duration(days: 2))) &&
                     mySubscriptionController.subscriptionDates[
-                            mySubscriptionController.selectedDate.value] !=
+                    mySubscriptionController.selectedDate.value] !=
                         VALIDSUBSCRIPTIONDAY_STATUS.offDay &&
                     mySubscriptionController.subscriptionDates[
-                            mySubscriptionController.selectedDate.value] !=
+                    mySubscriptionController.selectedDate.value] !=
                         VALIDSUBSCRIPTIONDAY_STATUS.delivered,
                 child: InkWell(
                   onTap: () {
@@ -137,10 +137,10 @@ class _MealSelectionPage_MySubscriptionState
                         mySubscriptionController.selectedDate.value.isAfter(
                             DateTime.now().add(const Duration(days: 2))) &&
                         mySubscriptionController.subscriptionDates[
-                                mySubscriptionController.selectedDate.value] !=
+                        mySubscriptionController.selectedDate.value] !=
                             VALIDSUBSCRIPTIONDAY_STATUS.offDay &&
                         mySubscriptionController.subscriptionDates[
-                                mySubscriptionController.selectedDate.value] !=
+                        mySubscriptionController.selectedDate.value] !=
                             VALIDSUBSCRIPTIONDAY_STATUS.delivered) {
                       showFreezeConfirmDialogue(context);
                     }
@@ -148,58 +148,58 @@ class _MealSelectionPage_MySubscriptionState
                   child: Container(
                     width: screenwidth * .25,
                     decoration:
-                        APPSTYLE_ShadowedContainerExtraSmallDecoration.copyWith(
-                            boxShadow: [
+                    APPSTYLE_ShadowedContainerExtraSmallDecoration.copyWith(
+                        boxShadow: [
                           const BoxShadow(
                             color: APPSTYLE_Grey80Shadow24,
                             offset: Offset(0, 3.0),
                             blurRadius: APPSTYLE_BlurRadiusLarge,
                           ),
                         ],
-                            color: APPSTYLE_Black),
+                        color: APPSTYLE_Black),
                     padding: EdgeInsets.symmetric(
                         vertical: APPSTYLE_SpaceSmall,
                         horizontal: APPSTYLE_SpaceSmall),
                     child: mySubscriptionController.isFreezing.value
                         ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              LoadingAnimationWidget.staggeredDotsWave(
-                                color: APPSTYLE_BackgroundWhite,
-                                size: 24,
-                              ),
-                            ],
-                          )
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        LoadingAnimationWidget.staggeredDotsWave(
+                          color: APPSTYLE_BackgroundWhite,
+                          size: 24,
+                        ),
+                      ],
+                    )
                         : Row(
-                            children: [
-                              Icon(
-                                  mySubscriptionController.subscriptionDates[
-                                              mySubscriptionController
-                                                  .selectedDate.value] ==
-                                          VALIDSUBSCRIPTIONDAY_STATUS.freezed
-                                      ? Ionicons.play
-                                      : Ionicons.pause,
-                                  color: APPSTYLE_BackgroundWhite,
-                                  size: APPSTYLE_FontSize16),
-                              addHorizontalSpace(APPSTYLE_SpaceExtraSmall),
-                              Expanded(
-                                child: FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child: Text(
-                                    mySubscriptionController.subscriptionDates[
-                                                mySubscriptionController
-                                                    .selectedDate.value] ==
-                                            VALIDSUBSCRIPTIONDAY_STATUS.freezed
-                                        ? "unpause".tr
-                                        : "pause".tr,
-                                    style: getBodyMediumStyle(context).copyWith(
-                                        color: APPSTYLE_BackgroundWhite),
-                                  ),
-                                ),
-                              ),
-                            ],
+                      children: [
+                        Icon(
+                            mySubscriptionController.subscriptionDates[
+                            mySubscriptionController
+                                .selectedDate.value] ==
+                                VALIDSUBSCRIPTIONDAY_STATUS.freezed
+                                ? Ionicons.play
+                                : Ionicons.pause,
+                            color: APPSTYLE_BackgroundWhite,
+                            size: APPSTYLE_FontSize16),
+                        addHorizontalSpace(APPSTYLE_SpaceExtraSmall),
+                        Expanded(
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              mySubscriptionController.subscriptionDates[
+                              mySubscriptionController
+                                  .selectedDate.value] ==
+                                  VALIDSUBSCRIPTIONDAY_STATUS.freezed
+                                  ? "unpause".tr
+                                  : "pause".tr,
+                              style: getBodyMediumStyle(context).copyWith(
+                                  color: APPSTYLE_BackgroundWhite),
+                            ),
                           ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -208,23 +208,23 @@ class _MealSelectionPage_MySubscriptionState
           ),
           body: SafeArea(
               child: Container(
-            child: Column(
-              children: [
-                Padding(
-                  padding: APPSTYLE_LargePaddingHorizontal,
-                  child: SingleChildScrollView(
-                    controller: _scrollController,
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        for (var date in mySubscriptionController
-                            .subscriptionDates.keys)
-                          InkWell(
-                              onTap: () {
-                                mySubscriptionController.getMealsByDate(
-                                    date, false);
-                              },
-                              child:
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: APPSTYLE_LargePaddingHorizontal,
+                      child: SingleChildScrollView(
+                        controller: _scrollController,
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            for (var date in mySubscriptionController
+                                .subscriptionDates.keys)
+                              InkWell(
+                                  onTap: () {
+                                    mySubscriptionController.getMealsByDate(
+                                        date, false);
+                                  },
+                                  child:
                                   MealCalendarDateMealSelectionComponent_MySubscription(
                                       date: date,
                                       isSelected: isSameDay(
@@ -232,598 +232,611 @@ class _MealSelectionPage_MySubscriptionState
                                           mySubscriptionController
                                               .selectedDate.value),
                                       status: mySubscriptionController
-                                              .subscriptionDates[date] ??
+                                          .subscriptionDates[date] ??
                                           ""))
-                      ],
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                addVerticalSpace(APPSTYLE_SpaceMedium),
+                    addVerticalSpace(APPSTYLE_SpaceMedium),
 
-                // Not Selected & Selected & paused (After) Day   Meals
-                Visibility(
-                  visible: !mySubscriptionController.isMealsFetching.value &&
-                      !mySubscriptionController.isFreezing.value &&
-                      mySubscriptionController
-                          .subscriptoinMealConfig.value.meals.isNotEmpty &&
-                      (mySubscriptionController.subscriptionDates[
-                                  mySubscriptionController.selectedDate.value] ==
-                              VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ||
-                          (mySubscriptionController.subscriptionDates[
-                          mySubscriptionController.selectedDate.value] ==
-                              VALIDSUBSCRIPTIONDAY_STATUS.freezed && mySubscriptionController.selectedDate.value.isAfter(
-                              DateTime.now().add(Duration(days: 1)))) ||
-                          mySubscriptionController.subscriptionDates[
-                                  mySubscriptionController.selectedDate.value] ==
-                              VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected),
-                  child: Expanded(
-                      child: ScrollablePositionedList.builder(
-                    itemCount: mySubscriptionController
-                        .subscriptoinMealConfig.value.meals.length,
-                    itemScrollController:
-                        mySubscriptionController.itemScrollController,
-                    itemBuilder: (BuildContext context, int index) {
-                      return StickyHeader(
-                        header: Container(
-                          color: APPSTYLE_PrimaryColorBgLight,
-                          padding: APPSTYLE_LargePaddingHorizontal.copyWith(
-                              top: APPSTYLE_SpaceMedium,
-                              bottom: APPSTYLE_SpaceMedium),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                        Localizations.localeOf(context)
+                    // Not Selected & Selected & paused (After) Day   Meals
+                    Visibility(
+                      visible: !mySubscriptionController.isMealsFetching.value &&
+                          !mySubscriptionController.isFreezing.value &&
+                          mySubscriptionController
+                              .subscriptoinMealConfig.value.meals.isNotEmpty &&
+                          (
+                              (mySubscriptionController.subscriptionDates[
+                              mySubscriptionController.selectedDate.value] ==
+                                  VALIDSUBSCRIPTIONDAY_STATUS.freezed && mySubscriptionController.selectedDate.value.isAfter(
+                                  DateTime.now().add(Duration(hours: 48)))) ||
+                                  (
+                                      ( mySubscriptionController.subscriptionDates[
+                                      mySubscriptionController.selectedDate.value] ==
+                                          VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected ||
+                                          mySubscriptionController.subscriptionDates[
+                                          mySubscriptionController.selectedDate.value] ==
+                                              VALIDSUBSCRIPTIONDAY_STATUS.mealSelected) &&
+                                          mySubscriptionController.selectedDate.value.isAfter(DateTime.now().add(Duration(hours: 48)))
+                                  )),
+                      child: Expanded(
+                          child: ScrollablePositionedList.builder(
+                            itemCount: mySubscriptionController
+                                .subscriptoinMealConfig.value.meals.length,
+                            itemScrollController:
+                            mySubscriptionController.itemScrollController,
+                            itemBuilder: (BuildContext context, int index) {
+                              return StickyHeader(
+                                header: Container(
+                                  color: APPSTYLE_PrimaryColorBgLight,
+                                  padding: APPSTYLE_LargePaddingHorizontal.copyWith(
+                                      top: APPSTYLE_SpaceMedium,
+                                      bottom: APPSTYLE_SpaceMedium),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                                Localizations.localeOf(context)
                                                     .languageCode
                                                     .toString() ==
-                                                'ar'
-                                            ? mySubscriptionController
-                                                .subscriptoinMealConfig
-                                                .value
-                                                .meals[index]
-                                                .arabicName
-                                            : mySubscriptionController
-                                                .subscriptoinMealConfig
-                                                .value
-                                                .meals[index]
-                                                .name,
-                                        style: getHeadlineMediumStyle(context)
-                                            .copyWith(
-                                                fontSize: APPSTYLE_FontSize20,
-                                                fontWeight:
+                                                    'ar'
+                                                    ? mySubscriptionController
+                                                    .subscriptoinMealConfig
+                                                    .value
+                                                    .meals[index]
+                                                    .arabicName
+                                                    : mySubscriptionController
+                                                    .subscriptoinMealConfig
+                                                    .value
+                                                    .meals[index]
+                                                    .name,
+                                                style: getHeadlineMediumStyle(context)
+                                                    .copyWith(
+                                                    fontSize: APPSTYLE_FontSize20,
+                                                    fontWeight:
                                                     APPSTYLE_FontWeightBold)),
-                                    Container(
-                                      width: screenwidth * .25,
-                                      height: 2,
-                                      color: APPSTYLE_Grey80,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                decoration:
-                                    APPSTYLE_BorderedContainerLargeDecoration
-                                        .copyWith(color: APPSTYLE_PrimaryColor),
-                                padding: EdgeInsets.symmetric(
-                                    vertical:
-                                        APPSTYLE_BorderRadiusExtraSmall * .5,
-                                    horizontal: APPSTYLE_SpaceSmall),
-                                child: Text(
-                                  "item_count".tr.replaceAll("1",
-                                      "${mySubscriptionController.selectedMealConfig.value.meals[index].items.length}/${mySubscriptionController.subscriptoinMealConfig.value.meals[index].itemCount}"),
-                                  style: getBodyMediumStyle(context)
-                                      .copyWith(color: APPSTYLE_BackgroundWhite),
-                                ),
-                              ),
-                              Visibility(
-                                  visible: mySubscriptionController
-                                      .selectedMealConfig
-                                      .value
-                                      .meals[index]
-                                      .items
-                                      .isNotEmpty,
-                                  child: addHorizontalSpace(APPSTYLE_SpaceSmall)),
-                              Visibility(
-                                visible:mySubscriptionController.subscriptionDates[
-                                mySubscriptionController
-                                    .selectedDate.value] !=
-                                    VALIDSUBSCRIPTIONDAY_STATUS.delivered &&
-                                    mySubscriptionController.subscriptionDates[
-                                    mySubscriptionController
-                                        .selectedDate.value] !=
-                                        VALIDSUBSCRIPTIONDAY_STATUS.offDay &&
-                                    mySubscriptionController.selectedDate.value.isAfter(
-                                        DateTime.now().add(Duration(days: 1))) && mySubscriptionController
-                                    .selectedMealConfig
-                                    .value
-                                    .meals[index]
-                                    .items
-                                    .isNotEmpty,
-                                child: InkWell(
-                                  onTap: () {
-                                    mySubscriptionController
-                                        .removeSelectionPerCategory(
-                                            mySubscriptionController
-                                                .selectedMealConfig
-                                                .value
-                                                .meals[index]
-                                                .id);
-                                  },
-                                  child: Container(
-                                    decoration:
+                                            Container(
+                                              width: screenwidth * .25,
+                                              height: 2,
+                                              color: APPSTYLE_Grey80,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        decoration:
                                         APPSTYLE_BorderedContainerLargeDecoration
-                                            .copyWith(
+                                            .copyWith(color: APPSTYLE_PrimaryColor),
+                                        padding: EdgeInsets.symmetric(
+                                            vertical:
+                                            APPSTYLE_BorderRadiusExtraSmall * .5,
+                                            horizontal: APPSTYLE_SpaceSmall),
+                                        child: Text(
+                                          "item_count".tr.replaceAll("1",
+                                              "${mySubscriptionController.selectedMealConfig.value.meals[index].items.length}/${mySubscriptionController.subscriptoinMealConfig.value.meals[index].itemCount}"),
+                                          style: getBodyMediumStyle(context)
+                                              .copyWith(color: APPSTYLE_BackgroundWhite),
+                                        ),
+                                      ),
+                                      Visibility(
+                                          visible: mySubscriptionController
+                                              .selectedMealConfig
+                                              .value
+                                              .meals[index]
+                                              .items
+                                              .isNotEmpty,
+                                          child: addHorizontalSpace(APPSTYLE_SpaceSmall)),
+                                      Visibility(
+                                        visible:mySubscriptionController.subscriptionDates[
+                                        mySubscriptionController
+                                            .selectedDate.value] !=
+                                            VALIDSUBSCRIPTIONDAY_STATUS.delivered &&
+                                            mySubscriptionController.subscriptionDates[
+                                            mySubscriptionController
+                                                .selectedDate.value] !=
+                                                VALIDSUBSCRIPTIONDAY_STATUS.offDay &&
+                                            mySubscriptionController.selectedDate.value.isAfter(
+                                                DateTime.now().add(Duration(days: 1))) && mySubscriptionController
+                                            .selectedMealConfig
+                                            .value
+                                            .meals[index]
+                                            .items
+                                            .isNotEmpty,
+                                        child: InkWell(
+                                          onTap: () {
+                                            mySubscriptionController
+                                                .removeSelectionPerCategory(
+                                                mySubscriptionController
+                                                    .selectedMealConfig
+                                                    .value
+                                                    .meals[index]
+                                                    .id);
+                                          },
+                                          child: Container(
+                                            decoration:
+                                            APPSTYLE_BorderedContainerLargeDecoration
+                                                .copyWith(
                                                 border: Border.all(
                                                     color: APPSTYLE_GuideRed,
                                                     width: .5),
                                                 color: APPSTYLE_BackgroundWhite),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical:
-                                            APPSTYLE_BorderRadiusExtraSmall * .5,
-                                        horizontal: APPSTYLE_SpaceSmall),
-                                    child: Text(
-                                      "clear_selection".tr,
-                                      style: getBodyMediumStyle(context)
-                                          .copyWith(color: APPSTYLE_GuideRed),
-                                    ),
+                                            padding: EdgeInsets.symmetric(
+                                                vertical:
+                                                APPSTYLE_BorderRadiusExtraSmall * .5,
+                                                horizontal: APPSTYLE_SpaceSmall),
+                                            child: Text(
+                                              "clear_selection".tr,
+                                              style: getBodyMediumStyle(context)
+                                                  .copyWith(color: APPSTYLE_GuideRed),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
                                 ),
-                              )
-                            ],
-                          ),
-                        ),
-                        content: mySubscriptionController.subscriptoinMealConfig
+                                content: mySubscriptionController.subscriptoinMealConfig
                                     .value.meals[index].isAlreadySelected &&
-                                mySubscriptionController.subscriptionDates[
-                                        mySubscriptionController
-                                            .selectedDate.value] ==
-                                    VALIDSUBSCRIPTIONDAY_STATUS.mealSelected
-                            ? Padding(
-                                padding: APPSTYLE_LargePaddingHorizontal.copyWith(
-                                    top: APPSTYLE_SpaceMedium),
-                                child: GridView.builder(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: mySubscriptionController
-                                      .selectedMealConfig
-                                      .value
-                                      .meals[index]
-                                      .items
-                                      .length,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          mainAxisSpacing: 0,
-                                          crossAxisSpacing: APPSTYLE_SpaceSmall,
-                                          mainAxisExtent: screenheight * 0.35),
-                                  itemBuilder: (context, indx) {
-                                    return MealSelectionItemCardSelectedComponent_MySubscription(
-                                        isSelectable: false,
-                                        selectedCount:0,
-                                        subscriptoinDailyMealItem:
-                                        mySubscriptionController
-                                            .selectedMealConfig
-                                            .value
-                                            .meals[index].items[indx],
-                                        onAdded: (int count){
-
-                                        });
-
-                                  },
-                                ),
-                              )
-                            : Padding(
-                                padding: APPSTYLE_LargePaddingHorizontal.copyWith(
-                                    top: APPSTYLE_SpaceMedium),
-                                child: GridView.builder(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: mySubscriptionController
-                                      .subscriptoinMealConfig
-                                      .value
-                                      .meals[index]
-                                      .items
-                                      .length,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          mainAxisSpacing: 0,
-                                          crossAxisSpacing: APPSTYLE_SpaceSmall,
-                                          mainAxisExtent: screenheight * 0.35),
-                                  itemBuilder: (context, indx) {
-                                    return MealSelectionItemCardSelectedComponent_MySubscription(
-                                      isSelectable: true,
-                                      selectedCount:
-                                      mySubscriptionController
-                                          .getMealSelectedCount(
+                                    mySubscriptionController.subscriptionDates[
+                                    mySubscriptionController
+                                        .selectedDate.value] ==
+                                        VALIDSUBSCRIPTIONDAY_STATUS.mealSelected
+                                    ? Padding(
+                                  padding: APPSTYLE_LargePaddingHorizontal.copyWith(
+                                      top: APPSTYLE_SpaceMedium),
+                                  child: GridView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: mySubscriptionController
+                                        .selectedMealConfig
+                                        .value
+                                        .meals[index]
+                                        .items
+                                        .length,
+                                    gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        mainAxisSpacing: 0,
+                                        crossAxisSpacing: APPSTYLE_SpaceSmall,
+                                        mainAxisExtent: screenheight * 0.35),
+                                    itemBuilder: (context, indx) {
+                                      return MealSelectionItemCardSelectedComponent_MySubscription(
+                                          isSelectable: false,
+                                          selectedCount:0,
+                                          subscriptoinDailyMealItem:
                                           mySubscriptionController
-                                              .subscriptoinMealConfig
+                                              .selectedMealConfig
                                               .value
-                                              .meals[
-                                          index]
-                                              .id,
+                                              .meals[index].items[indx],
+                                          onAdded: (int count){
+
+                                          });
+
+                                    },
+                                  ),
+                                )
+                                    : Padding(
+                                  padding: APPSTYLE_LargePaddingHorizontal.copyWith(
+                                      top: APPSTYLE_SpaceMedium),
+                                  child: GridView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: mySubscriptionController
+                                        .subscriptoinMealConfig
+                                        .value
+                                        .meals[index]
+                                        .items
+                                        .length,
+                                    gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        mainAxisSpacing: 0,
+                                        crossAxisSpacing: APPSTYLE_SpaceSmall,
+                                        mainAxisExtent: screenheight * 0.35),
+                                    itemBuilder: (context, indx) {
+                                      return MealSelectionItemCardSelectedComponent_MySubscription(
+                                          isSelectable: true,
+                                          selectedCount:
                                           mySubscriptionController
-                                              .subscriptoinMealConfig
-                                              .value
-                                              .meals[
-                                          index]
-                                              .items[indx]
-                                              .id),
-                                        subscriptoinDailyMealItem:
-                                            mySubscriptionController
-                                                .subscriptoinMealConfig
-                                                .value
-                                                .meals[index].items[indx],
-                                        onAdded: (int count){
-                                        if( mySubscriptionController.selectedDate.value.isAfter(
-                                            DateTime.now().add(Duration(days: 1)))){
-                                          if(count<=0){
-                                            mySubscriptionController.addOrRemoveMeal(
-                                                index, mySubscriptionController
-                                                .subscriptoinMealConfig
-                                                .value
-                                                .meals[
-                                            index].id, mySubscriptionController
-                                                .subscriptoinMealConfig
-                                                .value
-                                                .meals[
-                                            index]
-                                                .items[indx]
-                                                .id, count);
-                                          }else{
-                                            if(mySubscriptionController
-                                                .subscriptoinMealConfig
-                                                .value
-                                                .meals[
-                                            index]
-                                                .items[indx].isDislike){
-                                              openDislikeConfirm( index, mySubscriptionController
+                                              .getMealSelectedCount(
+                                              mySubscriptionController
                                                   .subscriptoinMealConfig
                                                   .value
                                                   .meals[
-                                              index].id, mySubscriptionController
+                                              index]
+                                                  .id,
+                                              mySubscriptionController
                                                   .subscriptoinMealConfig
                                                   .value
                                                   .meals[
                                               index]
                                                   .items[indx]
-                                                  .id, count,context);
-                                            }else{
-                                              mySubscriptionController.addOrRemoveMeal(
-                                                  index, mySubscriptionController
-                                                  .subscriptoinMealConfig
-                                                  .value
-                                                  .meals[
-                                              index].id, mySubscriptionController
-                                                  .subscriptoinMealConfig
-                                                  .value
-                                                  .meals[
-                                              index]
-                                                  .items[indx]
-                                                  .id, count);
+                                                  .id),
+                                          subscriptoinDailyMealItem:
+                                          mySubscriptionController
+                                              .subscriptoinMealConfig
+                                              .value
+                                              .meals[index].items[indx],
+                                          onAdded: (int count){
+                                            if( mySubscriptionController.selectedDate.value.isAfter(
+                                                DateTime.now().add(Duration(days: 1)))){
+                                              if(count<=0){
+                                                mySubscriptionController.addOrRemoveMeal(
+                                                    index, mySubscriptionController
+                                                    .subscriptoinMealConfig
+                                                    .value
+                                                    .meals[
+                                                index].id, mySubscriptionController
+                                                    .subscriptoinMealConfig
+                                                    .value
+                                                    .meals[
+                                                index]
+                                                    .items[indx]
+                                                    .id, count);
+                                              }else{
+                                                if(mySubscriptionController
+                                                    .subscriptoinMealConfig
+                                                    .value
+                                                    .meals[
+                                                index]
+                                                    .items[indx].isDislike){
+                                                  openDislikeConfirm( index, mySubscriptionController
+                                                      .subscriptoinMealConfig
+                                                      .value
+                                                      .meals[
+                                                  index].id, mySubscriptionController
+                                                      .subscriptoinMealConfig
+                                                      .value
+                                                      .meals[
+                                                  index]
+                                                      .items[indx]
+                                                      .id, count,context);
+                                                }else{
+                                                  mySubscriptionController.addOrRemoveMeal(
+                                                      index, mySubscriptionController
+                                                      .subscriptoinMealConfig
+                                                      .value
+                                                      .meals[
+                                                  index].id, mySubscriptionController
+                                                      .subscriptoinMealConfig
+                                                      .value
+                                                      .meals[
+                                                  index]
+                                                      .items[indx]
+                                                      .id, count);
+                                                }
+                                              }
+
                                             }
-                                          }
 
-                                        }
-
-                                        });
-                                  },
+                                          });
+                                    },
+                                  ),
                                 ),
-                              ),
-                      );
-                    },
-                  )),
-                ),
+                              );
+                            },
+                          )),
+                    ),
 
-                // Delivered Day Meals
-                Visibility(
-                  visible: !mySubscriptionController.isMealsFetching.value &&
-                      !mySubscriptionController.isFreezing.value &&
-                      mySubscriptionController
-                          .subscriptoinMealConfig.value.meals.isNotEmpty &&
-                      mySubscriptionController.subscriptionDates[
+                    // Delivered Day Meals
+                    Visibility(
+                      visible: !mySubscriptionController.isMealsFetching.value &&
+                          !mySubscriptionController.isFreezing.value &&
+                          mySubscriptionController
+                              .subscriptoinMealConfig.value.meals.isNotEmpty &&
+                          (
+                              mySubscriptionController.subscriptionDates[
                               mySubscriptionController.selectedDate.value] ==
-                          VALIDSUBSCRIPTIONDAY_STATUS.delivered,
-                  child: Expanded(
-                    child: ListView.builder(
-                        itemCount: mySubscriptionController
-                            .subscriptoinMealConfig.value.meals.length,
-                        itemBuilder: (context, index) {
-                          return StickyHeader(
-                            header: Container(
-                              color: APPSTYLE_PrimaryColorBgLight,
-                              padding: APPSTYLE_LargePaddingHorizontal.copyWith(
-                                  top: APPSTYLE_SpaceMedium,
-                                  bottom: APPSTYLE_SpaceMedium),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                  VALIDSUBSCRIPTIONDAY_STATUS.delivered ||(
+                                  (mySubscriptionController.subscriptionDates[
+                                  mySubscriptionController.selectedDate.value] ==
+                                      VALIDSUBSCRIPTIONDAY_STATUS.mealSelected  ||
+                                      mySubscriptionController.subscriptionDates[
+                                      mySubscriptionController.selectedDate.value] ==
+                                          VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected )&&
+                                      mySubscriptionController.selectedDate.value.isBefore(DateTime.now().add(Duration(hours: 48)))
+                              )
+                          )
+                      ,
+                      child: Expanded(
+                        child: ListView.builder(
+                            itemCount: mySubscriptionController
+                                .selectedMealConfig.value.meals.length,
+                            itemBuilder: (context, index) {
+                              return StickyHeader(
+                                header: Container(
+                                  color: APPSTYLE_PrimaryColorBgLight,
+                                  padding: APPSTYLE_LargePaddingHorizontal.copyWith(
+                                      top: APPSTYLE_SpaceMedium,
+                                      bottom: APPSTYLE_SpaceMedium),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                          Localizations.localeOf(context)
-                                                      .languageCode
-                                                      .toString() ==
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                              Localizations.localeOf(context)
+                                                  .languageCode
+                                                  .toString() ==
                                                   'ar'
-                                              ? mySubscriptionController
-                                                  .subscriptoinMealConfig
+                                                  ? mySubscriptionController
+                                                  .selectedMealConfig
                                                   .value
                                                   .meals[index]
                                                   .arabicName
-                                              : mySubscriptionController
-                                                  .subscriptoinMealConfig
+                                                  : mySubscriptionController
+                                                  .selectedMealConfig
                                                   .value
                                                   .meals[index]
                                                   .name,
-                                          style: getHeadlineMediumStyle(context)
-                                              .copyWith(
+                                              style: getHeadlineMediumStyle(context)
+                                                  .copyWith(
                                                   fontSize: APPSTYLE_FontSize20,
                                                   fontWeight:
-                                                      APPSTYLE_FontWeightBold)),
-                                      Container(
-                                        width: 30,
-                                        height: 2,
-                                        color: APPSTYLE_Grey80,
+                                                  APPSTYLE_FontWeightBold)),
+                                          Container(
+                                            width: 30,
+                                            height: 2,
+                                            color: APPSTYLE_Grey80,
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
-                            ),
-                            content: Padding(
-                              padding: APPSTYLE_LargePaddingHorizontal.copyWith(
-                                  top: APPSTYLE_SpaceMedium),
-                              child: GridView.builder(
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount: mySubscriptionController
-                                    .subscriptoinMealConfig
-                                    .value
-                                    .meals[index]
-                                    .items
-                                    .where((element) => element.isSelected)
-                                    .toList()
-                                    .length,
-                                gridDelegate:
+                                ),
+                                content: Padding(
+                                  padding: APPSTYLE_LargePaddingHorizontal.copyWith(
+                                      top: APPSTYLE_SpaceMedium),
+                                  child: GridView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: mySubscriptionController
+                                        .selectedMealConfig
+                                        .value
+                                        .meals[index]
+                                        .items
+                                        .length,
+                                    gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2,
                                         mainAxisSpacing: 0,
                                         crossAxisSpacing: APPSTYLE_SpaceMedium,
                                         mainAxisExtent: screenheight * 0.35),
-                                itemBuilder: (context, indx) {
-                                  return MealSelectionItemCardSelectedComponent_MySubscription(
-                                      isSelectable: true,
-                                      selectedCount:mySubscriptionController.selectedDate.value
-                                          .isBefore(threeDaysBefore) ?-1:1,                                      subscriptoinDailyMealItem:
+                                    itemBuilder: (context, indx) {
+                                      return MealSelectionItemCardSelectedComponent_MySubscription(
+                                          isSelectable: true,
+                                          selectedCount:mySubscriptionController.selectedDate.value
+                                              .isBefore(threeDaysBefore) ?-1:1,                                      subscriptoinDailyMealItem:
                                       mySubscriptionController
-                                          .subscriptoinMealConfig
+                                          .selectedMealConfig
                                           .value
                                           .meals[index].items[indx],
-                                      onAdded: (int count){
-                                        if(mySubscriptionController.selectedDate.value
-                                            .isBefore(threeDaysBefore)){
-                                          showRateDialog( mySubscriptionController
-                                              .subscriptoinMealConfig
-                                              .value
-                                              .meals[index].items[indx].id);
-                                        }
+                                          onAdded: (int count){
+                                            if(mySubscriptionController.selectedDate.value
+                                                .isBefore(threeDaysBefore)){
+                                              showRateDialog( mySubscriptionController
+                                                  .selectedMealConfig
+                                                  .value
+                                                  .meals[index].items[indx].id);
+                                            }
 
-                                      });
-                                },
-                              ),
+                                          });
+                                    },
+                                  ),
+                                ),
+                              );
+                            }),
+                      ),
+                    ),
+
+                    // Off - Day Info
+                    Visibility(
+                      visible: !mySubscriptionController.isMealsFetching.value &&
+                          !mySubscriptionController.isFreezing.value &&
+                          mySubscriptionController.subscriptionDates[
+                          mySubscriptionController.selectedDate.value] ==
+                              VALIDSUBSCRIPTIONDAY_STATUS.offDay,
+                      child: Expanded(
+                          child: Padding(
+                            padding: APPSTYLE_LargePaddingAll,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(1000),
+                                        color: APPSTYLE_Grey20,
+                                      ),
+                                      width: screenwidth * .3,
+                                      height: screenwidth * .3,
+                                      child: Center(
+                                        child: Icon(Ionicons.close_circle_outline,
+                                            size: screenwidth * .15,
+                                            color: APPSTYLE_Grey80),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                addVerticalSpace(APPSTYLE_SpaceLarge),
+                                Text("off-day".tr,
+                                    textAlign: TextAlign.center,
+                                    style: getHeadlineMediumStyle(context)),
+                              ],
                             ),
-                          );
-                        }),
-                  ),
-                ),
-
-                // Off - Day Info
-                Visibility(
-                  visible: !mySubscriptionController.isMealsFetching.value &&
-                      !mySubscriptionController.isFreezing.value &&
-                      mySubscriptionController.subscriptionDates[
-                              mySubscriptionController.selectedDate.value] ==
-                          VALIDSUBSCRIPTIONDAY_STATUS.offDay,
-                  child: Expanded(
-                      child: Padding(
-                    padding: APPSTYLE_LargePaddingAll,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(1000),
-                                color: APPSTYLE_Grey20,
-                              ),
-                              width: screenwidth * .3,
-                              height: screenwidth * .3,
-                              child: Center(
-                                child: Icon(Ionicons.close_circle_outline,
-                                    size: screenwidth * .15,
-                                    color: APPSTYLE_Grey80),
-                              ),
-                            )
-                          ],
-                        ),
-                        addVerticalSpace(APPSTYLE_SpaceLarge),
-                        Text("off-day".tr,
-                            textAlign: TextAlign.center,
-                            style: getHeadlineMediumStyle(context)),
-                      ],
+                          )),
                     ),
-                  )),
-                ),
 
-                // Frozen - Day Info
-                Visibility(
-                  visible: !mySubscriptionController.isMealsFetching.value &&
-                      !mySubscriptionController.isFreezing.value &&
-                      !mySubscriptionController.selectedDate.value.isAfter(
-                          DateTime.now().add(Duration(days: 1)))&&
-                      mySubscriptionController.subscriptionDates[
-                              mySubscriptionController.selectedDate.value] ==
-                          VALIDSUBSCRIPTIONDAY_STATUS.freezed,
-                  child: Expanded(
-                      child: Padding(
-                    padding: APPSTYLE_LargePaddingAll,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(1000),
-                                color: APPSTYLE_Grey20,
-                              ),
-                              width: screenwidth * .3,
-                              height: screenwidth * .3,
-                              child: Center(
-                                child: Icon(Ionicons.pause_circle_outline,
-                                    size: screenwidth * .15,
-                                    color: APPSTYLE_Grey80),
-                              ),
-                            )
-                          ],
-                        ),
-                        addVerticalSpace(APPSTYLE_SpaceLarge),
-                        Text("freezed".tr,
-                            textAlign: TextAlign.center,
-                            style: getHeadlineMediumStyle(context)),
-                      ],
+                    // Frozen - Day Info
+                    Visibility(
+                      visible: !mySubscriptionController.isMealsFetching.value &&
+                          !mySubscriptionController.isFreezing.value &&
+                          !mySubscriptionController.selectedDate.value.isAfter(
+                              DateTime.now().add(Duration(days: 1)))&&
+                          mySubscriptionController.subscriptionDates[
+                          mySubscriptionController.selectedDate.value] ==
+                              VALIDSUBSCRIPTIONDAY_STATUS.freezed,
+                      child: Expanded(
+                          child: Padding(
+                            padding: APPSTYLE_LargePaddingAll,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(1000),
+                                        color: APPSTYLE_Grey20,
+                                      ),
+                                      width: screenwidth * .3,
+                                      height: screenwidth * .3,
+                                      child: Center(
+                                        child: Icon(Ionicons.pause_circle_outline,
+                                            size: screenwidth * .15,
+                                            color: APPSTYLE_Grey80),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                addVerticalSpace(APPSTYLE_SpaceLarge),
+                                Text("freezed".tr,
+                                    textAlign: TextAlign.center,
+                                    style: getHeadlineMediumStyle(context)),
+                              ],
+                            ),
+                          )),
                     ),
-                  )),
-                ),
 
-                // Title Loader
-                Visibility(
-                    visible: mySubscriptionController.isMealsFetching.value ||
-                        mySubscriptionController.isFreezing.value,
-                    child: MealSelectionTitleLoader()),
+                    // Title Loader
+                    Visibility(
+                        visible: mySubscriptionController.isMealsFetching.value ||
+                            mySubscriptionController.isFreezing.value,
+                        child: MealSelectionTitleLoader()),
 
-                //  Meals Loader
-                Visibility(
-                  visible: mySubscriptionController.isMealsFetching.value ||
-                      mySubscriptionController.isFreezing.value,
-                  child: Expanded(
-                    child: MealSelectionItemsLoader(),
-                  ),
-                ),
+                    //  Meals Loader
+                    Visibility(
+                      visible: mySubscriptionController.isMealsFetching.value ||
+                          mySubscriptionController.isFreezing.value,
+                      child: Expanded(
+                        child: MealSelectionItemsLoader(),
+                      ),
+                    ),
 
-                // Submit BUtton with calories
-                Visibility(
-                  visible: !mySubscriptionController.isMealsFetching.value &&
-                      !mySubscriptionController.isFreezing.value &&
-                      mySubscriptionController
-                          .subscriptoinMealConfig.value.meals.isNotEmpty &&
-                      mySubscriptionController.subscriptionDates[
-                              mySubscriptionController.selectedDate.value] !=
-                          VALIDSUBSCRIPTIONDAY_STATUS.offDay &&
-                      ( mySubscriptionController.subscriptionDates[
-                      mySubscriptionController.selectedDate.value] !=
-                          VALIDSUBSCRIPTIONDAY_STATUS.freezed ||
-                       (mySubscriptionController.subscriptionDates[
-                      mySubscriptionController.selectedDate.value] ==
-                          VALIDSUBSCRIPTIONDAY_STATUS.freezed && mySubscriptionController.selectedDate.value.isAfter(
-                          DateTime.now().add(Duration(days: 1)))) ) ,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        boxShadow: APPSTYLE_ContainerTopShadow,
-                        color: APPSTYLE_BackgroundWhite),
-                    padding: APPSTYLE_LargePaddingHorizontal.copyWith(
-                        top: APPSTYLE_SpaceSmall, bottom: APPSTYLE_SpaceSmall),
-                    child: Row(
-                      children: [
-                        CircularPercentIndicator(
-                          radius: 20.0,
-                          lineWidth: 5.0,
-                          percent: getPercentage(
+                    // Submit BUtton with calories
+                    Visibility(
+                      visible: !mySubscriptionController.isMealsFetching.value &&
+                          !mySubscriptionController.isFreezing.value &&
+                          mySubscriptionController
+                              .subscriptoinMealConfig.value.meals.isNotEmpty &&
+                          mySubscriptionController.subscriptionDates[
+                          mySubscriptionController.selectedDate.value] !=
+                              VALIDSUBSCRIPTIONDAY_STATUS.offDay &&
+                          ( mySubscriptionController.subscriptionDates[
+                          mySubscriptionController.selectedDate.value] !=
+                              VALIDSUBSCRIPTIONDAY_STATUS.freezed ||
+                              (mySubscriptionController.subscriptionDates[
+                              mySubscriptionController.selectedDate.value] ==
+                                  VALIDSUBSCRIPTIONDAY_STATUS.freezed && mySubscriptionController.selectedDate.value.isAfter(
+                                  DateTime.now().add(Duration(days: 1)))) ) ,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            boxShadow: APPSTYLE_ContainerTopShadow,
+                            color: APPSTYLE_BackgroundWhite),
+                        padding: APPSTYLE_LargePaddingHorizontal.copyWith(
+                            top: APPSTYLE_SpaceSmall, bottom: APPSTYLE_SpaceSmall),
+                        child: Row(
+                          children: [
+                            CircularPercentIndicator(
+                              radius: 20.0,
+                              lineWidth: 5.0,
+                              percent: getPercentage(
                                   mySubscriptionController.subscriptoinMealConfig
                                       .value.recommendedCalories,
                                   mySubscriptionController.selectedMealConfig
                                       .value.recommendedCalories) /
-                              100,
-                          center: Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: Text(
-                              getPercentage(
+                                  100,
+                              center: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: Text(
+                                  getPercentage(
                                       mySubscriptionController
                                           .subscriptoinMealConfig
                                           .value
                                           .recommendedCalories,
                                       mySubscriptionController.selectedMealConfig
                                           .value.recommendedCalories)
-                                  .toString(),
-                              style: getLabelSmallStyle(context)
-                                  .copyWith(color: APPSTYLE_PrimaryColor),
+                                      .toString(),
+                                  style: getLabelSmallStyle(context)
+                                      .copyWith(color: APPSTYLE_PrimaryColor),
+                                ),
+                              ),
+                              progressColor: APPSTYLE_PrimaryColor,
                             ),
-                          ),
-                          progressColor: APPSTYLE_PrimaryColor,
-                        ),
-                        addHorizontalSpace(APPSTYLE_SpaceMedium),
-                        Expanded(
-                            child: Text(
-                          "${mySubscriptionController.selectedMealConfig.value.recommendedCalories} Cal",
-                          style: getHeadlineLargeStyle(context),
-                        )),
-                        Visibility(
-                          visible: (mySubscriptionController.subscriptionDates[
-                                      mySubscriptionController
-                                          .selectedDate.value] !=
+                            addHorizontalSpace(APPSTYLE_SpaceMedium),
+                            Expanded(
+                                child: Text(
+                                  "${mySubscriptionController.selectedMealConfig.value.recommendedCalories} Cal",
+                                  style: getHeadlineLargeStyle(context),
+                                )),
+                            Visibility(
+                              visible: (mySubscriptionController.subscriptionDates[
+                              mySubscriptionController
+                                  .selectedDate.value] !=
                                   VALIDSUBSCRIPTIONDAY_STATUS.delivered &&
-                              mySubscriptionController.subscriptionDates[
-                                      mySubscriptionController
-                                          .selectedDate.value] !=
-                                  VALIDSUBSCRIPTIONDAY_STATUS.offDay &&
-                              mySubscriptionController.selectedDate.value.isAfter(
-                                  DateTime.now().add(Duration(days: 1)))),
-                          child: SizedBox(
-                              width: screenwidth * .4,
-                              child: ElevatedButton(
-                                  child: mySubscriptionController
+                                  mySubscriptionController.subscriptionDates[
+                                  mySubscriptionController
+                                      .selectedDate.value] !=
+                                      VALIDSUBSCRIPTIONDAY_STATUS.offDay &&
+                                  mySubscriptionController.selectedDate.value.isAfter(
+                                      DateTime.now().add(Duration(days: 1)))),
+                              child: SizedBox(
+                                  width: screenwidth * .4,
+                                  child: ElevatedButton(
+                                      child: mySubscriptionController
                                           .isDayMealSaving.value
-                                      ? LoadingAnimationWidget.staggeredDotsWave(
-                                          color: APPSTYLE_BackgroundWhite,
-                                          size: 24,
-                                        )
-                                      : Text('save'.tr,
+                                          ? LoadingAnimationWidget.staggeredDotsWave(
+                                        color: APPSTYLE_BackgroundWhite,
+                                        size: 24,
+                                      )
+                                          : Text('save'.tr,
                                           style: getHeadlineMediumStyle(context)
                                               .copyWith(
-                                                  color: APPSTYLE_BackgroundWhite,
-                                                  fontWeight:
-                                                      APPSTYLE_FontWeightBold),
+                                              color: APPSTYLE_BackgroundWhite,
+                                              fontWeight:
+                                              APPSTYLE_FontWeightBold),
                                           textAlign: TextAlign.center),
-                                  onPressed: () {
-                                    if (!mySubscriptionController
+                                      onPressed: () {
+                                        if (!mySubscriptionController
                                             .isDayMealSaving.value &&
-                                        !mySubscriptionController
-                                            .isMealsFetching.value) {
-                                      int subscriptionId = sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList().isNotEmpty?
-                                      sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList()[0].id:-1;
-                                      mySubscriptionController.setMealsByDate(true,subscriptionId);
-                                    }
-                                  })),
+                                            !mySubscriptionController
+                                                .isMealsFetching.value) {
+                                          int subscriptionId = sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList().isNotEmpty?
+                                          sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList()[0].id:-1;
+                                          mySubscriptionController.setMealsByDate(true,subscriptionId);
+                                        }
+                                      })),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          )),
+                      ),
+                    )
+                  ],
+                ),
+              )),
         ),
       ),
     );
@@ -833,8 +846,8 @@ class _MealSelectionPage_MySubscriptionState
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (_scrollController.hasClients) {
         _scrollController.jumpTo(mySubscriptionController.subscriptionDates.keys
-                .toList()
-                .indexOf(mySubscriptionController.selectedDate.value) *
+            .toList()
+            .indexOf(mySubscriptionController.selectedDate.value) *
             (screenwidth * .15));
         isScrolled = true;
         setState(() {});
@@ -845,16 +858,16 @@ class _MealSelectionPage_MySubscriptionState
   void showFreezeConfirmDialogue(BuildContext context) async {
     final dialogTitleWidget = Text(
         mySubscriptionController.subscriptionDates[
-                    mySubscriptionController.selectedDate.value] !=
-                VALIDSUBSCRIPTIONDAY_STATUS.freezed
+        mySubscriptionController.selectedDate.value] !=
+            VALIDSUBSCRIPTIONDAY_STATUS.freezed
             ? 'sub_freeze_title'.tr
             : 'sub_unfreeze_title'.tr,
         style: getHeadlineMediumStyle(context).copyWith(
             color: APPSTYLE_Grey80, fontWeight: APPSTYLE_FontWeightBold));
     final dialogTextWidget = Text(
       mySubscriptionController.subscriptionDates[
-                  mySubscriptionController.selectedDate.value] !=
-              VALIDSUBSCRIPTIONDAY_STATUS.freezed
+      mySubscriptionController.selectedDate.value] !=
+          VALIDSUBSCRIPTIONDAY_STATUS.freezed
           ? 'sub_freeze_content'.tr
           : 'sub_unfreeze_content'.tr,
       style: getBodyMediumStyle(context),
@@ -873,7 +886,7 @@ class _MealSelectionPage_MySubscriptionState
       mySubscriptionController.freezeSubscription(
           mySubscriptionController.selectedDate.value,
           mySubscriptionController.subscriptionDates[
-                  mySubscriptionController.selectedDate.value] !=
+          mySubscriptionController.selectedDate.value] !=
               VALIDSUBSCRIPTIONDAY_STATUS.freezed);
       Get.back();
     }
@@ -1115,3 +1128,4 @@ class _MealSelectionPage_MySubscriptionState
 
 
 }
+
