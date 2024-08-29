@@ -29,8 +29,10 @@ import 'package:doneapp/landing.page.core.dart';
 import 'package:doneapp/notifications.page.core.dart';
 import 'package:doneapp/privacy.page.core.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
+import 'package:doneapp/shared_module/ui/pages/checkout.page.shared.dart';
 import 'package:doneapp/shared_module/ui/pages/otp_verification_mobile_input.page.shared.dart';
 import 'package:doneapp/shared_module/ui/pages/otp_verification_otp_input.page.shared.dart';
+import 'package:doneapp/shared_module/ui/pages/payment_gateway_webview.page.shared.dart';
 import 'package:doneapp/shared_module/ui/pages/success_confirmation.page.shared.dart';
 import 'package:doneapp/terms.page.core.dart';
 import 'package:get/get.dart';
@@ -186,6 +188,18 @@ AppPages() => [
     name: AppRouteNames.paymentPageRoute,
     page: () =>   PaymentGatewayWebView_PlanPurchase(),
   ),
+
+
+  GetPage(
+    name: AppRouteNames.paymentCompletePageRoute,
+    page: () =>   PaymentGatewayWebView_Shared(),
+  ),
+
+  GetPage(
+    name: AppRouteNames.paymentCompleteCheckoutRoute,
+    page: () =>   CheckoutPage_Shared(),
+  ),
+
 ];
 
 
