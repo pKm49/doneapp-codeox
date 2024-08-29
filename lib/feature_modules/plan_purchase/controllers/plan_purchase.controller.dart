@@ -71,7 +71,7 @@ class PlanPurchaseController extends GetxController {
     subscriptionCategories.value =
         await planPurchaseHttpService.getSubscriptionCategories();
     isCategoriesFetching.value = false;
-    currentCategory.value = mapSubscriptionCategory({});
+
     update();
     if (subscriptionCategories.isEmpty) {
       currentSubscription.value = mapSubscriptionItem({});
@@ -80,6 +80,9 @@ class PlanPurchaseController extends GetxController {
       subTotal.value = 0.0;
       total.value = 0.0;
       discount.value = 0.0;
+    }else{
+      changeCategory(subscriptionCategories[0]);
+
     }
   }
 

@@ -1,10 +1,12 @@
 import 'package:doneapp/feature_modules/my_subscription/models/subscription_dailymeal.model.my_subscription.dart';
 import 'package:doneapp/feature_modules/my_subscription/models/subscription_dailymeal_item.model.my_subscription.dart';
+import 'package:doneapp/feature_modules/my_subscription/models/subscription_date.model.my_subscription.dart';
 import 'package:doneapp/feature_modules/my_subscription/models/subscription_mealconfig.model.my_subscription.dart';
 import 'package:doneapp/feature_modules/my_subscription/services/http.my_subscription.service.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/valid_subscription_day_status.constants.shared.dart';
 import 'package:doneapp/shared_module/controllers/controller.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/date_conversion.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -14,7 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class MySubscriptionController extends GetxController {
 
   var isSubscriptionDatesLoading = false.obs;
-  var subscriptionDates = <DateTime, String>{}.obs;
+  var subscriptionDates = <SubscriptoinDate>[].obs;
   var currentMonth = DateTime (DateTime.now().year,DateTime.now().month,1).obs;
   var subscriptionMonths = <DateTime>[].obs;
   var subscriptionDays = <DateTime>[].obs;
@@ -92,7 +94,7 @@ class MySubscriptionController extends GetxController {
   void setSelectedDate() {
 
     if(subscriptionDates.isNotEmpty) {
-      DateTime startDate = subscriptionDates.keys.toList().first;
+      DateTime startDate = subscriptionDates.first.date;
       selectedDate.value = startDate.isAfter(DateTime.now())?
       startDate:DateTime.now();
     }
@@ -103,15 +105,16 @@ class MySubscriptionController extends GetxController {
 
     if(subscriptionDates.isNotEmpty){
 
-      DateTime startDate = subscriptionDates.keys.toList().first;
-      DateTime endDate = subscriptionDates.keys.toList().last;
+      DateTime startDate = subscriptionDates.first.date;
+      DateTime endDate = subscriptionDates.last.date;
 
       currentMonth.value = getCurrentMonth(startDate, endDate);
-      subscriptionDates.forEach((key, value) {
-        subscriptionDays.add(key);
-        print("$key $value");
-        if(!doesContainDate(subscriptionMonths,DateTime(key.year,key.month,1))){
-          subscriptionMonths.add(DateTime(key.year,key.month,1));
+
+      subscriptionDates.forEach((element) {
+        subscriptionDays.add(element.date);
+
+        if(!doesContainDate(subscriptionMonths,DateTime(element.date.year,element.date.month,1))){
+          subscriptionMonths.add(DateTime(element.date.year,element.date.month,1));
         }
       });
       setCurrentMonthWeekDays();
@@ -159,16 +162,28 @@ class MySubscriptionController extends GetxController {
   }
 
   bool isSubscriptionDay(DateTime firstWeekDay) {
-
-    return subscriptionDates.keys.toList().contains(firstWeekDay);
+    return subscriptionDates.where((p0) => isSameDay(p0.date,firstWeekDay)).toList().isNotEmpty;
   }
+  int  getDaySubId(DateTime firstWeekDay) {
 
+    print("getDaySubId");
+    print(firstWeekDay);
+    print(subscriptionDates.where((p0) => isSameDay(p0.date,firstWeekDay)).toList());
+    if(subscriptionDates.where((p0) => isSameDay(p0.date,firstWeekDay)).toList().isEmpty){
+      return -1;
+    }
+    print(subscriptionDates.where((p0) => isSameDay(p0.date,firstWeekDay)).toList()[0].subscriptionId.toString());
+    print(subscriptionDates.where((p0) => isSameDay(p0.date,firstWeekDay)).toList()[0].date.toString());
+    print(subscriptionDates.where((p0) => isSameDay(p0.date,firstWeekDay)).toList()[0].status.toString());
+    return subscriptionDates.where((p0) => isSameDay(p0.date,firstWeekDay)).toList()[0].subscriptionId;
+  }
   String  getDayStatus(DateTime firstWeekDay) {
 
-   if(subscriptionDates.keys.toList().contains(firstWeekDay)){
-     return subscriptionDates[firstWeekDay]??"";
-   }
-   return "";
+    if(subscriptionDates.where((p0) => isSameDay(p0.date,firstWeekDay)).toList().isEmpty){
+      return "";
+    }
+
+   return subscriptionDates.where((p0) => isSameDay(p0.date,firstWeekDay)).toList()[0].status;
   }
   setCurrentMonthWeekDays() {
 
@@ -261,10 +276,7 @@ class MySubscriptionController extends GetxController {
 
          var mySubsHttpService = MySubsHttpService();
          subscriptoinMealConfig.value =  await mySubsHttpService.getMealsByDay(tMobile,f.format(selectedDate.value));
-         print("getMealsByDay data recieved");
-         print(subscriptoinMealConfig.value.recommendedCalories);
-         print(subscriptoinMealConfig.value.meals.length);
-         print(subscriptoinMealConfig.value.meals[0].items.length);
+
          initializeMealSelection(f.format(selectedDate.value));
          isMealsFetching.value = false;
 
@@ -284,37 +296,64 @@ class MySubscriptionController extends GetxController {
   }
 
 
+  bool isSetMealsEnabled(bool isNavigateBack,bool isFromBackbutton){
 
-  Future<void> setMealsByDate(bool isNavigateBack,int subscriptionId ) async {
-    if(!isDayMealSaving.value &&
-        ((subscriptionDates[
-        selectedDate.value] !=
-            VALIDSUBSCRIPTIONDAY_STATUS.freezed &&
-            selectedMealConfig.value.meals.where((element) => element.items.isNotEmpty).toList().isNotEmpty) ||
-            (subscriptionDates[
-            selectedDate.value] ==
-                VALIDSUBSCRIPTIONDAY_STATUS.freezed &&
-                selectedMealConfig.value.meals.where((element) => element.items.length==element.itemCount).toList().length
-                    ==selectedMealConfig.value.meals.length) )
-    ){
-      if(subscriptionDates[
-      selectedDate.value] ==
+    if(isDayMealSaving.value || isFreezing.value){
+      return false;
+    }
+
+    if(getDayStatus(selectedDate.value) ==
+        VALIDSUBSCRIPTIONDAY_STATUS.offDay  || getDayStatus(selectedDate.value) ==
+        VALIDSUBSCRIPTIONDAY_STATUS.delivered){
+      return false;
+    }
+
+    if(getDayStatus(selectedDate.value) ==
+        VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected &&
+        selectedMealConfig.value.meals.where((element) => element.items.isNotEmpty).toList().isEmpty){
+      showSnackbar(Get.context!, "please_select_meals_for_all_categories".tr, "error");
+      return false;
+    }
+
+
+    if(getDayStatus(selectedDate.value) ==
+        VALIDSUBSCRIPTIONDAY_STATUS.mealSelected &&
+        selectedMealConfig.value.meals.where((element) => element.items.length==element.itemCount).toList().length
+            !=selectedMealConfig.value.meals.length && isNavigateBack){
+      showSnackbar(Get.context!, "please_select_meals_for_all_categories".tr, "error");
+      return false;
+    }
+
+    if(getDayStatus(selectedDate.value) ==
+        VALIDSUBSCRIPTIONDAY_STATUS.freezed && isFromBackbutton){
+      return false;
+    }
+
+    if(getDayStatus(selectedDate.value) ==
+        VALIDSUBSCRIPTIONDAY_STATUS.freezed && selectedMealConfig.value.meals.where((element) => element.items.length==element.itemCount).toList().length
+        !=selectedMealConfig.value.meals.length){
+      return false;
+    }
+
+   return true;
+
+  }
+
+
+  Future<void> setMealsByDate(bool isNavigateBack,int subscriptionId,bool isFromBackbutton ) async {
+    print("setMealsByDate");
+    print(isSetMealsEnabled(isNavigateBack,isFromBackbutton));
+    if(isSetMealsEnabled(isNavigateBack,isFromBackbutton)){
+      if(getDayStatus(selectedDate.value) ==
           VALIDSUBSCRIPTIONDAY_STATUS.freezed &&
           selectedMealConfig.value.meals.where((element) => element.items.length==element.itemCount).toList().length
-              ==selectedMealConfig.value.meals.length){
+              ==selectedMealConfig.value.meals.length && !isFromBackbutton){
         unfreezeAndSaveMeals();
       }else{
-        if(subscriptionDates[
-        selectedDate.value] ==
-            VALIDSUBSCRIPTIONDAY_STATUS.mealSelected &&
-            selectedMealConfig.value.meals.where((element) => element.items.length==element.itemCount).toList().length
-                !=selectedMealConfig.value.meals.length){
-          showSnackbar(Get.context!, "please_select_meals_for_all_categories".tr, "error");
-        }else{
+        print("else reached");
           final SharedPreferences prefs = await SharedPreferences.getInstance();
           final String? tMobile = prefs.getString('mobile');
           if (tMobile != null && tMobile != '') {
-
 
             if(subscriptionId != -1){
               isDayMealSaving.value = true;
@@ -330,7 +369,6 @@ class MySubscriptionController extends GetxController {
 
                 getSubscriptionDates(false,false);
 
-
               }
 
               isDayMealSaving.value = false;
@@ -344,14 +382,8 @@ class MySubscriptionController extends GetxController {
             Get.offAllNamed(AppRouteNames.loginRoute);
           }
 
-        }
-
       }
 
-    }else{
-      if(selectedMealConfig.value.meals.where((element) => element.items.isEmpty).toList().isNotEmpty && isNavigateBack){
-        showSnackbar(Get.context!, "please_select_meals_for_all_categories".tr, "error");
-      }
     }
 
 
@@ -516,10 +548,7 @@ class MySubscriptionController extends GetxController {
 
   Future<void> freezeSubscription(DateTime dateTime, bool isFreeze) async {
     if(!isFreezing.value){
-        final sharedController = Get.find<SharedController>();
-        int subscriptionId = sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList().isNotEmpty?
-        sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList()[0].id:-1;
-
+         int subscriptionId = getDaySubId(dateTime);
         if(subscriptionId != -1){
           final f = DateFormat('yyyy-MM-dd');
           List<String> frozenDays = [];
@@ -615,10 +644,7 @@ class MySubscriptionController extends GetxController {
 
   Future<void> unfreezeAndSaveMeals() async {
     if(!isFreezing.value){
-      final sharedController = Get.find<SharedController>();
-      int subscriptionId = sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList().isNotEmpty?
-      sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList()[0].id:-1;
-
+       int subscriptionId =  getDaySubId(selectedDate.value);
       if(subscriptionId != -1){
         final f = DateFormat('yyyy-MM-dd');
         List<String> frozenDays = [];
@@ -631,9 +657,7 @@ class MySubscriptionController extends GetxController {
           final String? tMobile = prefs.getString('mobile');
           if (tMobile != null && tMobile != '') {
 
-            final sharedController = Get.find<SharedController>();
-            int subscriptionId = sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList().isNotEmpty?
-            sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList()[0].id:-1;
+            int subscriptionId =  getDaySubId(selectedDate.value);
 
             if(subscriptionId != -1){
               isDayMealSaving.value = true;

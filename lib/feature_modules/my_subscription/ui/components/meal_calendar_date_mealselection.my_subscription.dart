@@ -1,4 +1,5 @@
  
+import 'package:doneapp/feature_modules/my_subscription/services/meal_selection.helper.services.dart';
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/valid_subscription_day_status.constants.shared.dart';
@@ -66,11 +67,12 @@ class MealCalendarDateMealSelectionComponent_MySubscription extends StatelessWid
                         style: getLabelLargeStyle(context)
                             .copyWith(
                             color: isSelected?APPSTYLE_BackgroundWhite:
-                            status==VALIDSUBSCRIPTIONDAY_STATUS.offDay?APPSTYLE_PrimaryColor:
+                            status==VALIDSUBSCRIPTIONDAY_STATUS.offDay?APPSTYLE_GuideRed:
                             status==VALIDSUBSCRIPTIONDAY_STATUS.freezed?APPSTYLE_GuideOrange:
                             status==VALIDSUBSCRIPTIONDAY_STATUS.delivered && date.isAfter(threeDaysBefore) ?APPSTYLE_GuideGreen:
                             status==VALIDSUBSCRIPTIONDAY_STATUS.delivered && date.isBefore(threeDaysBefore) ?APPSTYLE_GuideRed:
-                            status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected?APPSTYLE_PrimaryColor:
+                            status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected && isTodayTomorrow(date)?APPSTYLE_WhatsappGreen:
+                            status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected && !isTodayTomorrow(date)?APPSTYLE_GuideRed:
                              APPSTYLE_WhatsappGreen
                         ),
                       ),
@@ -172,7 +174,7 @@ class MealCalendarDateMealSelectionComponent_MySubscription extends StatelessWid
 
                   // Today And Tomorrow
                   Visibility(
-                      visible:  (date.isBefore(DateTime.now().add(Duration(days: 2)))) &&
+                      visible: (isTodayTomorrow(date)) &&
                           status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected ,
                       child:  Padding(
                         padding: const EdgeInsets.only(bottom: APPSTYLE_SpaceExtraSmall),
@@ -180,7 +182,7 @@ class MealCalendarDateMealSelectionComponent_MySubscription extends StatelessWid
                       )
                   ),
                   Visibility(
-                    visible:  (date.isBefore(DateTime.now().add(Duration(days: 2)))) &&
+                    visible: (isTodayTomorrow(date)) &&
                         status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected ,
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
@@ -192,7 +194,7 @@ class MealCalendarDateMealSelectionComponent_MySubscription extends StatelessWid
 
                   // Meal Not Selected & After tommorrow
                   Visibility(
-                      visible:(date.isAfter(DateTime.now().add(Duration(days: 2)))) &&
+                      visible: (!isTodayTomorrow(date)) &&
                           status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected  ,
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: APPSTYLE_SpaceExtraSmall),
@@ -200,7 +202,7 @@ class MealCalendarDateMealSelectionComponent_MySubscription extends StatelessWid
                       )
                   ),
                   Visibility(
-                    visible:(date.isAfter(DateTime.now().add(Duration(days: 2)))) &&
+                    visible: (!isTodayTomorrow(date)) &&
                         status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected ,
                     child: FittedBox(
                       fit: BoxFit.scaleDown,

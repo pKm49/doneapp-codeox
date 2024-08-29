@@ -339,10 +339,10 @@ class _MySubscriptionListPage_ProfileState
                                               style: getLabelLargeStyle(context).copyWith(color: APPSTYLE_BackgroundWhite) ),
                                         ),
                                         onTap: (){
-                                          // if (!sharedController
-                                          //     .isOrderDetailsFetching.value) {
-                                          //   sharedController.getPaymentLink(sharedController.mySubscriptions[index].id);
-                                          // }
+                                          if (!sharedController
+                                              .isOrderDetailsFetching.value) {
+                                            sharedController.getPaymentLink(sharedController.mySubscriptions[index].id);
+                                          }
                                         },
                                       ),
                                     ],

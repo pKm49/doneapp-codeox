@@ -2,7 +2,7 @@ import 'package:doneapp/shared_module/models/subscription_day_status.model.share
 
   SubscriptionDayStatus VALIDSUBSCRIPTIONDAY_STATUS = SubscriptionDayStatus(
     offDay: 'off-day',
-    freezed: 'freezed',
     delivered: 'delivered',
+    freezed: 'freezed',
     mealSelected: 'meal-selected',
     mealNotSelected: 'meal-not-selected');
