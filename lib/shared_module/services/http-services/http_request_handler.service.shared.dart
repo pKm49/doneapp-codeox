@@ -2,9 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:doneapp/shared_module/models/http_response.model.shared.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as httpForMultipart;
-import 'package:http_interceptor/http_interceptor.dart'; 
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http_interceptor/http_interceptor.dart';
 import 'package:doneapp/env.dart' as env;
 
 import 'http_interceptor.service.shared.dart';
