@@ -10,8 +10,13 @@ import 'package:doneapp/env.dart' as env;
 import 'http_interceptor.service.shared.dart';
 
 getRequest(endpoint, parameters) async {
-  try {
 
+  // print("getRequest trigggered");
+  // print("endpoint");
+  // print(endpoint);
+  // print("parameters");
+  // print(parameters);
+  try {
 
     final http = InterceptedHttp.build(interceptors: [
       AppHttpInterceptor(),
@@ -20,10 +25,8 @@ getRequest(endpoint, parameters) async {
     final httpResponse = await http
         .get(Uri.https(env.apiEndPoint, "$endpoint"),params: json.decode(json.encode(parameters)));
 
-
-    print("httpResponse");
-    print(httpResponse.body);
-    print("httpResponse");
+    // print("getRequest response received");
+    // print(httpResponse.body);
 
     var httpResponseBody = json.decode(httpResponse.body);
 
@@ -52,15 +55,16 @@ getRequest(endpoint, parameters) async {
 }
 
 postRequest(endpoint, body) async {
-
+  // print("postRequest trigggered");
+  // print("endpoint");
+  // print(endpoint);
+  // print("parameters");
+  // print(body);
   try {
     final http = InterceptedHttp.build(interceptors: [
       AppHttpInterceptor(),
     ]);
-    print("postRequest called pass 1");
-    print(Uri.https(env.apiEndPoint, "$endpoint").toString());
-    print("update_customer_profile request");
-    print(endpoint.toString().contains('update_customer_profile'));
+
     late var httpResponse;
     if(endpoint.toString().contains('update_customer_profile')){
       // print("update_customer_profile contains update_customer_profile");
@@ -76,12 +80,9 @@ postRequest(endpoint, body) async {
       );
     }
 
-    print("postRequest called pass 2");
+    // print("postRequest response received");
+    // print(httpResponse.body);
 
-    print("post body");
-    print(json.encode(body));
-    print(httpResponse.body);
-    print(httpResponse.statusCode);
     var httpResponseBody = json.decode(httpResponse.body);
 
     return generateSuccessResponse(httpResponseBody,httpResponse.statusCode);
@@ -114,30 +115,24 @@ postRequest(endpoint, body) async {
 }
 
 patchRequest(endpoint, body) async {
-  print("patchRequest called");
-  print(endpoint);
-  print(Uri.https(env.apiEndPoint, "$endpoint").toString());
-  print(body);
+  // print("patchRequest trigggered");
+  // print("endpoint");
+  // print(endpoint);
+  // print("parameters");
+  // print(body);
   try {
     final http = InterceptedHttp.build(interceptors: [
       AppHttpInterceptor(),
     ]);
-    print("patchRequest called pass 1");
-    print(Uri.https(env.apiEndPoint, "$endpoint").toString());
-    print("update_customer_profile request");
-    print(endpoint.toString().contains('update_customer_profile'));
-    late var httpResponse;
-    httpResponse = await http.patch(
+
+   var httpResponse = await http.patch(
         Uri.https(env.apiEndPoint, "$endpoint"),
         body:endpoint.toString().contains('update_customer_profile')?null: json.encode(body)
     );
 
-    print("patchRequest called pass 2");
+    // print("patchRequest response received");
+    // print(httpResponse.body);
 
-    print("patch body");
-    print(json.encode(body));
-    print(httpResponse.body);
-    print(httpResponse.statusCode);
     var httpResponseBody = json.decode(httpResponse.body);
 
     return generateSuccessResponse(httpResponseBody,httpResponse.statusCode);
@@ -169,17 +164,23 @@ patchRequest(endpoint, body) async {
 
 }
 deleteRequest(endpoint,parameters) async {
+  // print("deleteRequest trigggered");
+  // print("endpoint");
+  // print(endpoint);
+  // print("parameters");
+  // print(parameters);
   try {
     final http = InterceptedHttp.build(interceptors: [
       AppHttpInterceptor(),
     ]);
-    print("deleteRequest called pass 1");
-    print(Uri.https(env.apiEndPoint, "$endpoint").toString());
+
     final httpResponse =
     await http.delete(Uri.https(env.apiEndPoint, "/$endpoint"),params: json.decode(json.encode(parameters)));
 
     var httpResponseBody = json.decode(httpResponse.body);
 
+    // print("deleteRequest response received");
+    // print(httpResponse.body);
 
     return generateSuccessResponse(httpResponseBody,httpResponse.statusCode);
   } on SocketException {
@@ -209,10 +210,10 @@ generateErrorResponse(String errorMessage) {
 
 generateSuccessResponse(dynamic httpResponseBody, int requestStatusCode) {
 
-  print("generateSuccessResponse");
+  // print("generateSuccessResponse");
   // print(httpResponseBody);
   var result = httpResponseBody['result'] != null ?httpResponseBody['result']:httpResponseBody  ;
-  print(result.toString());
+
   if(result is String && result.toString().contains('UNAUTHORIZED')){
     return generateErrorResponse('UnAuthorized');
   }
@@ -235,12 +236,12 @@ generateSuccessResponse(dynamic httpResponseBody, int requestStatusCode) {
         :(result  != null && result['payload']  != null)
         ? result['payload']
         : result;
-    print("statusCode");
-    print(statusCode);
-    print("message");
-    print(message);
-    print("data");
-    print(data);
+    // print("statusCode");
+    // print(statusCode);
+    // print("message");
+    // print(message);
+    // print("data");
+    // print(data);
     AppHttpResponse poundHttpResponse = AppHttpResponse(
         statusCode:(result  != null && result['statusCode']  != null)
             ? result['statusCode']
