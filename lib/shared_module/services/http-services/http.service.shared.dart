@@ -20,9 +20,7 @@ class SharedHttpService {
     params["client_secret"] = env.clientSecret;
     AppHttpResponse response = await getRequest(
         SharedHttpRequestEndpoint_GetAccessToken, params);
-    print("response is");
-    print(response.statusCode);
-    print(response.message);
+
     return;
   }
 
@@ -32,8 +30,7 @@ class SharedHttpService {
       params["mobile"] = mobile;
       AppHttpResponse response =
           await getRequest(SharedHttpRequestEndpoint_GetProfileData, params);
-      print("getProfileData");
-      print(response.data);
+
       if (response.statusCode == 200 && response.data != null) {
         return mapUserData(response.data[0]);
       }
@@ -148,9 +145,6 @@ class SharedHttpService {
     try{
       AppHttpResponse response =
           await getRequest(SharedHttpRequestEndpoint_GetSupportNumber,null);
-        print("getSupportNumber");
-        print(response.statusCode);
-        print(response.data);
       if(response.statusCode == 200){
         return response.data;
       }
@@ -186,10 +180,6 @@ class SharedHttpService {
       AppHttpResponse response =
       await postRequest(SharedHttpRequestEndpoint_ActivateSubscription, params);
 
-      print("activateSubscription");
-      print(response.statusCode.toString());
-      print(response.data.toString());
-      print(response.message.toString());
       return response.statusCode == 200;
 
     }catch  (e,st){
@@ -206,19 +196,13 @@ class SharedHttpService {
       Map<String, dynamic> params = {};
       AppHttpResponse response =
       await getRequest('$SharedHttpRequestEndpoint_GetPaymentLink/$subscriptionId',params );
-      print("getPaymentLink");
-      print(response.statusCode);
-      print(response.data);
-      print(response.message);
+
       if (response.statusCode == 200 && response.data != null) {
-        print("createOrder inside iff");
-        print(response.data[0].toString());
+
         return mapPaymentCompletionData(response.data[0]);
       }else{
-        print("createOrder inside else");
         showSnackbar(Get.context!, response.message , "error");
       }
-      print("createOrder outside else");
 
       return mapPaymentCompletionData({});
 

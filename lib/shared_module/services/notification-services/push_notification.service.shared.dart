@@ -43,8 +43,6 @@ class PushNotificationService {
         onDidReceiveNotificationResponse:
             (NotificationResponse notificationResponse) async {
 
-              debugPrint("onDidReceiveNotificationResponse triggered");
-              debugPrint("payload is " + notificationResponse.payload.toString());
 
               final List<String> str =
               notificationResponse.payload!.replaceAll('{', '').replaceAll('}', '').split(',');
@@ -74,7 +72,7 @@ class PushNotificationService {
   Future<void> onActionReceivedImplementationMethod(
       Map<String, dynamic> data) async {
     debugPrint("onActionReceivedImplementationMethod triggered");
-    debugPrint(data.toString());
+
   }
 
   Future<String> _downloadAndSaveFile(String url, String fileName) async {

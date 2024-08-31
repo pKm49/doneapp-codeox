@@ -1,13 +1,11 @@
-
-
- import 'dart:convert';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:doneapp/feature_modules/profile/controllers/profile.controller.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/available_genders.shared.constant.dart';
- import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/valid_phoneverification_modes.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
 import 'package:doneapp/shared_module/controllers/controller.shared.dart';
@@ -34,10 +32,10 @@ class EditProfilePage_Profile extends StatefulWidget {
 }
 
 class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
+
   final profileController = Get.find<ProfileController>();
   final GlobalKey<FormState> editProfileFormKey = GlobalKey<FormState>();
   final sharedController = Get.find<SharedController>();
-
 
   @override
   void initState() {
@@ -713,7 +711,6 @@ class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
       ),
     ).then((valueFromDialog) {
       // use the value as you wish
-      print(valueFromDialog);
     });
   }
 

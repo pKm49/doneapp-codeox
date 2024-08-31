@@ -17,9 +17,7 @@ class MySubsHttpService {
       AppHttpResponse response =
       await getRequest(MySubscriptionHttpRequestEndpoint_GetSubscriptionDates,params);
 
-      print("getSubscriptionDates");
-      print(response.statusCode);
-      print(response.data);
+
       final List<SubscriptoinDate> subscriptoinDates = [];
 
       if (response.statusCode == 200 && response.data != null) {
@@ -65,19 +63,16 @@ class MySubsHttpService {
       AppHttpResponse response =
       await getRequest(MySubscriptionHttpRequestEndpoint_GetSubscriptionMealsByDate+mobile,params);
 
-      print("getMealsByDay");
-      print(response.statusCode);
-      print(response.data);
       if (response.statusCode == 200 && response.data != null) {
          return mapSubscriptoinMealConfig(response.data[0], date);
       }
-      print("reached hereeeeeee");
+
       return mapSubscriptoinMealConfig({}, date);
 
     }catch (e,st){
       print(e);
       print(st);
-      print("reached error");
+
       return mapSubscriptoinMealConfig({}, date);
     }
   }

@@ -11,9 +11,7 @@ import 'http_interceptor.service.shared.dart';
 
 getRequest(endpoint, parameters) async {
   try {
-    print("getRequest called");
-    print(endpoint);
-    print(parameters);
+
 
     final http = InterceptedHttp.build(interceptors: [
       AppHttpInterceptor(),
@@ -21,8 +19,7 @@ getRequest(endpoint, parameters) async {
 
     final httpResponse = await http
         .get(Uri.https(env.apiEndPoint, "$endpoint"),params: json.decode(json.encode(parameters)));
-    print(Uri.https(env.apiEndPoint, "$endpoint").toString());
-    print(parameters);
+
 
     print("httpResponse");
     print(httpResponse.body);
@@ -55,10 +52,7 @@ getRequest(endpoint, parameters) async {
 }
 
 postRequest(endpoint, body) async {
-  print("postRequest called");
-  print(endpoint);
-  print(Uri.https(env.apiEndPoint, "$endpoint").toString());
-  print(body);
+
   try {
     final http = InterceptedHttp.build(interceptors: [
       AppHttpInterceptor(),

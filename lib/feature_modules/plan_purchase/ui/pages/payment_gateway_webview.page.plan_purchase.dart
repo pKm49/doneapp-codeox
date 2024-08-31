@@ -77,9 +77,7 @@ class _PaymentGatewayWebView_PlanPurchaseState extends State<PaymentGatewayWebVi
                   controller = controller;
                 },
                 onUpdateVisitedHistory: (InAppWebViewController controller, Uri? url, bool? flag) {
-                  print("onUpdateVisitedHistory");
-                  print(url.toString());
-                  print(paymentCheckUrl);
+
                   if(url.toString().contains("https://erp.donekw.com/subscription/payment/status") ){
                     isConfirmationReached = true;
                     setState(() {
@@ -184,8 +182,7 @@ class _PaymentGatewayWebView_PlanPurchaseState extends State<PaymentGatewayWebVi
 
 
   Future<void> setBack(bool status) async {
-    debugPrint("setBack called");
-    debugPrint(status.toString());
+
     subscriptionsController.changePaymentGatewayLoading(false);
     setState(() {
     });

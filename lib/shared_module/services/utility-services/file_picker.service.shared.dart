@@ -88,7 +88,6 @@ Future<List<File>> getVideoFromCamera() async {
 
 getMimeType(String path) {
   String? mimeType = lookupMimeType(path);
-  print("mimeType is");
 
   if (mimeType != null) {
     if (mimeType.contains('video')) {

@@ -11,9 +11,9 @@ import 'package:doneapp/shared_module/services/utility-services/widget_generator
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:doneapp/shared_module/ui/components/custom_back_button.component.shared.dart';
 import 'package:doneapp/shared_module/ui/components/dropdown_selector.component.shared.dart';
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
- import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class AuditAddressPage_Address extends StatefulWidget {
   const AuditAddressPage_Address({super.key});
@@ -37,8 +37,7 @@ class _AuditAddressPage_AddressState extends State<AuditAddressPage_Address> {
     addressAuthorMode =
         getArguments[0] ?? VALIDADDRESSAUTHOR_MODES.complete_registration;
     mobile = getArguments[1];
-    print("mobile at address is");
-    print(mobile);
+
     addressController.setFromRoute(addressAuthorMode);
     addressController.getAreas();
   }

@@ -65,8 +65,7 @@ class _MealSelectionPage_MySubscriptionState
     return PopScope(
       canPop: false,
       onPopInvoked : (didPop){
-        print("onPopInvoked");
-        print(didPop);
+
         if (didPop) {
           return;
         }else{
@@ -961,7 +960,7 @@ class _MealSelectionPage_MySubscriptionState
     final selectedDate = mySubscriptionController.selectedDate.value;
     final subscriptionDates = mySubscriptionController.getDayStatus(selectedDate);
     final isDateBeforeTwoDays = selectedDate.isBefore(DateTime.now().add(const Duration(days: 2)));
-    print("ifSaveOperationAllowed 1");
+
     if (mySubscriptionController.isDayMealSaving.value ||
         mySubscriptionController.isMealsFetching.value ||
         mySubscriptionController.isFreezing.value ||
@@ -972,7 +971,7 @@ class _MealSelectionPage_MySubscriptionState
         isDateBeforeTwoDays) {
       return false;
     }
-    print("ifSaveOperationAllowed 2");
+
     return true;
   }
 

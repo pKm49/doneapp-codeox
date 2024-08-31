@@ -56,8 +56,6 @@ class SharedController extends GetxController {
 
     bool isUpdateAvailable = await appUpdateChecker.checkStatus();
 
-    print("isUpdateAvailable");
-    print(isUpdateAvailable);
     if (!isUpdateAvailable) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -78,19 +76,9 @@ class SharedController extends GetxController {
         userData.value = await sharedHttpService.getProfileData(mobile.value);
         mySubscriptions.value =
             await sharedHttpService.getMySubscriptions(mobile.value);
-        print("user data fetched");
-        print("mySubscriptions data fetched");
+
         isUserDataFetching.value = false;
-        print(userData.value.id);
-        print(userData.value.subscriptionRemainingDays);
-        print(userData.value.subscriptionRemainingDays.toLowerCase());
-        print(userData.value.subscriptionRemainingDays.toLowerCase().trim());
-        print( userData
-            .value.subscriptionRemainingDays
-            .toLowerCase()
-            .replaceAll(' ', '')
-            .contains(
-            "noactivesubscription").toString());
+
         // Decide route based on user data id and subscription status.
         if (userData.value.id != -1) {
           saveDeviceToken();
@@ -101,7 +89,7 @@ class SharedController extends GetxController {
           Get.toNamed(AppRouteNames.welcomeScreenRoute);
         }
       } else {
-        debugPrint("no mobile set but language is set");
+
         Get.toNamed(AppRouteNames.welcomeScreenRoute);
       }
     }
@@ -122,8 +110,7 @@ class SharedController extends GetxController {
       var sharedHttpService = SharedHttpService();
       isUserDataFetching.value = true;
       mobile.value = tMobile;
-      print("ref fetchUserData");
-      print(tMobile);
+
       userData.value = await sharedHttpService.getProfileData(tMobile);
       mySubscriptions.value =
           await sharedHttpService.getMySubscriptions(mobile.value);
@@ -131,7 +118,7 @@ class SharedController extends GetxController {
 
 
     }catch(e,st){
-      print("ref fetchUserData error");
+
       print(e);
       print(st);
       isUserDataFetching.value = false ;
@@ -156,15 +143,12 @@ class SharedController extends GetxController {
       var sharedHttpService = SharedHttpService();
       isUserDataFetching.value = true;
       mobile.value = tMobile;
-      print("fetchUserData");
-      print(tMobile);
+
       userData.value = await sharedHttpService.getProfileData(tMobile);
       mySubscriptions.value =
       await sharedHttpService.getMySubscriptions(mobile.value);
       isUserDataFetching.value = false;
-      print("userData");
-      print(userData.value.id);
-      print(userData.value.profilePictureUrl);
+
       if (userData.value.id != -1) {
         saveDeviceToken();
         if (targetRoute != "") {
@@ -181,7 +165,7 @@ class SharedController extends GetxController {
         }
       }
     }catch(e,st){
-      print("fetchUserData error");
+
       print(e);
       print(st);
       Future.delayed(const Duration(milliseconds: 10));
@@ -357,8 +341,7 @@ class SharedController extends GetxController {
         }else{
           showSnackbar(Get.context!, "something_wrong".tr, "error");
         }
-        print("activatePlan");
-        print(isSuccess);
+
       }
     }
 

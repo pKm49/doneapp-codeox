@@ -166,15 +166,10 @@ class MySubscriptionController extends GetxController {
   }
   int  getDaySubId(DateTime firstWeekDay) {
 
-    print("getDaySubId");
-    print(firstWeekDay);
-    print(subscriptionDates.where((p0) => isSameDay(p0.date,firstWeekDay)).toList());
+
     if(subscriptionDates.where((p0) => isSameDay(p0.date,firstWeekDay)).toList().isEmpty){
       return -1;
     }
-    print(subscriptionDates.where((p0) => isSameDay(p0.date,firstWeekDay)).toList()[0].subscriptionId.toString());
-    print(subscriptionDates.where((p0) => isSameDay(p0.date,firstWeekDay)).toList()[0].date.toString());
-    print(subscriptionDates.where((p0) => isSameDay(p0.date,firstWeekDay)).toList()[0].status.toString());
     return subscriptionDates.where((p0) => isSameDay(p0.date,firstWeekDay)).toList()[0].subscriptionId;
   }
   String  getDayStatus(DateTime firstWeekDay) {
@@ -190,15 +185,12 @@ class MySubscriptionController extends GetxController {
     List<DateTime> weekDays = [];
     DateTime weekStartDate = getDate(currentMonth.value.subtract(Duration(days: currentMonth.value.weekday))) ;
     DateTime weekEndDate = getDate(currentMonth.value.add(Duration(days: DateTime.daysPerWeek - (currentMonth.value.weekday+1))));
-    print("weekStartDate month: ${weekStartDate.month}");
-    print("weekEndDate month: ${weekEndDate.month}");
-    print("currentMonth.value month : ${currentMonth.value.month}");
+
     if(weekStartDate.month < currentMonth.value.month && weekEndDate.month < currentMonth.value.month){
       weekStartDate = currentMonth.value;
       weekEndDate = currentMonth.value.add(Duration(days: 6));
     }
-    print("weekStartDate : $weekStartDate");
-    print("weekEndDate : $weekEndDate");
+
     firstWeekDays.clear();
     secondWeekDays.clear();
     thirdWeekDays.clear();
@@ -341,8 +333,7 @@ class MySubscriptionController extends GetxController {
 
 
   Future<void> setMealsByDate(bool isNavigateBack,int subscriptionId,bool isFromBackbutton ) async {
-    print("setMealsByDate");
-    print(isSetMealsEnabled(isNavigateBack,isFromBackbutton));
+
     if(isSetMealsEnabled(isNavigateBack,isFromBackbutton)){
       if(getDayStatus(selectedDate.value) ==
           VALIDSUBSCRIPTIONDAY_STATUS.freezed &&
@@ -350,8 +341,7 @@ class MySubscriptionController extends GetxController {
               ==selectedMealConfig.value.meals.length && !isFromBackbutton){
         unfreezeAndSaveMeals();
       }else{
-        print("else reached");
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
+           final SharedPreferences prefs = await SharedPreferences.getInstance();
           final String? tMobile = prefs.getString('mobile');
           if (tMobile != null && tMobile != '') {
 
@@ -400,10 +390,7 @@ class MySubscriptionController extends GetxController {
 
 
   void initializeMealSelection(String date) {
-    print("initializeMealSelection data recieved");
-    print(subscriptoinMealConfig.value.recommendedCalories);
-    print(subscriptoinMealConfig.value.meals.length);
-    print(subscriptoinMealConfig.value.meals[0].items.length);
+
     try{
       List<SubscriptoinDailyMeal> meals = [];
       double recommendedCalories = 0.0;
@@ -420,9 +407,7 @@ class MySubscriptionController extends GetxController {
 
           }
         }
-        print("initializeMealSelection data recieved");
-        print(mealItems.length);
-        print(element.itemCount);
+
         meals.add(SubscriptoinDailyMeal(
             name: element.name,
             id: element.id,
@@ -439,7 +424,6 @@ class MySubscriptionController extends GetxController {
     }catch (e,st){
       print(e);
       print(st);
-      print("reached error");
     }
 
   }

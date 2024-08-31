@@ -267,8 +267,7 @@ class _MealSelectionItemCardSelectedComponent_MySubscriptionState extends State<
 
   void _startOperation() {
     _timer = Timer(const Duration(seconds: 1), () {
-      print('LongPress Event');
-      isLongPressed = true;
+       isLongPressed = true;
       isFlipped = !isFlipped;
       setState(() {
 

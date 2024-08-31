@@ -66,8 +66,7 @@ class RegisterController extends GetxController {
 
   void updateMobile(String newMobile) {
     mobile.value = newMobile;
-    print("updateMobile");
-    print(mobile.value);
+
   }
 
   void changeGender(String s) {
@@ -85,15 +84,11 @@ class RegisterController extends GetxController {
 
   void updateAddressData(Address tAddress){
     address.value = tAddress;
-    print("updateAddressData");
-    print(address.value.areaId);
-    print(address.value.blockId);
+
   }
 
   handleRegistration() async {
-    print("handleRegistration");
-    print(heightTextEditingController.value.text.toString().trim());
-    print(weightTextEditingController.value.text.toString().trim());
+
     isRegisterSubmitting.value = true;
     var authHttpService = new AuthHttpService();
     bool isSuccess = await authHttpService.register(RegisterCredential(

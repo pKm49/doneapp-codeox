@@ -40,8 +40,8 @@ class PushNotificationController {
 
     FirebaseMessaging.onMessageOpenedApp.listen(
       (RemoteMessage message) {
-        debugPrint("onMessageOpenedApp triggered");
-        debugPrint(message.toString());
+
+
         PushNotificationService()
             .onActionReceivedImplementationMethod(message.data);
       },
