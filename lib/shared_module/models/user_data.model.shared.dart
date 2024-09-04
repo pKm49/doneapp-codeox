@@ -10,6 +10,7 @@ class UserData {
   final String firstNameArabic;
   final String lastNameArabic;
   final String gender;
+  final String tag;
   final double height;
   final double weight;
   final String birthday;
@@ -27,6 +28,7 @@ class UserData {
       {required this.id,
         required this.firstName,
         required this.shift,
+        required this.tag,
         required this.lastName,
         required this.firstNameArabic,
         required this.lastNameArabic,
@@ -82,6 +84,8 @@ UserData mapUserData(dynamic payload) {
     payload["subscription_end_in"].toString():  "No active subscription.",
     shift: payload["shift"] != null?
     payload["shift"].toString():  "",
+    tag: payload["tags"] != null?
+    payload["tags"].toString():  "",
     subscriptionEndDate: payload["subscription_end_date"] != null?
     payload["subscription_end_date"].toString():  "No active subscription.",
     subscriptionName: payload["subscription_name"] != null?

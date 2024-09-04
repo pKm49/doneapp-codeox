@@ -5,3 +5,4 @@ const String SubscriptionsHttpRequestEndpoint_CreateOrder =  "/subscription";
 const String SubscriptionsHttpRequestEndpoint_CheckOrderStatus =  "/subscription_payment_status";
 const String SubscriptionsHttpRequestEndpoint_CheckDateAvailability =  "/subscription_start_date_validity";
 const String SubscriptionsHttpRequestEndpoint_ActivateSubscription =  "/activate_subscription";
+const String SubscriptionsHttpRequestEndpoint_GetSubscriptionDates = "/get/calendar";

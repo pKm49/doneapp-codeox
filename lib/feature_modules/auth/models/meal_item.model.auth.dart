@@ -5,6 +5,7 @@ class MealItem {
 
   final int id;
   final String imageUrl;
+  final String tags;
   final String name;
   final String description;
   final String arabicName;
@@ -21,6 +22,7 @@ class MealItem {
   MealItem({
     required this.id,
     required this.imageUrl,
+    required this.tags,
     required this.name,
     required this.arabicName,
     required this.description,
@@ -52,6 +54,7 @@ MealItem mapMealItem(dynamic payload){
 
   return MealItem(
     id :payload["id"]??-1,
+    tags :payload["tags"]!= null?payload["tags"].toString():"",
     imageUrl :payload["image"]!= null?payload["image"].toString():ASSETS_SAMPLEFOOD,
     name :payload["name"]!= null && payload["name"]!= false?payload["name"] :"",
     arabicName :payload["arabic_name"]!= null && payload["arabic_name"]!= false?payload["arabic_name"] :"",

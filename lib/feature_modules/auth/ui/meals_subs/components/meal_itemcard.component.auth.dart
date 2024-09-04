@@ -79,9 +79,7 @@ class _MealItemCardComponent_AuthState extends State<MealItemCardComponent_Auth>
                     width: screenwidth * .4,
                     height: screenwidth * .35,
                     clipBehavior:
-                    Clip.hardEdge ),
-                addVerticalSpace(
-                    APPSTYLE_SpaceExtraSmall),
+                    Clip.hardEdge ), 
                 Text('${Localizations.localeOf(
                       context)
                       .languageCode
@@ -100,8 +98,19 @@ class _MealItemCardComponent_AuthState extends State<MealItemCardComponent_Auth>
                       color:
                       APPSTYLE_Grey80),
                 ),
-                addVerticalSpace(
-                    APPSTYLE_SpaceExtraSmall),
+                Visibility(
+                  visible: widget.subscriptoinDailyMealItem.tags !="",
+                  child: Text( widget.subscriptoinDailyMealItem.tags,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    style: getLabelSmallStyle(
+                        context)
+                        .copyWith(
+                        fontWeight: APPSTYLE_FontWeightBold,
+                        color:
+                        APPSTYLE_PrimaryColor),
+                  ),
+                ),
                 Row(
                   children: [
                     Expanded(

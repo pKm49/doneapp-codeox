@@ -1,5 +1,5 @@
 import 'package:doneapp/feature_modules/my_subscription/constants/http_request_endpoints.constants.my_subscription.dart';
-import 'package:doneapp/feature_modules/my_subscription/models/subscription_date.model.my_subscription.dart';
+import 'package:doneapp/shared_module/models/subscription_date.model.my_subscription.dart';
 import 'package:doneapp/feature_modules/my_subscription/models/subscription_mealconfig.model.my_subscription.dart';
 import 'package:doneapp/shared_module/constants/default_values.constants.shared.dart';
 import 'package:doneapp/shared_module/models/http_response.model.shared.dart';

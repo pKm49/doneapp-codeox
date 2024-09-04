@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
@@ -41,7 +42,7 @@ class _HomePage_CoreState extends State<HomePage_Core> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          handleRequestSupportClick(context, true);
+          openWhatsapp();
         },
         child: Icon(Ionicons.logo_whatsapp, color: APPSTYLE_BackgroundWhite),
         backgroundColor: APPSTYLE_WhatsappGreen,
@@ -119,7 +120,7 @@ class _HomePage_CoreState extends State<HomePage_Core> {
                           // ),
                           FittedBox(
                             fit: BoxFit.scaleDown,
-                            child: Text("#${sharedController.userData.value.customerCode.toString()}",
+                            child: Text("#${sharedController.userData.value.customerCode.toString()} - ${sharedController.userData.value.tag.toString()}",
                               textAlign: TextAlign.start,
                               style: getLabelLargeStyle(context).copyWith(
                                 color: APPSTYLE_BackgroundWhite,
@@ -146,7 +147,7 @@ class _HomePage_CoreState extends State<HomePage_Core> {
 
                       InkWell(
                         onTap: () {
-                          handleRequestSupportClick(context, false);
+                          openDialer();
                         },
                         child: Icon(Ionicons.call_outline,
                             color: APPSTYLE_BackgroundWhite,
@@ -768,26 +769,42 @@ class _HomePage_CoreState extends State<HomePage_Core> {
     );
   }
 
-  Future<void> handleRequestSupportClick(
-      BuildContext buildContext, bool isWhatsapp) async {
-    final Uri callUrl =
-        Uri(scheme: 'tel', path: sharedController.supportNumber.value);
-    final whatsappUrl =
-        Uri.parse("https://wa.me/${sharedController.supportNumber.value}");
-    var canLaunch = false;
-    if (isWhatsapp) {
-      canLaunch = await UrlLauncher.canLaunchUrl(whatsappUrl);
-    } else {
-      canLaunch = await UrlLauncher.canLaunchUrl(callUrl);
-    }
-    if (canLaunch) {
-      if (isWhatsapp) {
-        UrlLauncher.launchUrl(whatsappUrl);
-      } else {
-        UrlLauncher.launchUrl(callUrl);
-      }
-    } else {
-      showSnackbar(buildContext, "not_able_to_connect".tr, "error");
+  openWhatsapp() async {
+    String contact = sharedController.supportNumber.value;
+
+    final Uri whatsappUrl = Uri(
+      scheme: 'whatsapp',
+      path: contact,
+    );
+
+    String webUrl = 'https://api.whatsapp.com/send/?phone=$contact&text=hi';
+
+    try {
+      await UrlLauncher.launchUrl(whatsappUrl);
+    } catch (e) {
+      print('object');
+      await UrlLauncher.launchUrl(
+          Uri.parse(webUrl), mode: UrlLauncher.LaunchMode.externalApplication);
     }
   }
+
+  openDialer() async {
+      String contact = sharedController.supportNumber.value;
+
+      final Uri dialerUrl = Uri(
+        scheme: 'tel',
+        path: contact,
+      );
+      String webUrl = 'tel:$contact';
+
+
+      try {
+        await UrlLauncher.launchUrl(dialerUrl);
+      } catch (e) {
+        print('object');
+        await UrlLauncher.launchUrl(Uri.parse(webUrl),
+            mode: UrlLauncher.LaunchMode.externalApplication);
+      }
+    }
+
 }

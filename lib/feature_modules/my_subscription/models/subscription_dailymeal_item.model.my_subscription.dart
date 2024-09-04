@@ -3,6 +3,7 @@ import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart
 
 class SubscriptoinDailyMealItem {
   final int id;
+  final String tags;
   final String name;
   final String arabicName;
   final String description;
@@ -35,11 +36,12 @@ class SubscriptoinDailyMealItem {
         required this.ratingCount,
         required this.isDislike,
         required this.selectedCount,
+        required this.tags
       });
 }
 
 SubscriptoinDailyMealItem mapSubscriptoinDailyMealItem(dynamic payload) {
-
+  print(payload);
   return SubscriptoinDailyMealItem(
     id: payload["id"] ?? -1,
     arabicName: payload["arabic_name"]!=null && payload["arabic_name"] != false?payload["arabic_name"] : "",
@@ -57,5 +59,6 @@ SubscriptoinDailyMealItem mapSubscriptoinDailyMealItem(dynamic payload) {
     isSelected: payload["is_selected"] ?? false,
     isDislike: payload["is_dislike"] ?? false,
     image :payload["image"]!= null && payload["image"]!= ""?payload["image"].toString():ASSETS_SAMPLEFOOD,
+    tags :payload["tags"]!= null && payload["tags"]!= ""?payload["tags"].toString():"",
   );
 }

@@ -16,7 +16,7 @@
         android:required="false"
         tools:targetApi="eclair" />
     <application
-        android:label="DietDn"
+        android:label="Dietdone"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -66,4 +66,18 @@
             android:name="firebase_messaging_auto_init_enabled"
             android:value="false" />
     </application>
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="tel" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="whatsapp" />
+        </intent>
+    </queries>
+
 </manifest>

@@ -27,7 +27,7 @@ class SharedController extends GetxController {
   var userData = mapUserData({}).obs;
   var notifications = <AppNotification>[].obs;
   var mySubscriptions = <MySubscription>[].obs;
-  var supportNumber = "".obs;
+  var supportNumber = "+96596077660".obs;
 
   //  Mobile Verification
   var isOtpVerifying = false.obs;

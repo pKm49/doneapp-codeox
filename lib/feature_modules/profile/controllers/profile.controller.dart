@@ -137,7 +137,8 @@ class ProfileController extends GetxController {
             customerCode: userData.value.customerCode,
             profilePictureUrl:
                 isFileSelected.value ? profilePictureUrl.value : "",
-              shift:""
+              shift:"",
+            tag:"",
           ),
           mobile);
       isProfileUpdating.value = false;

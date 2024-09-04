@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:doneapp/feature_modules/plan_purchase/models/discount_data.model.plan_purchase.dart';
 import 'package:doneapp/feature_modules/plan_purchase/models/payment_data.model.plan_purchase.dart';
 import 'package:doneapp/feature_modules/plan_purchase/models/plan.model.plan_purchase.dart';
@@ -8,6 +10,7 @@ import 'package:doneapp/shared_module/constants/app_route_names.constants.shared
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/default_values.constants.shared.dart';
 import 'package:doneapp/shared_module/controllers/controller.shared.dart';
+import 'package:doneapp/shared_module/models/subscription_date.model.my_subscription.dart';
 import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,6 +43,7 @@ class PlanPurchaseController extends GetxController {
   var isPaymentGatewayLoading = false.obs;
   var paymentGatewayIsLoading = false.obs;
 
+  var subscriptionDates = <SubscriptoinDate>[].obs;
 
   // calendar
   var firstWeekDays = <DateTime>[].obs;
@@ -56,14 +60,33 @@ class PlanPurchaseController extends GetxController {
   void onInit() {
     super.onInit();
     minimumPossibleDate.value = DateTime.now().add(Duration(days: 2));
-
     setCurrentMonthWeekDays();
-     couponCodeController.value.addListener(() {
+
+    couponCodeController.value.addListener(() {
       resetCouponCode();
     });
   }
+  getSubscriptionDates() async {
+
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final String? tMobile = prefs.getString('mobile');
+      if (tMobile != null && tMobile != '') {
+
+        var planPurchaseHttpService = new PlanPurchaseHttpService();
+        subscriptionDates.value = await planPurchaseHttpService.getSubscriptionDates(tMobile);
+        if(subscriptionDates.isNotEmpty){
+          DateTime dateTime = subscriptionDates.last.date;
+            currentMonth.value = DateTime (dateTime.year,dateTime.month,1);
+        }
+        setCurrentMonthWeekDays();
+
+
+      }
+
+  }
 
   Future<void> getSubscriptionCategories() async {
+    getSubscriptionDates();
     isCategoriesFetching.value = true;
     subscriptionCategories.value = [];
     isPaymentGatewayLoading.value = false;
@@ -283,9 +306,17 @@ class PlanPurchaseController extends GetxController {
 
 
   void previousMonth() {
+    var thisMonth = DateTime (DateTime.now().year,DateTime.now().month,1);
+
     var newDate = DateTime(currentMonth.value.year, currentMonth.value.month - 1, currentMonth.value.day);
-    currentMonth.value = newDate;
-    setCurrentMonthWeekDays();
+    if(newDate.isAfter(thisMonth) || (
+        thisMonth.month==newDate.month &&
+        thisMonth.year==newDate.year
+    ) ){
+      currentMonth.value = newDate;
+      setCurrentMonthWeekDays();
+    }
+
 
   }
 

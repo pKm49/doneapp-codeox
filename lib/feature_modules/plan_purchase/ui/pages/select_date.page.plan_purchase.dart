@@ -247,15 +247,15 @@ class _SelectInitialDatePage_PlanPurchaseState extends State<SelectInitialDatePa
                                             onTap: () {
 
                                               if(planPurchaseController.firstWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                  && !isOffDay(planPurchaseController.firstWeekDays[i].weekday)){
+                                                  && !isOffDay(planPurchaseController.firstWeekDays[i])){
                                                 planPurchaseController.setSelectedDate(planPurchaseController.firstWeekDays[i]);
                                               }
                                             },
                                             child: CalendarDateComponent_PlanPurchase(
                                                 isSelected:isSameDay(planPurchaseController.selectedDate.value, planPurchaseController.firstWeekDays[i]),
-                                                isOffDay: isOffDay(planPurchaseController.firstWeekDays[i].weekday) ,
+                                                isOffDay: isOffDay(planPurchaseController.firstWeekDays[i]) ,
                                                 isSubscriptionDay:planPurchaseController.firstWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                && !isOffDay(planPurchaseController.firstWeekDays[i].weekday),
+                                                && !isOffDay(planPurchaseController.firstWeekDays[i]),
                                                 borderColor: Colors.transparent,
                                                 isMonthDay:planPurchaseController.firstWeekDays[i].month==
                                                     planPurchaseController.currentMonth.value.month,
@@ -282,15 +282,15 @@ class _SelectInitialDatePage_PlanPurchaseState extends State<SelectInitialDatePa
                                             onTap: () {
 
                                               if(planPurchaseController.secondWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                  && !isOffDay(planPurchaseController.secondWeekDays[i].weekday)){
+                                                  && !isOffDay(planPurchaseController.secondWeekDays[i])){
                                                 planPurchaseController.setSelectedDate(planPurchaseController.secondWeekDays[i]);
                                               }
                                             },
                                             child: CalendarDateComponent_PlanPurchase(
                                                 isSelected:isSameDay(planPurchaseController.selectedDate.value, planPurchaseController.secondWeekDays[i]),
-                                                isOffDay:isOffDay(planPurchaseController.secondWeekDays[i].weekday),
+                                                isOffDay:isOffDay(planPurchaseController.secondWeekDays[i]),
                                                 isSubscriptionDay:planPurchaseController.secondWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                    && !isOffDay(planPurchaseController.secondWeekDays[i].weekday),
+                                                    && !isOffDay(planPurchaseController.secondWeekDays[i]),
                                                  borderColor: Colors.transparent,
                                                 isMonthDay:planPurchaseController.secondWeekDays[i].month==
                                                     planPurchaseController.currentMonth.value.month,
@@ -316,15 +316,15 @@ class _SelectInitialDatePage_PlanPurchaseState extends State<SelectInitialDatePa
                                           child: InkWell(
                                             onTap: () {
                                                if(planPurchaseController.thirdWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                   && !isOffDay(planPurchaseController.thirdWeekDays[i].weekday)){
+                                                   && !isOffDay(planPurchaseController.thirdWeekDays[i])){
                                                 planPurchaseController.setSelectedDate(planPurchaseController.thirdWeekDays[i]);
                                               }
                                             },
                                             child: CalendarDateComponent_PlanPurchase(
                                                 isSelected:isSameDay(planPurchaseController.selectedDate.value, planPurchaseController.thirdWeekDays[i]),
-                                                isOffDay:isOffDay(planPurchaseController.thirdWeekDays[i].weekday),
+                                                isOffDay:isOffDay(planPurchaseController.thirdWeekDays[i]),
                                                 isSubscriptionDay:planPurchaseController.thirdWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                    && !isOffDay(planPurchaseController.thirdWeekDays[i].weekday),
+                                                    && !isOffDay(planPurchaseController.thirdWeekDays[i]),
                                                  borderColor: Colors.transparent,
                                                 isMonthDay:planPurchaseController.thirdWeekDays[i].month==
                                                     planPurchaseController.currentMonth.value.month,
@@ -350,15 +350,15 @@ class _SelectInitialDatePage_PlanPurchaseState extends State<SelectInitialDatePa
                                           child: InkWell(
                                             onTap: () {
                                                if(planPurchaseController.fourthWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                   && !isOffDay(planPurchaseController.fourthWeekDays[i].weekday)){
+                                                   && !isOffDay(planPurchaseController.fourthWeekDays[i])){
                                                 planPurchaseController.setSelectedDate(planPurchaseController.fourthWeekDays[i]);
                                               }
                                             },
                                             child: CalendarDateComponent_PlanPurchase(
                                                 isSelected:isSameDay(planPurchaseController.selectedDate.value, planPurchaseController.fourthWeekDays[i]),
-                                                isOffDay:isOffDay(planPurchaseController.fourthWeekDays[i].weekday),
+                                                isOffDay:isOffDay(planPurchaseController.fourthWeekDays[i]),
                                                 isSubscriptionDay:planPurchaseController.fourthWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                    && !isOffDay(planPurchaseController.fourthWeekDays[i].weekday),
+                                                    && !isOffDay(planPurchaseController.fourthWeekDays[i]),
                                                  borderColor: Colors.transparent,
                                                 isMonthDay:planPurchaseController.fourthWeekDays[i].month==
                                                     planPurchaseController.currentMonth.value.month,
@@ -384,15 +384,15 @@ class _SelectInitialDatePage_PlanPurchaseState extends State<SelectInitialDatePa
                                           child: InkWell(
                                             onTap: () {
                                                if(planPurchaseController.fifthWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                   && !isOffDay(planPurchaseController.fifthWeekDays[i].weekday)){
+                                                   && !isOffDay(planPurchaseController.fifthWeekDays[i])){
                                                 planPurchaseController.setSelectedDate(planPurchaseController.fifthWeekDays[i]);
                                               }
                                             },
                                             child:CalendarDateComponent_PlanPurchase (
                                                 isSelected:isSameDay(planPurchaseController.selectedDate.value, planPurchaseController.fifthWeekDays[i]),
-                                                isOffDay:isOffDay(planPurchaseController.fifthWeekDays[i].weekday),
+                                                isOffDay:isOffDay(planPurchaseController.fifthWeekDays[i]),
                                                 isSubscriptionDay:planPurchaseController.fifthWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                    && !isOffDay(planPurchaseController.fifthWeekDays[i].weekday),
+                                                    && !isOffDay(planPurchaseController.fifthWeekDays[i]),
                                                  borderColor: Colors.transparent,
                                                 isMonthDay:planPurchaseController.fifthWeekDays[i].month==
                                                     planPurchaseController.currentMonth.value.month,
@@ -418,15 +418,15 @@ class _SelectInitialDatePage_PlanPurchaseState extends State<SelectInitialDatePa
                                           child: InkWell(
                                             onTap: () {
                                               if(planPurchaseController.sixthWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                  &&  !isOffDay(planPurchaseController.sixthWeekDays[i].weekday)){
+                                                  &&  !isOffDay(planPurchaseController.sixthWeekDays[i])){
                                                 planPurchaseController.setSelectedDate(planPurchaseController.sixthWeekDays[i]);
                                               }
                                              },
                                             child:CalendarDateComponent_PlanPurchase (
                                                 isSelected:isSameDay(planPurchaseController.selectedDate.value, planPurchaseController.sixthWeekDays[i]),
-                                                isOffDay:isOffDay(planPurchaseController.sixthWeekDays[i].weekday),
+                                                isOffDay:isOffDay(planPurchaseController.sixthWeekDays[i]) ,
                                                 isSubscriptionDay:planPurchaseController.sixthWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                    && !isOffDay(planPurchaseController.sixthWeekDays[i].weekday),
+                                                    && !isOffDay(planPurchaseController.sixthWeekDays[i]),
                                                  borderColor: Colors.transparent,
                                                 isMonthDay:planPurchaseController.sixthWeekDays[i].month==
                                                     planPurchaseController.currentMonth.value.month,
@@ -547,12 +547,17 @@ class _SelectInitialDatePage_PlanPurchaseState extends State<SelectInitialDatePa
     return APPSTYLE_PrimaryColorBg;
   }
 
-  isOffDay(int weekday) {
+  isOffDay(DateTime dateTime) {
    List<int> days = planPurchaseController.currentSubscription.value.dayAvailability.keys.toList();
-   if(!days.contains(weekday)){
+   if(!days.contains(dateTime.weekday)){
      return false;
    }
-   return  !planPurchaseController.currentSubscription.value.dayAvailability[weekday]!;
+
+   if(planPurchaseController.subscriptionDates.where((p0) => isSameDay(p0.date,dateTime)).toList().isNotEmpty){
+     return true;
+   }
+
+   return  !planPurchaseController.currentSubscription.value.dayAvailability[dateTime.weekday]!;
   }
 
 }

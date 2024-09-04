@@ -1,6 +1,6 @@
 import 'package:doneapp/feature_modules/my_subscription/models/subscription_dailymeal.model.my_subscription.dart';
 import 'package:doneapp/feature_modules/my_subscription/models/subscription_dailymeal_item.model.my_subscription.dart';
-import 'package:doneapp/feature_modules/my_subscription/models/subscription_date.model.my_subscription.dart';
+import 'package:doneapp/shared_module/models/subscription_date.model.my_subscription.dart';
 import 'package:doneapp/feature_modules/my_subscription/models/subscription_mealconfig.model.my_subscription.dart';
 import 'package:doneapp/feature_modules/my_subscription/services/http.my_subscription.service.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';

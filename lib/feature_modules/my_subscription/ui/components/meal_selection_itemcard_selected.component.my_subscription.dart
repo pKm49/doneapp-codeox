@@ -146,8 +146,6 @@ class _MealSelectionItemCardSelectedComponent_MySubscriptionState extends State<
                     height: screenwidth * .35,
                     clipBehavior:
                     Clip.hardEdge ),
-                addVerticalSpace(
-                    APPSTYLE_SpaceExtraSmall),
                 Text('${Localizations.localeOf(
                       context)
                       .languageCode
@@ -166,8 +164,19 @@ class _MealSelectionItemCardSelectedComponent_MySubscriptionState extends State<
                       color:
                       APPSTYLE_Grey80),
                 ),
-                addVerticalSpace(
-                    APPSTYLE_SpaceExtraSmall),
+                Visibility(
+                  visible: widget.subscriptoinDailyMealItem.tags !="",
+                  child: Text( widget.subscriptoinDailyMealItem.tags,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    style: getLabelSmallStyle(
+                        context)
+                        .copyWith(
+                        fontWeight: APPSTYLE_FontWeightBold,
+                        color:
+                        APPSTYLE_PrimaryColor),
+                  ),
+                ),
                 Row(
                   children: [
                     Expanded(
