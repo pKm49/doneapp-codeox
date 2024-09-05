@@ -17,6 +17,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
  import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
+import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 
 class AboutPage_Profile extends StatefulWidget {
   const AboutPage_Profile({super.key});
@@ -304,15 +305,14 @@ class _AboutPage_ProfileState extends State<AboutPage_Profile> {
   openWhatsapp() async {
     String contact = sharedController.supportNumber.value;
 
-    final Uri whatsappUrl = Uri(
-      scheme: 'whatsapp',
-      path: contact,
+    final whatsappUrl = WhatsAppUnilink(
+      phoneNumber: contact,
+      text: "Hey",
     );
-
     String webUrl = 'https://api.whatsapp.com/send/?phone=$contact&text=hi';
 
     try {
-      await UrlLauncher.launchUrl(whatsappUrl);
+      await UrlLauncher.launchUrl(whatsappUrl.asUri());
     } catch (e) {
       print('object');
       await UrlLauncher.launchUrl(

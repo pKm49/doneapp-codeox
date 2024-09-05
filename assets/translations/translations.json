@@ -282,7 +282,8 @@
       "rate": "Rate",
       "rating_saved": "Submitted Succesfully",
       "order_reference": "Order Reference",
-      "payment_reference": "Payment Reference"
+      "payment_reference": "Payment Reference",
+      "menu": "Menu"
     }
   },
   {
@@ -371,7 +372,7 @@
       "total": "المجموع",
       "subscription_success": "الاشتراك ناجح!",
       "subscription_success_info": "لقد تم شراء خطة الاشتراك الخاصة بك بنجاح، استمتع بنظام غذائي رائع. شكرا لاختيارك لنا",
-      "home": "اذهب إلى الصفحة الرئيسية",
+      "home": "الصفحة الرئيسية",
       "password_changed": "تم تغيير كلمة المرور!",
       "password_changed_message": "لقد تم تغيير كلمة المرور الخاصة بك بنجاح. الرجاء تسجيل الدخول",
       "back_to_login": "العودة إلى تسجيل الدخول",
@@ -571,7 +572,8 @@
       "rate": "التقييم",
       "rating_saved": "تم تقديم التقديم بنجاح",
       "order_reference": "معرف الطلب",
-      "payment_reference": "معرف الدفع"
+      "payment_reference": "معرف الدفع",
+      "menu": "قائمة طعام"
     }
   }
 ]

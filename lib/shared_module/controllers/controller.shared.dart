@@ -175,21 +175,21 @@ class SharedController extends GetxController {
   }
 
   Future<void> handleLogout() async {
-    saveAuthTokenAndMobileToSharedPreference("","");
+
     userData.value = mapUserData({});
     notifications.value = [];
     Get.offAllNamed(AppRouteNames.loginRoute);
+    removeToken();
+
   }
 
-  Future<void> setDeviceToken() async {
-    isDeviceTokenUpdating.value = true;
-    await Future<void>.delayed(
-      const Duration(
-        seconds: 2,
-      ),
-    );
-    String firebaseToken = await getFirebaseMessagingToken();
+  Future<void> removeToken() async {
+    var sharedHttpService = SharedHttpService();
+    String deviceToken = await getFirebaseMessagingToken();
+   await sharedHttpService.removeDeviceToken(deviceToken);
+
   }
+
 
   Future<String> getFirebaseMessagingToken() async {
     try {

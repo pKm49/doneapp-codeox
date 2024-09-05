@@ -13,7 +13,6 @@ import 'package:ionicons/ionicons.dart';
 class WelcomePage_Auth extends StatelessWidget {
     WelcomePage_Auth({super.key});
 
-    MealsController mealsController = Get.put(MealsController());
 
   @override
   Widget build(BuildContext context) {
@@ -39,87 +38,72 @@ class WelcomePage_Auth extends StatelessWidget {
             Container(
 
               padding: APPSTYLE_LargePaddingAll,
-              child: ListView(
+              child: Column(
                 children: [
-                  addVerticalSpace(APPSTYLE_SpaceLarge),
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        addVerticalSpace(APPSTYLE_SpaceLarge*2),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(ASSETS_NAMELOGO, width: screenwidth*.25),
-                    ],
-                  ),
-                  addVerticalSpace(APPSTYLE_SpaceLarge ),
-                  Text("welcome_message_title".tr,
-                      textAlign: TextAlign.center,
-                      style: getHeadlineLargeStyle(context).copyWith(
-                          fontSize: APPSTYLE_FontSize24*1.5,
-                          color: APPSTYLE_BackgroundWhite)),
-                  addVerticalSpace(APPSTYLE_SpaceLarge*2),
-                  Text("welcome_message_description".tr,
-                      textAlign: TextAlign.center,
-                      style: getHeadlineMediumStyle(context).copyWith(color: APPSTYLE_BackgroundWhite)),
-                  addVerticalSpace(APPSTYLE_SpaceLarge*3),
-                  SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor:
-                            MaterialStateProperty.all<Color>(APPSTYLE_BackgroundWhite)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(ASSETS_NAMELOGO, width: screenwidth*.25),
+                          ],
                         ),
-                          child:   Text('login'.tr,
-                              style: getHeadlineMediumStyle(context).copyWith(
-                                  color: APPSTYLE_Black,fontWeight: APPSTYLE_FontWeightBold),
-                              textAlign: TextAlign.center),
-                          onPressed: () {
-                            Get.toNamed(AppRouteNames.loginRoute);
-                          })),
-                  addVerticalSpace(APPSTYLE_SpaceMedium),
-                  SizedBox(
+                        addVerticalSpace(APPSTYLE_SpaceLarge*3 ),
+                        Text("welcome_message_title".tr,
+                            textAlign: TextAlign.center,
+                            style: getHeadlineLargeStyle(context).copyWith(
+                                fontSize: APPSTYLE_FontSize24*1.5,
+                                color: APPSTYLE_BackgroundWhite)),
+                        addVerticalSpace(APPSTYLE_SpaceLarge),
+                        Text("welcome_message_description".tr,
+                            textAlign: TextAlign.center,
+                            style: getHeadlineMediumStyle(context).copyWith(color: APPSTYLE_BackgroundWhite)),
+                        addVerticalSpace(APPSTYLE_SpaceLarge*4),
+                        SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                  MaterialStateProperty.all<Color>(APPSTYLE_BackgroundWhite)
+                              ),
+                                child:   Text('login'.tr,
+                                    style: getHeadlineMediumStyle(context).copyWith(
+                                        color: APPSTYLE_Black,fontWeight: APPSTYLE_FontWeightBold),
+                                    textAlign: TextAlign.center),
+                                onPressed: () {
+                                  Get.toNamed(AppRouteNames.loginRoute);
+                                })),
 
-                      width: double.infinity,
-                      child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            side: const BorderSide(width: 2.0, color: APPSTYLE_BackgroundWhite),
-                          ),
-                          child:   Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(ASSETS_MEALS,width: 30),
-                              addHorizontalSpace(APPSTYLE_SpaceMedium),
-                              Text(' مشاهدة المنيو / Show our menu',
-                                  style: getHeadlineMediumStyle(context).copyWith(
-                                      color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
-                                  textAlign: TextAlign.center),
-                            ],
-                          ),
-                          onPressed: () {
-                            Get.toNamed(AppRouteNames.menuListRoute);
-                          })),
-                  // addVerticalSpace(APPSTYLE_SpaceMedium),
-                  // SizedBox(
-                  //
-                  //     width: double.infinity,
-                  //     child:OutlinedButton(
-                  //       style: OutlinedButton.styleFrom(
-                  //         side: const BorderSide(width: 2.0, color: APPSTYLE_BackgroundWhite),
-                  //       ),
-                  //       onPressed: () {
-                  //         Get.toNamed(AppRouteNames.planPurchaseSubscriptionPlansCategoryListRoute);
-                  //       },
-                  //       child: Row(
-                  //         mainAxisAlignment: MainAxisAlignment.center,
-                  //         children: [
-                  //           Image.asset(ASSETS_SUBSCRIPTIONS,width: 30,),
-                  //
-                  //           addHorizontalSpace(APPSTYLE_SpaceMedium),
-                  //           Text('view_subscriptions'.tr,
-                  //               style: getHeadlineMediumStyle(context).copyWith(
-                  //                   color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
-                  //               textAlign: TextAlign.center),
-                  //         ],
-                  //       ),
-                  //     ))
+                        // addVerticalSpace(APPSTYLE_SpaceMedium),
+                        // SizedBox(
+                        //
+                        //     width: double.infinity,
+                        //     child:OutlinedButton(
+                        //       style: OutlinedButton.styleFrom(
+                        //         side: const BorderSide(width: 2.0, color: APPSTYLE_BackgroundWhite),
+                        //       ),
+                        //       onPressed: () {
+                        //         Get.toNamed(AppRouteNames.planPurchaseSubscriptionPlansCategoryListRoute);
+                        //       },
+                        //       child: Row(
+                        //         mainAxisAlignment: MainAxisAlignment.center,
+                        //         children: [
+                        //           Image.asset(ASSETS_SUBSCRIPTIONS,width: 30,),
+                        //
+                        //           addHorizontalSpace(APPSTYLE_SpaceMedium),
+                        //           Text('view_subscriptions'.tr,
+                        //               style: getHeadlineMediumStyle(context).copyWith(
+                        //                   color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
+                        //               textAlign: TextAlign.center),
+                        //         ],
+                        //       ),
+                        //     ))
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),

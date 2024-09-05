@@ -16,6 +16,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
+import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 
 class HomePage_Core extends StatefulWidget {
   HomePage_Core({super.key});
@@ -685,6 +686,53 @@ class _HomePage_CoreState extends State<HomePage_Core> {
                         ],
                       ),
                     ),
+                    Visibility(
+                        visible: !sharedController.isUserDataFetching.value && sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList().isEmpty,
+                        child: addVerticalSpace(APPSTYLE_SpaceExtraSmall)),
+                    Visibility(
+                      visible: !sharedController.isUserDataFetching.value && sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList().isEmpty,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                              width: screenwidth * .6,
+                              child: OutlinedButton(
+                                  style: ButtonStyle(
+                                      side:  MaterialStateProperty.all<BorderSide>(BorderSide(width: 1.5, color:APPSTYLE_BackgroundWhite)) ,
+
+                                      padding: MaterialStateProperty.all<
+                                          EdgeInsetsGeometry>(
+                                          const EdgeInsets.symmetric(
+                                              horizontal: APPSTYLE_SpaceMedium,
+                                              vertical:
+                                              APPSTYLE_SpaceExtraSmall)),
+                                      shape: MaterialStateProperty.all<
+                                          OutlinedBorder>(
+                                          RoundedRectangleBorder(
+                                              borderRadius:
+                                              BorderRadius.circular(
+                                                  1000)))),
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child:  Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(ASSETS_MEALS,width: 30),
+                                        addHorizontalSpace(APPSTYLE_SpaceMedium),
+                                        Text(' مشاهدة المنيو / Show our menu',
+                                            style: getHeadlineMediumStyle(context).copyWith(
+                                                color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
+                                            textAlign: TextAlign.center),
+                                      ],
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Get.toNamed(AppRouteNames.menuListRoute);
+                                  })),
+                        ],
+                      ),
+                    ),
                   ],
                 ))
               ],
@@ -770,22 +818,28 @@ class _HomePage_CoreState extends State<HomePage_Core> {
   }
 
   openWhatsapp() async {
+
     String contact = sharedController.supportNumber.value;
 
-    final Uri whatsappUrl = Uri(
-      scheme: 'whatsapp',
-      path: contact,
+    // final Uri whatsappUrl = Uri(
+    //   scheme: 'whatsapp',
+    //   path: contact,
+    // );
+    final whatsappUrl = WhatsAppUnilink(
+      phoneNumber: contact,
+      text: "Hey",
     );
 
     String webUrl = 'https://api.whatsapp.com/send/?phone=$contact&text=hi';
 
     try {
-      await UrlLauncher.launchUrl(whatsappUrl);
+      await UrlLauncher.launchUrl(whatsappUrl.asUri());
     } catch (e) {
       print('object');
       await UrlLauncher.launchUrl(
           Uri.parse(webUrl), mode: UrlLauncher.LaunchMode.externalApplication);
     }
+
   }
 
   openDialer() async {

@@ -21,7 +21,8 @@ class SharedHttpService {
     params["client_secret"] = env.clientSecret;
     AppHttpResponse response = await getRequest(
         SharedHttpRequestEndpoint_GetAccessToken, params);
-
+    print("getAccessToken");
+    print(response.data);
     return;
   }
 
@@ -83,6 +84,20 @@ class SharedHttpService {
       print(e);
       print(st);
       return [];
+    }
+  }
+
+  Future<bool> removeDeviceToken(String deviceToken) async {
+    try {
+      Map<String, dynamic> body = {};
+      body["device_token"] = deviceToken;
+      AppHttpResponse response =
+      await postRequest(SharedHttpRequestEndpoint_RemoveDeviceToken, body);
+      return response.statusCode == 200;
+    } catch  (e,st){
+      print(e);
+      print(st);
+      return false;
     }
   }
 

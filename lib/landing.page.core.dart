@@ -5,7 +5,7 @@ import 'package:doneapp/home.page.core.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
 import 'package:doneapp/shared_module/controllers/controller.shared.dart';
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -16,9 +16,9 @@ class LandingPage_Core extends StatefulWidget {
   State<LandingPage_Core> createState() => _LandingPage_CoreState();
 }
 
-class _LandingPage_CoreState extends State<LandingPage_Core>   with TickerProviderStateMixin{
-
-   final profileController = Get.find<ProfileController>();
+class _LandingPage_CoreState extends State<LandingPage_Core>
+    with TickerProviderStateMixin {
+  final profileController = Get.find<ProfileController>();
   final sharedController = Get.find<SharedController>();
 
   List<int> tabHistory = [];
@@ -34,25 +34,6 @@ class _LandingPage_CoreState extends State<LandingPage_Core>   with TickerProvid
     MyProfilePage_Profile()
   ];
 
-
-  List<BottomNavigationBarItem> bottomNavigationBarItemsThree = [
-    const BottomNavigationBarItem(
-      icon: Icon(Ionicons.home_outline,size: APPSTYLE_FontSize24),
-      activeIcon: Icon(Ionicons.home,size: APPSTYLE_FontSize24),
-      label: "",
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(Ionicons.calendar_outline,size: APPSTYLE_FontSize24),
-      activeIcon: Icon(Ionicons.calendar,size: APPSTYLE_FontSize24),
-      label: "",
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(Ionicons.person_outline,size: APPSTYLE_FontSize24),
-      activeIcon: Icon(Ionicons.person,size: APPSTYLE_FontSize24),
-      label: "",
-    ),
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -62,7 +43,6 @@ class _LandingPage_CoreState extends State<LandingPage_Core>   with TickerProvid
     profileController.getAllergies();
     tabHistory.add(0);
 
-
     _tabController = TabController(length: _tabList.length, vsync: this);
     _tabController.animateTo(_currentIndex);
     _tabController.addListener(() {
@@ -70,10 +50,7 @@ class _LandingPage_CoreState extends State<LandingPage_Core>   with TickerProvid
         _currentIndex = _tabController.index;
       });
     });
-
   }
-
-
 
   @override
   void dispose() {
@@ -83,25 +60,24 @@ class _LandingPage_CoreState extends State<LandingPage_Core>   with TickerProvid
 
   @override
   Widget build(BuildContext context) {
-
-    return  Scaffold(
-        backgroundColor: _currentIndex==0?APPSTYLE_PrimaryColor:APPSTYLE_BackgroundWhite,
-        onDrawerChanged: (isOpened) {
-        },
+    return Scaffold(
+        backgroundColor: _currentIndex == 0
+            ? APPSTYLE_PrimaryColor
+            : APPSTYLE_BackgroundWhite,
+        onDrawerChanged: (isOpened) {},
         body: Container(
-            padding:
-            EdgeInsets.only(top: isConnectivityVisible ? 30.0 : 0.0),
+            padding: EdgeInsets.only(top: isConnectivityVisible ? 30.0 : 0.0),
             child: TabBarView(
               physics: NeverScrollableScrollPhysics(),
               controller: _tabController,
               children: _tabList,
             )),
-        bottomNavigationBar:Container(
-            decoration: APPSTYLE_TopShadowedContainerLargeDecoration.copyWith(color: _currentIndex==0?APPSTYLE_PrimaryColor:APPSTYLE_BackgroundOffWhite),
+        bottomNavigationBar: Container(
+            decoration: APPSTYLE_TopShadowedContainerLargeDecoration.copyWith(
+                color: _currentIndex == 0
+                    ? APPSTYLE_PrimaryColor
+                    : APPSTYLE_BackgroundOffWhite),
             child: BottomNavigationBar(
-                selectedFontSize: 0.0,
-                showSelectedLabels: false,
-                showUnselectedLabels: false,
                 backgroundColor: APPSTYLE_BackgroundOffWhite,
                 type: BottomNavigationBarType.fixed,
                 currentIndex: _currentIndex,
@@ -113,7 +89,7 @@ class _LandingPage_CoreState extends State<LandingPage_Core>   with TickerProvid
                     _currentIndex = index;
                   });
 
-                  if(index == 0){
+                  if (index == 0) {
                     // final subscriptionsState = BlocProvider.of<SubscriptionsBloc>(context).state;
                     //
                     // context.read<SubscriptionsBloc>().add(
@@ -124,15 +100,23 @@ class _LandingPage_CoreState extends State<LandingPage_Core>   with TickerProvid
                   }
 
                   _tabController.animateTo(_currentIndex);
-
-
                 },
-                // items:bottomNavigationBarItemsThree
-                items: bottomNavigationBarItemsThree
-            )
-        )
-    );
-
+                items: [
+                  BottomNavigationBarItem(
+                    icon: Icon(Ionicons.home_outline, size: APPSTYLE_FontSize24),
+                    activeIcon: Icon(Ionicons.home, size: APPSTYLE_FontSize24),
+                    label: "home".tr,
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Ionicons.restaurant_outline, size: APPSTYLE_FontSize24),
+                    activeIcon: Icon(Ionicons.restaurant, size: APPSTYLE_FontSize24),
+                    label: "menu".tr,
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Ionicons.person_outline, size: APPSTYLE_FontSize24),
+                    activeIcon: Icon(Ionicons.person, size: APPSTYLE_FontSize24),
+                    label: "profile".tr,
+                  ),
+                ])));
   }
-
 }

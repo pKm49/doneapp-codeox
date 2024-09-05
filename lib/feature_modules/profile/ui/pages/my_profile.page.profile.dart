@@ -149,7 +149,7 @@ class MyProfilePage_Profile extends StatelessWidget {
                             ),
                             padding: APPSTYLE_ExtraSmallPaddingAll.copyWith(left: APPSTYLE_SpaceMedium,right: APPSTYLE_SpaceMedium),
                             child: Text(
-                              sharedController.userData.value.customerCode,
+                              '#${sharedController.userData.value.customerCode} - ${sharedController.userData.value.tag.toString()}',
                               style: getLabelSmallStyle(context)
                                   .copyWith(color: APPSTYLE_BackgroundWhite),
                             ),
