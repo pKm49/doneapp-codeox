@@ -41,7 +41,8 @@ class SubscriptoinDailyMealItem {
 }
 
 SubscriptoinDailyMealItem mapSubscriptoinDailyMealItem(dynamic payload) {
-  print(payload);
+  // print("mapSubscriptoinDailyMealItem");
+  // print(payload["selected_count"]);
   return SubscriptoinDailyMealItem(
     id: payload["id"] ?? -1,
     arabicName: payload["arabic_name"]!=null && payload["arabic_name"] != false?payload["arabic_name"] : "",

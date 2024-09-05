@@ -37,8 +37,8 @@ class AppHttpInterceptor implements InterceptorContract {
     try {
 
       if (response is Response) {
-        print("httpResponseBody");
-        print(response.body);
+        // print("httpResponseBody");
+        // print(response.body);
         var httpResponseBody = json.decode(response.body.toString());
 
         if (httpResponseBody['payload'] != null) {
