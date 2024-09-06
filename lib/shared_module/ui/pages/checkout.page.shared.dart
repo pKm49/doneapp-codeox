@@ -16,6 +16,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
+import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 
 class CheckoutPage_Shared extends StatefulWidget {
   const CheckoutPage_Shared({super.key});
@@ -107,88 +108,7 @@ class _CheckoutPage_SharedState
                               children: [
                                 addVerticalSpace(APPSTYLE_SpaceLarge),
 
-                                Padding(
-                                  padding: APPSTYLE_MediumPaddingHorizontal,
-                                  child: Text( 'payment_summary'.tr,
-                                    textAlign: TextAlign.start,
-                                    style: getHeadlineMediumStyle(context)
-                                        .copyWith(fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                addVerticalSpace(APPSTYLE_SpaceMedium),
-                                Container(
-                                  width: screenwidth,
-                                  decoration: APPSTYLE_ShadowedContainerSmallDecoration,
-                                  padding: APPSTYLE_MediumPaddingAll,
-                                  margin: APPSTYLE_LargePaddingHorizontal,
-                                  alignment: Alignment.center,
-                                  child: Wrap(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text( 'sub_total'.tr,
-                                            style: getBodyMediumStyle(context).copyWith(
-                                              color: APPSTYLE_Grey80, ),
-                                          ),
-                                          Text(
-                                            "${sharedController.paymentCompletionData.value.total} KWD",
-                                            style: getBodyMediumStyle(context).copyWith(
-                                                color: APPSTYLE_Grey80,
-                                                fontWeight: FontWeight.bold),
-                                          )
-                                        ],
-                                      ),
-                                      addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text( 'discount'.tr,
-                                            style: getBodyMediumStyle(context).copyWith(
-                                              color: APPSTYLE_Grey80,
-                                            ),
-                                          ),
-                                          Text(
-                                            "-${sharedController.paymentCompletionData.value.couponDiscount} KWD",
-                                            style: getBodyMediumStyle(context).copyWith(
-                                                color: APPSTYLE_GuideGreen,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
-                                      addVerticalSpace(APPSTYLE_SpaceMedium),
-                                      Row(
-                                        children: List.generate(
-                                            600 ~/ 10,
-                                                (index) => Expanded(
-                                              child: Container(
-                                                color: index % 2 == 0
-                                                    ? Colors.transparent
-                                                    : Colors.grey,
-                                                height: 2,
-                                              ),
-                                            )),
-                                      ),
-                                      addVerticalSpace(APPSTYLE_SpaceMedium),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text( 'total'.tr,
-                                            style: getBodyMediumStyle(context).copyWith(
-                                              color: APPSTYLE_Grey80, ),
-                                          ),
-                                          Text(
-                                            "${sharedController.paymentCompletionData.value.grandTotal} KWD",
-                                            style: getBodyMediumStyle(context).copyWith(
-                                                color: APPSTYLE_Grey80,
-                                                fontWeight: FontWeight.bold),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                addVerticalSpace(APPSTYLE_SpaceLarge ),
+
                                 Padding(
                                   padding: APPSTYLE_LargePaddingHorizontal,
                                   child: Text( 'order_summary'.tr,
@@ -298,7 +218,90 @@ class _CheckoutPage_SharedState
                                     ],
                                   ),
                                 ),
+                                addVerticalSpace(APPSTYLE_SpaceLarge ),
+
+                                Padding(
+                                  padding: APPSTYLE_MediumPaddingHorizontal,
+                                  child: Text( 'payment_summary'.tr,
+                                    textAlign: TextAlign.start,
+                                    style: getHeadlineMediumStyle(context)
+                                        .copyWith(fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                                 addVerticalSpace(APPSTYLE_SpaceMedium),
+                                Container(
+                                  width: screenwidth,
+                                  decoration: APPSTYLE_ShadowedContainerSmallDecoration,
+                                  padding: APPSTYLE_MediumPaddingAll,
+                                  margin: APPSTYLE_LargePaddingHorizontal,
+                                  alignment: Alignment.center,
+                                  child: Wrap(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text( 'sub_total'.tr,
+                                            style: getBodyMediumStyle(context).copyWith(
+                                              color: APPSTYLE_Grey80, ),
+                                          ),
+                                          Text(
+                                            "${sharedController.paymentCompletionData.value.total} KWD",
+                                            style: getBodyMediumStyle(context).copyWith(
+                                                color: APPSTYLE_Grey80,
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                        ],
+                                      ),
+                                      addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text( 'discount'.tr,
+                                            style: getBodyMediumStyle(context).copyWith(
+                                              color: APPSTYLE_Grey80,
+                                            ),
+                                          ),
+                                          Text(
+                                            "-${sharedController.paymentCompletionData.value.couponDiscount} KWD",
+                                            style: getBodyMediumStyle(context).copyWith(
+                                                color: APPSTYLE_GuideGreen,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                      addVerticalSpace(APPSTYLE_SpaceMedium),
+                                      Row(
+                                        children: List.generate(
+                                            600 ~/ 10,
+                                                (index) => Expanded(
+                                              child: Container(
+                                                color: index % 2 == 0
+                                                    ? Colors.transparent
+                                                    : Colors.grey,
+                                                height: 2,
+                                              ),
+                                            )),
+                                      ),
+                                      addVerticalSpace(APPSTYLE_SpaceMedium),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text( 'total'.tr,
+                                            style: getBodyMediumStyle(context).copyWith(
+                                              color: APPSTYLE_Grey80, ),
+                                          ),
+                                          Text(
+                                            "${sharedController.paymentCompletionData.value.grandTotal} KWD",
+                                            style: getBodyMediumStyle(context).copyWith(
+                                                color: APPSTYLE_Grey80,
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                addVerticalSpace(APPSTYLE_SpaceLarge*2),
                                 Padding(
                                   padding: APPSTYLE_LargePaddingHorizontal,
                                   child: Text( 'customer_support'.tr,
@@ -314,7 +317,7 @@ class _CheckoutPage_SharedState
                                     children: [
                                       InkWell(
                                         onTap: (){
-                                          handleRequestSupportClick(context,false);
+                                          openDialer();
                                         },
                                         child: Container(
                                           decoration: APPSTYLE_BorderedContainerLargeDecoration.copyWith(
@@ -340,7 +343,7 @@ class _CheckoutPage_SharedState
                                       addHorizontalSpace(APPSTYLE_SpaceSmall),
                                       InkWell(
                                         onTap: (){
-                                          handleRequestSupportClick(context,true);
+                                          openWhatsapp();
 
                                         },
                                         child: Container(
@@ -397,28 +400,48 @@ class _CheckoutPage_SharedState
   }
 
 
-  Future<void> handleRequestSupportClick(
-      BuildContext buildContext, bool isWhatsapp) async {
-    final sharedController = Get.find<SharedController>();
 
-    final Uri callUrl =
-    Uri(scheme: 'tel', path: sharedController.supportNumber.value);
-    final whatsappUrl =
-    Uri.parse("https://wa.me/${sharedController.supportNumber.value}");
-    var canLaunch = false;
-    if (isWhatsapp) {
-      canLaunch = await UrlLauncher.canLaunchUrl(whatsappUrl);
-    } else {
-      canLaunch = await UrlLauncher.canLaunchUrl(callUrl);
+  openWhatsapp() async {
+
+    String contact = sharedController.supportNumber.value;
+
+    // final Uri whatsappUrl = Uri(
+    //   scheme: 'whatsapp',
+    //   path: contact,
+    // );
+    final whatsappUrl = WhatsAppUnilink(
+      phoneNumber: contact,
+      text: "Hey",
+    );
+
+    String webUrl = 'https://api.whatsapp.com/send/?phone=$contact&text=hi';
+
+    try {
+      await UrlLauncher.launchUrl(whatsappUrl.asUri());
+    } catch (e) {
+      print('object');
+      await UrlLauncher.launchUrl(
+          Uri.parse(webUrl), mode: UrlLauncher.LaunchMode.externalApplication);
     }
-    if (canLaunch) {
-      if (isWhatsapp) {
-        UrlLauncher.launchUrl(whatsappUrl);
-      } else {
-        UrlLauncher.launchUrl(callUrl);
-      }
-    } else {
-      showSnackbar(buildContext, "not_able_to_connect".tr, "error");
+
+  }
+
+  openDialer() async {
+    String contact = sharedController.supportNumber.value;
+
+    final Uri dialerUrl = Uri(
+      scheme: 'tel',
+      path: contact,
+    );
+    String webUrl = 'tel:$contact';
+
+
+    try {
+      await UrlLauncher.launchUrl(dialerUrl);
+    } catch (e) {
+      print('object');
+      await UrlLauncher.launchUrl(Uri.parse(webUrl),
+          mode: UrlLauncher.LaunchMode.externalApplication);
     }
   }
 }

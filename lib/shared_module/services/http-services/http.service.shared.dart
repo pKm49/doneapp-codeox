@@ -46,7 +46,6 @@ class SharedHttpService {
 
   Future<List<MySubscription>> getMySubscriptions(String mobile) async {
 
-
     try{
 
       AppHttpResponse response =
@@ -55,7 +54,10 @@ class SharedHttpService {
       List<MySubscription> tempMealCategories = [];
       if (response.statusCode == 200 && response.data != null) {
         for (var i = 0; i < response.data.length; i++) {
-          tempMealCategories.add(mapMySubscription(response.data[i]));
+          MySubscription mySubscription = mapMySubscription(response.data[i]);
+          if(mySubscription.status=='in_progress'){
+            tempMealCategories.add(mapMySubscription(response.data[i]));
+          }
         }
       }
 

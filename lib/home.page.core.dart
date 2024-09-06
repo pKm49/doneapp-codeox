@@ -65,12 +65,11 @@ class _HomePage_CoreState extends State<HomePage_Core> {
               children: [
                 Container(
                   width: screenwidth,
-                  height: (screenwidth * .13) + (APPSTYLE_SpaceMedium * 2),
+                  height: (screenwidth * .25) + (APPSTYLE_SpaceMedium * 2),
                   padding: EdgeInsets.all(APPSTYLE_SpaceMedium),
-                  margin: EdgeInsets.only(bottom: APPSTYLE_SpaceMedium),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Container(
                       //     decoration: APPSTYLE_BorderedContainerDarkMediumDecoration.copyWith(
@@ -83,7 +82,7 @@ class _HomePage_CoreState extends State<HomePage_Core> {
                       // addHorizontalSpace(APPSTYLE_SpaceSmall),
                       Expanded(
                           child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           FittedBox(
@@ -92,19 +91,14 @@ class _HomePage_CoreState extends State<HomePage_Core> {
                               (Localizations.localeOf(context)
                                           .languageCode
                                           .toString() ==
-                                      'ar')
-                                  ? 'hey_username'.tr.replaceAll(
-                                      'username',
-                                      "${sharedController
-                                              .userData.value.firstNameArabic} ${sharedController
-                                              .userData.value.lastNameArabic}")
-                                  : 'hey_username'.tr.replaceAll(
-                                      'username',
-                                      "${sharedController
-                                              .userData.value.firstName} ${sharedController
-                                              .userData.value.lastName}"),
+                                      'ar')?"${sharedController
+                                .userData.value.firstNameArabic} ${sharedController
+                                .userData.value.lastNameArabic}"
+                                 :"${sharedController
+                                  .userData.value.firstName} ${sharedController
+                                .userData.value.lastName}",
                               textAlign: TextAlign.start,
-                              style: getBodyMediumStyle(context).copyWith(
+                              style: getHeadlineLargeStyle(context).copyWith(
                                   color: APPSTYLE_BackgroundWhite,
                                   fontWeight: APPSTYLE_FontWeightBold),
                             ),
@@ -121,10 +115,21 @@ class _HomePage_CoreState extends State<HomePage_Core> {
                           // ),
                           FittedBox(
                             fit: BoxFit.scaleDown,
-                            child: Text("#${sharedController.userData.value.customerCode.toString()} - ${sharedController.userData.value.tag.toString()}",
+                            child: Text("ID : ${sharedController.userData.value.customerCode.toString()}",
                               textAlign: TextAlign.start,
-                              style: getLabelLargeStyle(context).copyWith(
+                              style: getBodyMediumStyle(context).copyWith(
                                 color: APPSTYLE_BackgroundWhite,
+                                  fontWeight: APPSTYLE_FontWeightBold
+                              ),
+                            ),
+                          ),
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text("${sharedController.userData.value.tag.toString()}",
+                              textAlign: TextAlign.start,
+                              style: getBodyMediumStyle(context).copyWith(
+                                color: APPSTYLE_BackgroundWhite,
+                                  fontWeight: APPSTYLE_FontWeightBold
                               ),
                             ),
                           ),
@@ -160,7 +165,6 @@ class _HomePage_CoreState extends State<HomePage_Core> {
                 Expanded(
                     child: ListView(
                   children: [
-                    addVerticalSpace(APPSTYLE_SpaceLarge),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -364,22 +368,7 @@ class _HomePage_CoreState extends State<HomePage_Core> {
                                                     "noactivesubscription") &&
                                             !sharedController
                                                 .isUserDataFetching.value,
-                                        child: Text(
-                                          sharedController.mySubscriptions
-                                                  .where((p0) =>
-                                                      p0.status == "paid")
-                                                  .isNotEmpty
-                                              ? "subscription_inactive_message"
-                                                  .tr
-                                              : sharedController
-                                                      .mySubscriptions
-                                                      .where((p0) =>
-                                                          p0.status ==
-                                                          "not paid")
-                                                      .isNotEmpty
-                                                  ? "subscription_payment_complete_message"
-                                                      .tr
-                                                  : "subscription_purchase_message"
+                                        child: Text(  "subscription_purchase_message"
                                                       .tr,
                                           textAlign: TextAlign.center,
                                           maxLines: 3,
@@ -573,19 +562,7 @@ class _HomePage_CoreState extends State<HomePage_Core> {
                                                 .contains(
                                                     "noactivesubscription")
                                             ? 'renew_subscription'.tr
-                                            : sharedController.mySubscriptions
-                                                    .where((p0) =>
-                                                        p0.status == "paid")
-                                                    .isNotEmpty
-                                                ? "activate_subscription".tr
-                                                : sharedController
-                                                        .mySubscriptions
-                                                        .where((p0) =>
-                                                            p0.status ==
-                                                            "not paid")
-                                                        .isNotEmpty
-                                                    ? "complete_payment".tr
-                                                    : "purchase_subscription"
+                                            : "purchase_subscription"
                                                         .tr,
                                         style: getLabelLargeStyle(context)
                                             .copyWith(
@@ -595,41 +572,8 @@ class _HomePage_CoreState extends State<HomePage_Core> {
                                         textAlign: TextAlign.center),
                                   ),
                                   onPressed: () {
-                                    if(sharedController.mySubscriptions
-                                        .where((p0) =>
-                                    p0.status == "in_progress").toList()
-                                        .isNotEmpty){
-                                      Get.toNamed(AppRouteNames
-                                          .planPurchaseSubscriptionPlansCategoryListRoute);
-                                    }else{
-                                      if(sharedController.mySubscriptions
-                                          .where((p0) =>
-                                      p0.status == "paid").toList()
-                                          .isNotEmpty){
-                                        if (!sharedController
-                                            .isPlanActivating.value) {
-                                          sharedController.activatePlan(sharedController.mySubscriptions
-                                              .where((p0) =>
-                                          p0.status == "paid").toList()[0].id);
-                                        }
-                                      }
-                                      else if(sharedController.mySubscriptions
-                                          .where((p0) =>
-                                      p0.status == "not paid").toList()
-                                          .isNotEmpty){
-                                        if (!sharedController
-                                            .isOrderDetailsFetching.value) {
-                                          sharedController.getPaymentLink(sharedController.mySubscriptions
-                                              .where((p0) =>
-                                          p0.status == "not paid").toList()[0].id);
-                                        }
-                                      }else{
-                                        Get.toNamed(AppRouteNames
-                                            .planPurchaseSubscriptionPlansCategoryListRoute);
-                                      }
-
-                                    }
-
+                                    Get.toNamed(AppRouteNames
+                                        .planPurchaseSubscriptionPlansCategoryListRoute);
                                   })),
                         ],
                       ),

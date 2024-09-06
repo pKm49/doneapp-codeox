@@ -15,6 +15,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
+import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 
 class CheckoutPage_PlanPurchase extends StatefulWidget {
   const CheckoutPage_PlanPurchase({super.key});
@@ -26,6 +27,7 @@ class CheckoutPage_PlanPurchase extends StatefulWidget {
 
 class _CheckoutPage_PlanPurchaseState
     extends State<CheckoutPage_PlanPurchase> {
+  final sharedController = Get.find<SharedController>();
 
   final planPurchaseController = Get.find<PlanPurchaseController>();
 
@@ -105,10 +107,9 @@ class _CheckoutPage_PlanPurchaseState
                             child: ListView(
                               children: [
                                 addVerticalSpace(APPSTYLE_SpaceLarge),
-
                                 Padding(
-                                  padding: APPSTYLE_MediumPaddingHorizontal,
-                                  child: Text( 'payment_summary'.tr,
+                                  padding: APPSTYLE_LargePaddingHorizontal,
+                                  child: Text( 'order_summary'.tr,
                                     textAlign: TextAlign.start,
                                     style: getHeadlineMediumStyle(context)
                                         .copyWith(fontWeight: FontWeight.bold),
@@ -116,80 +117,71 @@ class _CheckoutPage_PlanPurchaseState
                                 ),
                                 addVerticalSpace(APPSTYLE_SpaceMedium),
                                 Container(
+                                  height: 100,
                                   width: screenwidth,
                                   decoration: APPSTYLE_ShadowedContainerSmallDecoration,
                                   padding: APPSTYLE_MediumPaddingAll,
                                   margin: APPSTYLE_LargePaddingHorizontal,
                                   alignment: Alignment.center,
-                                  child: Wrap(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: [
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text( 'sub_total'.tr,
-                                            style: getBodyMediumStyle(context).copyWith(
-                                              color: APPSTYLE_Grey80, ),
+                                          Expanded(
+                                            child: Text( Localizations.localeOf(context)
+                                                .languageCode
+                                                .toString() ==
+                                                'ar'?
+                                            planPurchaseController.currentCategory.value.arabicName
+                                                :planPurchaseController.currentCategory.value.name,
+                                              textAlign: TextAlign.start,
+                                              style: getBodyMediumStyle(context).copyWith(
+                                                  color: APPSTYLE_Grey80,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
-                                          Text(
-                                            "${planPurchaseController.subTotal.value} KWD",
-                                            style: getBodyMediumStyle(context).copyWith(
-                                                color: APPSTYLE_Grey80,
-                                                fontWeight: FontWeight.bold),
+                                          Expanded(
+
+                                            child: Text( Localizations.localeOf(context)
+                                                .languageCode
+                                                .toString() ==
+                                                'ar'?
+                                            planPurchaseController.currentSubscription.value.arabicName
+                                                :planPurchaseController.currentSubscription.value.name,
+                                              textAlign: TextAlign.end,
+                                              style: getBodyMediumStyle(context).copyWith(
+                                                  color: APPSTYLE_Grey80,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           )
                                         ],
                                       ),
-                                      addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                                      addVerticalSpace(APPSTYLE_SpaceSmall),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text( 'discount'.tr,
+                                          Text(
+                                            '${planPurchaseController.currentSubscription.value.durationType}',
                                             style: getBodyMediumStyle(context).copyWith(
                                               color: APPSTYLE_Grey80,
                                             ),
                                           ),
                                           Text(
-                                            "-${planPurchaseController.discount.value} KWD",
+                                            "${planPurchaseController.currentSubscription.value.price} KWD",
                                             style: getBodyMediumStyle(context).copyWith(
-                                                color: APPSTYLE_GuideGreen,
+                                                color: APPSTYLE_PrimaryColor,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ],
                                       ),
-                                      addVerticalSpace(APPSTYLE_SpaceMedium),
-                                      Row(
-                                        children: List.generate(
-                                            600 ~/ 10,
-                                                (index) => Expanded(
-                                              child: Container(
-                                                color: index % 2 == 0
-                                                    ? Colors.transparent
-                                                    : Colors.grey,
-                                                height: 2,
-                                              ),
-                                            )),
-                                      ),
-                                      addVerticalSpace(APPSTYLE_SpaceMedium),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text( 'total'.tr,
-                                            style: getBodyMediumStyle(context).copyWith(
-                                              color: APPSTYLE_Grey80, ),
-                                          ),
-                                          Text(
-                                            "${planPurchaseController.total.value} KWD",
-                                            style: getBodyMediumStyle(context).copyWith(
-                                                color: APPSTYLE_Grey80,
-                                                fontWeight: FontWeight.bold),
-                                          )
-                                        ],
-                                      ),
+
                                     ],
                                   ),
                                 ),
-                                addVerticalSpace(APPSTYLE_SpaceMedium),
+                                addVerticalSpace(APPSTYLE_SpaceLarge*2),
 
-                                addVerticalSpace(APPSTYLE_SpaceMedium),
                                 Container(
                                   width: screenwidth,
                                   decoration: APPSTYLE_ShadowedContainerSmallDecoration,
@@ -282,9 +274,10 @@ class _CheckoutPage_PlanPurchaseState
                                     ],
                                   ),),
                                 addVerticalSpace(APPSTYLE_SpaceLarge*2),
+
                                 Padding(
-                                  padding: APPSTYLE_LargePaddingHorizontal,
-                                  child: Text( 'order_summary'.tr,
+                                  padding: APPSTYLE_MediumPaddingHorizontal,
+                                  child: Text( 'payment_summary'.tr,
                                     textAlign: TextAlign.start,
                                     style: getHeadlineMediumStyle(context)
                                         .copyWith(fontWeight: FontWeight.bold),
@@ -292,70 +285,79 @@ class _CheckoutPage_PlanPurchaseState
                                 ),
                                 addVerticalSpace(APPSTYLE_SpaceMedium),
                                 Container(
-                                  height: 100,
                                   width: screenwidth,
                                   decoration: APPSTYLE_ShadowedContainerSmallDecoration,
                                   padding: APPSTYLE_MediumPaddingAll,
                                   margin: APPSTYLE_LargePaddingHorizontal,
                                   alignment: Alignment.center,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  child: Wrap(
                                     children: [
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Expanded(
-                                            child: Text( Localizations.localeOf(context)
-                                      .languageCode
-                                      .toString() ==
-                                      'ar'?
-                                  planPurchaseController.currentCategory.value.arabicName
-                                      :planPurchaseController.currentCategory.value.name,
-                                              textAlign: TextAlign.start,
-                                              style: getBodyMediumStyle(context).copyWith(
-                                                  color: APPSTYLE_Grey80,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
+                                          Text( 'sub_total'.tr,
+                                            style: getBodyMediumStyle(context).copyWith(
+                                              color: APPSTYLE_Grey80, ),
                                           ),
-                                          Expanded(
-
-                                            child: Text( Localizations.localeOf(context)
-                                                .languageCode
-                                                .toString() ==
-                                                'ar'?
-                                            planPurchaseController.currentSubscription.value.arabicName
-                                                :planPurchaseController.currentSubscription.value.name,
-                                              textAlign: TextAlign.end,
-                                              style: getBodyMediumStyle(context).copyWith(
-                                                  color: APPSTYLE_Grey80,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
+                                          Text(
+                                            "${planPurchaseController.subTotal.value} KWD",
+                                            style: getBodyMediumStyle(context).copyWith(
+                                                color: APPSTYLE_Grey80,
+                                                fontWeight: FontWeight.bold),
                                           )
                                         ],
                                       ),
-                                      addVerticalSpace(APPSTYLE_SpaceSmall),
+                                      addVerticalSpace(APPSTYLE_SpaceExtraSmall),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
-                                            '${planPurchaseController.currentSubscription.value.durationType}',
+                                          Text( 'discount'.tr,
                                             style: getBodyMediumStyle(context).copyWith(
                                               color: APPSTYLE_Grey80,
                                             ),
                                           ),
                                           Text(
-                                            "${planPurchaseController.currentSubscription.value.price} KWD",
+                                            "-${planPurchaseController.discount.value} KWD",
                                             style: getBodyMediumStyle(context).copyWith(
-                                                color: APPSTYLE_PrimaryColor,
+                                                color: APPSTYLE_GuideGreen,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ],
                                       ),
-
+                                      addVerticalSpace(APPSTYLE_SpaceMedium),
+                                      Row(
+                                        children: List.generate(
+                                            600 ~/ 10,
+                                                (index) => Expanded(
+                                              child: Container(
+                                                color: index % 2 == 0
+                                                    ? Colors.transparent
+                                                    : Colors.grey,
+                                                height: 2,
+                                              ),
+                                            )),
+                                      ),
+                                      addVerticalSpace(APPSTYLE_SpaceMedium),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text( 'total'.tr,
+                                            style: getBodyMediumStyle(context).copyWith(
+                                              color: APPSTYLE_Grey80, ),
+                                          ),
+                                          Text(
+                                            "${planPurchaseController.total.value} KWD",
+                                            style: getBodyMediumStyle(context).copyWith(
+                                                color: APPSTYLE_Grey80,
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),
-                                addVerticalSpace(APPSTYLE_SpaceMedium),
+                                addVerticalSpace(APPSTYLE_SpaceLarge*2),
+
                                 Padding(
                                   padding: APPSTYLE_LargePaddingHorizontal,
                                   child: Text( 'customer_support'.tr,
@@ -371,7 +373,7 @@ class _CheckoutPage_PlanPurchaseState
                                     children: [
                                       InkWell(
                                         onTap: (){
-                                          handleRequestSupportClick(context,false);
+                                          openDialer();
                                         },
                                         child: Container(
                                           decoration: APPSTYLE_BorderedContainerLargeDecoration.copyWith(
@@ -397,7 +399,7 @@ class _CheckoutPage_PlanPurchaseState
                                       addHorizontalSpace(APPSTYLE_SpaceSmall),
                                       InkWell(
                                         onTap: (){
-                                          handleRequestSupportClick(context,true);
+                                          openWhatsapp();
 
                                         },
                                         child: Container(
@@ -456,28 +458,47 @@ class _CheckoutPage_PlanPurchaseState
   }
 
 
-  Future<void> handleRequestSupportClick(
-      BuildContext buildContext, bool isWhatsapp) async {
-    final sharedController = Get.find<SharedController>();
+  openWhatsapp() async {
 
-    final Uri callUrl =
-    Uri(scheme: 'tel', path: sharedController.supportNumber.value);
-    final whatsappUrl =
-    Uri.parse("https://wa.me/${sharedController.supportNumber.value}");
-    var canLaunch = false;
-    if (isWhatsapp) {
-      canLaunch = await UrlLauncher.canLaunchUrl(whatsappUrl);
-    } else {
-      canLaunch = await UrlLauncher.canLaunchUrl(callUrl);
+    String contact = sharedController.supportNumber.value;
+
+    // final Uri whatsappUrl = Uri(
+    //   scheme: 'whatsapp',
+    //   path: contact,
+    // );
+    final whatsappUrl = WhatsAppUnilink(
+      phoneNumber: contact,
+      text: "Hey",
+    );
+
+    String webUrl = 'https://api.whatsapp.com/send/?phone=$contact&text=hi';
+
+    try {
+      await UrlLauncher.launchUrl(whatsappUrl.asUri());
+    } catch (e) {
+      print('object');
+      await UrlLauncher.launchUrl(
+          Uri.parse(webUrl), mode: UrlLauncher.LaunchMode.externalApplication);
     }
-    if (canLaunch) {
-      if (isWhatsapp) {
-        UrlLauncher.launchUrl(whatsappUrl);
-      } else {
-        UrlLauncher.launchUrl(callUrl);
-      }
-    } else {
-      showSnackbar(buildContext, "not_able_to_connect".tr, "error");
+
+  }
+
+  openDialer() async {
+    String contact = sharedController.supportNumber.value;
+
+    final Uri dialerUrl = Uri(
+      scheme: 'tel',
+      path: contact,
+    );
+    String webUrl = 'tel:$contact';
+
+
+    try {
+      await UrlLauncher.launchUrl(dialerUrl);
+    } catch (e) {
+      print('object');
+      await UrlLauncher.launchUrl(Uri.parse(webUrl),
+          mode: UrlLauncher.LaunchMode.externalApplication);
     }
   }
 }
