@@ -72,6 +72,7 @@ class RegisterController extends GetxController {
   void changeGender(String s) {
     gender.value = s;
   }
+
   void changeSource(String s) {
     source.value = s;
   }

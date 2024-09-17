@@ -14,7 +14,7 @@ import 'package:doneapp/shared_module/services/utility-services/local_storage.se
 import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
- import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedController extends GetxController {
@@ -178,6 +178,7 @@ class SharedController extends GetxController {
 
     userData.value = mapUserData({});
     notifications.value = [];
+    saveAuthTokenAndMobileToSharedPreference("","");
     Get.offAllNamed(AppRouteNames.loginRoute);
     removeToken();
 

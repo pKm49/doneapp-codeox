@@ -90,12 +90,12 @@ class _LoginPage_AuthState extends State<LoginPage_Auth> {
                                 style: getHeadlineLargeStyle(context).copyWith(
                                     fontSize: APPSTYLE_FontSize24*1.5,
                                     color: APPSTYLE_BackgroundWhite)),
-                            addVerticalSpace(APPSTYLE_SpaceLarge*3),
+                            addVerticalSpace(APPSTYLE_SpaceLarge),
                             TextFormField(
                                 controller:
                                 loginController.mobileTextEditingController.value,
                                 validator: (value) => checkIfMobileNumberValid(value),
-                                keyboardType: TextInputType.number,
+                                keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
                                 decoration: InputDecoration(
                                     floatingLabelBehavior: FloatingLabelBehavior.never,
 
@@ -129,7 +129,7 @@ class _LoginPage_AuthState extends State<LoginPage_Auth> {
                                     }),
                               ],
                             ),
-                            addVerticalSpace(APPSTYLE_SpaceLarge * 3),
+                            addVerticalSpace(APPSTYLE_SpaceLarge),
                             SizedBox(
                                 width: double.infinity,
                                 child: ElevatedButton(

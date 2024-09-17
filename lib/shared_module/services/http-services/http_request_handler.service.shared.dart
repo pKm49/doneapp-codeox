@@ -9,11 +9,11 @@ import 'http_interceptor.service.shared.dart';
 
 getRequest(endpoint, parameters) async {
 
-  // print("getRequest trigggered");
-  // print("endpoint");
-  // print(endpoint);
-  // print("parameters");
-  // print(parameters);
+  print("getRequest trigggered");
+  print("endpoint");
+  print(endpoint);
+  print("parameters");
+  print(parameters);
   try {
 
     final http = InterceptedHttp.build(interceptors: [
@@ -23,13 +23,14 @@ getRequest(endpoint, parameters) async {
     final httpResponse = await http
         .get(Uri.https(env.apiEndPoint, "$endpoint"),params: json.decode(json.encode(parameters)));
 
-    // print("getRequest response received");
-    // print(httpResponse.body);
+    print("getRequest response received");
+    print(httpResponse.body);
 
     var httpResponseBody = json.decode(httpResponse.body);
 
     return generateSuccessResponse(httpResponseBody,httpResponse.statusCode);
   } on SocketException {
+    print("SocketException");
     return generateErrorResponse('Couldn\'t Connect, Try Again Later');
   } on FormatException catch (e,stack) {
     if (e.toString().contains("Request Not Implemented")) {
@@ -41,13 +42,13 @@ getRequest(endpoint, parameters) async {
     if (e.toString().contains("Request Not Authorised")) {
       return generateErrorResponse('Request Not Authorised');
     }
-    // print("get FormatException exception");
-    // print(e.toString());
-    // print(stack.toString());
+    print("get FormatException exception");
+    print(e.toString());
+    print(stack.toString());
     return generateErrorResponse('Something went wrong, try again');
   } on Exception catch (e) {
-    // print("get exception");
-    // print(e.toString());
+    print("get exception");
+    print(e.toString());
     return generateErrorResponse('Something went wrong, try again');
   }
 }

@@ -64,9 +64,9 @@ class MySubsHttpService {
       await getRequest(MySubscriptionHttpRequestEndpoint_GetSubscriptionMealsByDate+mobile,params);
 
       if (response.statusCode == 200 && response.data != null) {
+
          return mapSubscriptoinMealConfig(response.data[0], date);
       }
-
       return mapSubscriptoinMealConfig({}, date);
 
     }catch (e,st){

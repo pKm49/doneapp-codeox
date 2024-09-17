@@ -57,7 +57,8 @@ class AddressCardComponentShared extends StatelessWidget {
                     child: Icon(Ionicons.create_outline)),
                 Expanded(
                   child:shippingAddress.nickname.trim()!=''?
-                  Text(shippingAddress.nickname,style: getHeadlineMediumStyle(context),textAlign:Localizations.localeOf(context)
+                  Text(shippingAddress.nickname,style: getHeadlineMediumStyle(context),textAlign:
+                  Localizations.localeOf(context)
                       .languageCode
                       .toString() ==
                       'ar'? TextAlign.start : TextAlign.end,):

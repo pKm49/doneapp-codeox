@@ -23,7 +23,7 @@ class SubscriptionPlanCardComponent_PlanPurchase extends StatelessWidget {
       APPSTYLE_BorderedContainerSmallDecoration.copyWith(
           color: Colors.transparent,
           border: Border.all(
-              color:isSelected? APPSTYLE_PrimaryColor:Colors.transparent, width: 2)),
+              color:isSelected? APPSTYLE_PrimaryColor:Colors.transparent, width: 4)),
       height: screenheight * .28,
       width: screenwidth,
       padding: APPSTYLE_ExtraSmallPaddingAll,
@@ -32,7 +32,7 @@ class SubscriptionPlanCardComponent_PlanPurchase extends StatelessWidget {
       child: Container(
         decoration: APPSTYLE_BorderedContainerSmallDecoration
             .copyWith(
-          color: APPSTYLE_Black,
+          color:isSelected?APPSTYLE_Grey80:  APPSTYLE_Black,
           boxShadow: APPSTYLE_ContainerShadow
         ),
         padding: APPSTYLE_MediumPaddingAll,
