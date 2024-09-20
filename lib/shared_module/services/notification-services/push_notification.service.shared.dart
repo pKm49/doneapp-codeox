@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -88,24 +89,16 @@ class PushNotificationService {
     debugPrint("FirebaseMessaging onMessage triggered");
     debugPrint("payload is " + message!.data.toString());
 
-    final RemoteNotification? notification = message.notification;
+
     final Map<String, dynamic> data = message.data;
-    final AndroidNotification? android = message.notification?.android;
-    final AppleNotification? apple = message.notification?.apple;
     String logoPath =
         "https://lh3.googleusercontent.com/cvAnXU2xZQg7m0mAXgZzSlVH2hfjxzOBWHuxHTXwEAR7_r-p5OfBfZe2muSEL9DZmLq7";
     String imageUrl = logoPath;
 
-    if(android != null){
-      if(android.imageUrl != null){
-        imageUrl = android.imageUrl??logoPath;
-      }
+    if(data["image"] != null){
+      imageUrl = data["image"];
     }
-    if(apple != null){
-      if(apple.imageUrl != null){
-        imageUrl = apple.imageUrl??logoPath;
-      }
-    }
+
 
     String bigPicturePath = "";
     try {
@@ -120,26 +113,29 @@ class PushNotificationService {
     BigPictureStyleInformation(FilePathAndroidBitmap(bigPicturePath));
     // If `onMessage` is triggered with a notification, construct our own
 // local notification to show to users using the created channel.
+    await notificationsPlugin.cancelAll();
 
-    if(notification != null){
-      notificationsPlugin.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
-        flutter_local_notifications.NotificationDetails(
-          android: AndroidNotificationDetails(
-              channel.id,
-              channel.name,
-              channelDescription: channel.description,
-              icon: '@mipmap/ic_launcher',
-              styleInformation: bigPictureStyleInformation),
-          iOS: const DarwinNotificationDetails(),
-        ),
-        payload: message.data.toString(),
-      );
-    }
+    notificationsPlugin.show(
+      getRandomId(),
+      data['title'],
+      data['body'],
+      flutter_local_notifications.NotificationDetails(
+        android: AndroidNotificationDetails(
+            channel.id,
+            channel.name,
+            channelDescription: channel.description,
+            icon: '@mipmap/ic_launcher',
+            styleInformation: bigPictureStyleInformation),
+        iOS: const DarwinNotificationDetails(),
+      ),
+      payload: message.data.toString(),
+    );
+
 
 
   }
 
+  getRandomId(){
+    return 100000 + Random().nextInt(999999 - 100000);
+  }
 }
