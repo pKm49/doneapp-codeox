@@ -240,15 +240,12 @@ class ProfileController extends GetxController {
     }
 
   }
+  skipDislikesUpdate(){
+    Get.toNamed(AppRouteNames.planPurchaseSubscriptionPlansCategoryListRoute);
+  }
 
   updateDislikes(bool isRegisterComplete) async {
-    if(dislikes.isEmpty){
-      if(isRegisterComplete){
-        Get.toNamed(AppRouteNames.planPurchaseSubscriptionPlansCategoryListRoute);
-      }else{
-        Get.back();
-      }
-    }else{
+
       if(! isDislikesUpdating.value){
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         final String? tMobile = prefs.getString('mobile');
@@ -272,8 +269,6 @@ class ProfileController extends GetxController {
         }
 
       }
-    }
-
 
   }
 

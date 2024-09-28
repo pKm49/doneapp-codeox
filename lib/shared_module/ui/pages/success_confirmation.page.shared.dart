@@ -56,15 +56,136 @@ class _SuccessConfirmationPage_SharedState
         backgroundColor: APPSTYLE_BackgroundWhite,
         elevation: 0.0,
         scrolledUnderElevation:0.0,
-
+        title: Row(
+          children: [
+            Visibility(
+                visible: pageTitle == 'subscription_success',
+                child: Image.asset(ASSETS_NAMELOGO_PRIMARY,width: screenwidth*.2))
+          ],
+        ),
         actions: [
-          LanguagePreviewButtonComponentShared(textColor:APPSTYLE_PrimaryColor),
-          addHorizontalSpace(APPSTYLE_SpaceLarge)
+          Visibility(
+              visible: pageTitle != 'subscription_success',
+              child: LanguagePreviewButtonComponentShared(textColor:APPSTYLE_PrimaryColor)),
+          Visibility(
+              visible: pageTitle != 'subscription_success',
+              child: addHorizontalSpace(APPSTYLE_SpaceLarge))
         ],
       ),
       resizeToAvoidBottomInset: true,
       body: SafeArea(
-        child: Container(
+        child:pageTitle=='subscription_success'?
+
+        Container(
+          height: screenheight,
+          width: screenwidth,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Container(
+                  child: ListView(
+
+                    children: [
+                       Row(
+                        mainAxisAlignment: MainAxisAlignment.end ,
+                        children: [
+
+                          Image.asset(
+                            ASSETS_SUCCESSMARK_SS,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center ,
+                        children: [
+                          Image.asset(
+                            assetUrl,
+                            width:pageTitle != 'subscription_success'? screenwidth * .5: screenwidth * .4,
+                          ),
+
+                        ],
+                      ),
+                      addVerticalSpace(APPSTYLE_SpaceLarge),
+                      Visibility(
+                        visible: pageTitle != 'subscription_success',
+                        child: Text(pageTitle.tr,
+                            textAlign: TextAlign.center,
+                            style: getHeadlineLargeStyle(context).copyWith(
+                                fontSize: APPSTYLE_FontSize24*1.5 )),
+                      ),
+                      Visibility(
+                        visible: pageTitle == 'subscription_success',
+                        child: Text("Payment Successfull",
+                            textAlign: TextAlign.center,
+                            style: getHeadlineLargeStyle(context).copyWith(
+                                fontSize: APPSTYLE_FontSize24*1.2,color: APPSTYLE_WhatsappGreen)),
+                      ),
+                      Visibility(
+                          visible: pageTitle == 'subscription_success',
+                          child: addVerticalSpace(APPSTYLE_SpaceLarge)),
+                      Visibility(
+                        visible: pageTitle == 'subscription_success',
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text: 'Welcome to',
+                            style: getHeadlineLargeStyle(context)
+                                .copyWith(color: APPSTYLE_Grey80),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text:" DONE ",
+                                  style: TextStyle(
+                                      fontWeight:
+                                      APPSTYLE_FontWeightBold,
+                                      color: APPSTYLE_PrimaryColor)),
+                              TextSpan(
+                                  text:"Family",
+                                  style: TextStyle( )),
+                            ],
+                          ),
+                        ),
+                      ),
+                      addVerticalSpace(APPSTYLE_SpaceLarge),
+
+
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: APPSTYLE_LargePaddingAll,
+                child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        style: getElevatedButtonStyle(context),
+                        child: Text(
+                          buttonText.tr,
+                          style: getHeadlineMediumStyle(context).copyWith(
+                              color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
+                        ),
+                        onPressed: () async {
+                          //       showSnackbar(Get.context!, "password_reset".tr, "info");
+                          if(toRoute == AppRouteNames.addressAuditRoute){
+
+                            Get.toNamed(
+                                AppRouteNames.addressAuditRoute,arguments:
+                            [VALIDADDRESSAUTHOR_MODES.complete_registration,mobile]);
+                          }else if(toRoute == AppRouteNames.loginRoute){
+                            showSnackbar(Get.context!, "login_message".tr, "info");
+                            final sharedController = Get.find<SharedController>();
+                            await sharedController.handleLogout();
+                          }else{
+                            Get.offAllNamed(toRoute);
+                          }
+
+                        })),
+              ),
+            ],
+          ),
+        )
+            : Container(
           height: screenheight,
           width: screenwidth,
           padding: APPSTYLE_LargePaddingAll,

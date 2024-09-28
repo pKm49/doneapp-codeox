@@ -102,10 +102,11 @@ class _LandingPage_CoreState extends State<LandingPage_Core>
                   _tabController.animateTo(_currentIndex);
                 },
                 items: [
+
                   BottomNavigationBarItem(
-                    icon: Icon(Ionicons.home_outline, size: APPSTYLE_FontSize24),
-                    activeIcon: Icon(Ionicons.home, size: APPSTYLE_FontSize24),
-                    label: "home".tr,
+                    icon: Icon(Ionicons.person_outline, size: APPSTYLE_FontSize24),
+                    activeIcon: Icon(Ionicons.person, size: APPSTYLE_FontSize24),
+                    label: "profile".tr,
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Ionicons.restaurant_outline, size: APPSTYLE_FontSize24),
@@ -113,9 +114,9 @@ class _LandingPage_CoreState extends State<LandingPage_Core>
                     label: "menu".tr,
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Ionicons.person_outline, size: APPSTYLE_FontSize24),
-                    activeIcon: Icon(Ionicons.person, size: APPSTYLE_FontSize24),
-                    label: "profile".tr,
+                    icon: Icon(Ionicons.settings_outline, size: APPSTYLE_FontSize24),
+                    activeIcon: Icon(Ionicons.settings, size: APPSTYLE_FontSize24),
+                    label: "setting".tr,
                   ),
                 ])));
   }

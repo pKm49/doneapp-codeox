@@ -150,7 +150,7 @@ class _NotificationsPage_CoreState extends State<NotificationsPage_Core> {
                                     width: screenwidth -
                                         ((APPSTYLE_SpaceMedium * 2) +
                                             (APPSTYLE_SpaceLarge * 2)),
-                                    child: Text(getFormattedDate(sharedController.notifications[index].dateTime),
+                                    child: Text(getFormattedDateTime(sharedController.notifications[index].dateTime),
                                         style:getLabelLargeStyle (context).copyWith(
                                             color: APPSTYLE_Grey40,
                                             fontWeight: APPSTYLE_FontWeightLight)),

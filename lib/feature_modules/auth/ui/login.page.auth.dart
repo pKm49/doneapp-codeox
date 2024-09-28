@@ -90,7 +90,29 @@ class _LoginPage_AuthState extends State<LoginPage_Auth> {
                                 style: getHeadlineLargeStyle(context).copyWith(
                                     fontSize: APPSTYLE_FontSize24*1.5,
                                     color: APPSTYLE_BackgroundWhite)),
-                            addVerticalSpace(APPSTYLE_SpaceLarge),
+
+                            addVerticalSpace(APPSTYLE_SpaceSmall),
+                            SizedBox(
+                                width: double.infinity,
+                                child: OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      side: const BorderSide(width: 2.0, color: APPSTYLE_BackgroundWhite),
+                                    ),
+                                    child:   Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(ASSETS_MEALS,width: 30),
+                                        addHorizontalSpace(APPSTYLE_SpaceMedium),
+                                        Text(' مشاهدة المنيو / Show our menu',
+                                            style: getHeadlineMediumStyle(context).copyWith(
+                                                color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
+                                            textAlign: TextAlign.center),
+                                      ],
+                                    ),
+                                    onPressed: () {
+                                      Get.toNamed(AppRouteNames.menuListRoute);
+                                    })),
+                            addVerticalSpace(APPSTYLE_SpaceLarge*2),
                             TextFormField(
                                 controller:
                                 loginController.mobileTextEditingController.value,
@@ -164,27 +186,7 @@ class _LoginPage_AuthState extends State<LoginPage_Auth> {
                                     onPressed: () {
                                       Get.toNamed(AppRouteNames.registerEnglishNameRoute);
                                     })),
-                            addVerticalSpace(APPSTYLE_SpaceMedium),
-                            SizedBox(
-                                width: double.infinity,
-                                child: OutlinedButton(
-                                    style: OutlinedButton.styleFrom(
-                                      side: const BorderSide(width: 2.0, color: APPSTYLE_BackgroundWhite),
-                                    ),
-                                    child:   Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(ASSETS_MEALS,width: 30),
-                                        addHorizontalSpace(APPSTYLE_SpaceMedium),
-                                        Text(' مشاهدة المنيو / Show our menu',
-                                            style: getHeadlineMediumStyle(context).copyWith(
-                                                color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
-                                            textAlign: TextAlign.center),
-                                      ],
-                                    ),
-                                    onPressed: () {
-                                      Get.toNamed(AppRouteNames.menuListRoute);
-                                    })),
+
                           ],
                         ),
                       ),

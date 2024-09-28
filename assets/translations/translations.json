@@ -4,7 +4,7 @@
     "code": "en_US",
     "texts": {
       "dislike_qtn": "What are your dislikes ?",
-
+      "setting": "Settings",
       "welcome_message_title": "Fast delivery at Your doorstep",
       "welcome_message_description": "A few taps on your phone, and a world of culinary delights arrives. With a diverse array of cuisines just a click away, you can savor global flavors from the comfort of home.",
       "login": "Login",
@@ -292,6 +292,7 @@
     "code": "ar_AE",
     "texts": {
       "dislike_qtn": "ما هي الأشياء التي لا تحبها؟",
+      "setting": "إعدادات",
 
       "welcome_message_title": "التسليم السريع على عتبة داركم",
       "welcome_message_description": "فقط بضع نقرات على هاتفك، وسوف تحصل على عالم من المأكولات اللذيذة. مع مجموعة متنوعة من المأكولات بنقرة واحدة فقط، يمكنك تذوق النكهات العالمية وأنت مرتاح في منزلك.",
@@ -562,7 +563,7 @@
       "dislikes": "الغير مرغوب",
       "please_select_meals_for_all_categories": "يرجى اختيار الوجبات لجميع الفئات",
       "check_input_and_try_again": "يرجى التحقق من الإدخال والمحاولة مرة أخرى",
-      "days": "Days",
+      "days": "أيام",
       "evening_shift_string": "يوم واحد قبل التسليم",
       "morning_shift_string": "التسليم في نفس اليوم",
       "view_meals": "وجبات",
