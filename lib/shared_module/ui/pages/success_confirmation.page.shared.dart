@@ -101,7 +101,7 @@ class _SuccessConfirmationPage_SharedState
                         mainAxisAlignment: MainAxisAlignment.center ,
                         children: [
                           Image.asset(
-                            assetUrl,
+                            ASSETS_SUCCESSMARK_CHECK,
                             width:pageTitle != 'subscription_success'? screenwidth * .5: screenwidth * .4,
                           ),
 
