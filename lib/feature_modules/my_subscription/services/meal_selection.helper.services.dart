@@ -41,7 +41,21 @@ getProductImage(image) {
       : NetworkImage(image);
 }
 
+double getOriginalPercentage(
+    double recommendedCalories, double currentSelectedCalories2) {
+  if (recommendedCalories == 0.0) {
+    return 0;
+  }
+  double percentage = (currentSelectedCalories2 * 100) / recommendedCalories;
+  if (percentage > 100) {
+    return percentage;
 
+  }
+  if (percentage < 0) {
+    return percentage.round() * -1;
+  }
+  return percentage ;
+}
 int getPercentage(
     double recommendedCalories, double currentSelectedCalories2) {
   if (recommendedCalories == 0.0) {

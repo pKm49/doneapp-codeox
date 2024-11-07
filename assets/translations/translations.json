@@ -279,12 +279,25 @@
       "no_meals_found": "No Meals found",
       "confirm_selection": "Confirm Meal Selection",
       "confirm_selection_message": "Are you sure to select this meal? This item contains ingredients you marked as 'Dislike'",
+      "confirm_selection_message_calory": "Are you sure to select this meal? This selection will exceed your overall calorie limit",
       "rate_meal": "Rate Meal",
       "rate": "Rate",
       "rating_saved": "Submitted Succesfully",
       "order_reference": "Order Reference",
       "payment_reference": "Payment Reference",
-      "menu": "Menu"
+      "orders": "Orders",
+      "menu": "Menu",
+      "eshop": "E-Shop",
+      "ingredients": "Ingredients",
+      "purchase_success": "Checkout Success",
+      "purchase_success_info": "Meals successfully purchased.",
+      "shopping_cart": "Shopping Cart",
+      "cart_items": "Shopping Cart",
+      "empty_cart": "Empty Cart",
+      "please_select_address": "Please select address",
+      "please_select_time": "Please select time",
+      "select_shift": "Select Time"
+
     }
   },
   {
@@ -571,12 +584,26 @@
       "no_meals_found": "لم يتم العثور على وجبات",
       "confirm_selection": "تأكيد اختيار الوجبة",
       "confirm_selection_message": "هل أنت متأكد من اختيار هذه الوجبة؟ يحتوي هذا العنصر على المكونات التي قمت بوضع علامة \"لا تحبها\".",
+      "confirm_selection_message_calory": "هل أنت متأكد من اختيار هذه الوجبة؟ سيتجاوز هذا الاختيار الحد الإجمالي للسعرات الحرارية",
+
       "rate_meal": "قيم الوجبه",
       "rate": "التقييم",
       "rating_saved": "تم تقديم التقديم بنجاح",
       "order_reference": "معرف الطلب",
       "payment_reference": "معرف الدفع",
-      "menu": "قائمة طعام"
+      "orders": "أوامر الشراء",
+      "menu": "قائمة طعام",
+      "eshop": "تبضع",
+      "ingredients": "مكونات",
+      "purchase_success": "نجاح الشراء",
+      "purchase_success_info": "تم شراء الوجبات بنجاح.",
+      "shopping_cart": "سلة التسوق",
+      "cart_items": "عناصر السلة",
+      "empty_cart": "عربة فارغة",
+      "please_select_address": "الرجاء تحديد العنوان",
+      "please_select_time": "الرجاء تحديد الوقت",
+      "select_shift": "حدد الوقت"
+
     }
   }
 ]

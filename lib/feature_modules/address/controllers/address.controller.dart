@@ -187,12 +187,9 @@ class AddressController extends GetxController {
                 id: currentAddress.value.id,
                 name: nicknameTextEditingController.value.text,
                 comments: commentsTextEditingController.value.text,
-                apartmentNo:apartmentNumberTextEditingController.value.text.toString().trim() !=""?
-                int.parse(apartmentNumberTextEditingController.value.text.toString().trim()):-1,
-              houseNumber:houseNumberTextEditingController.value.text.toString().trim() !=""?
-              int.parse(houseNumberTextEditingController.value.text.toString().trim()):-1,
-              floorNumber:floorNumberTextEditingController.value.text.toString().trim() !=""?
-              int.parse(floorNumberTextEditingController.value.text.toString().trim()):-1,
+                apartmentNo:apartmentNumberTextEditingController.value.text.toString() ,
+              houseNumber:houseNumberTextEditingController.value.text.toString() ,
+              floorNumber:floorNumberTextEditingController.value.text.toString(),
 
                 street: streetTextEditingController.value.text,
                 areaId: areaId.value,

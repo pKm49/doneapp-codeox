@@ -12,9 +12,9 @@ class Address {
   final String blockNameArabic;
   final String street;
   final String jedha;
-  final int houseNumber;
-  final int floorNumber;
-  final int apartmentNo;
+  final String houseNumber;
+  final String floorNumber;
+  final String apartmentNo;
   final String comments;
   final String nickname;
 
@@ -96,14 +96,14 @@ Address mapAddress(dynamic payload) {
           : "",
 
     floorNumber: payload["floor_number"] != null
-        ? payload["floor_number"] != ""? int.parse(payload["floor_number"].toString())
-        :-1 : -1,
+        ? payload["floor_number"] != ""? payload["floor_number"].toString()
+        :"" : "",
     houseNumber: payload["house_number"] != null
-        ? payload["house_number"] != ""? int.parse(payload["house_number"].toString())
-        :-1 : -1,
+        ? payload["house_number"] != ""? payload["house_number"].toString()
+        :"" : "",
     apartmentNo: payload["apartment_no"] != null
-        ? payload["apartment_no"] != ""? int.parse(payload["apartment_no"].toString())
-        :-1 : -1,
+        ? payload["apartment_no"] != ""? payload["apartment_no"].toString()
+        :"" : "",
 
 
   );

@@ -18,9 +18,11 @@ class SubscriptoinDailyMealItem {
   final bool isSelected;
   final bool isDislike;
   final int selectedCount;
+  final List<MealIngredient> ingredients;
 
   SubscriptoinDailyMealItem(
       {
+        required this.ingredients,
         required this.id,
         required this.name,
         required this.arabicName,
@@ -43,13 +45,24 @@ class SubscriptoinDailyMealItem {
 SubscriptoinDailyMealItem mapSubscriptoinDailyMealItem(dynamic payload) {
   // print("mapSubscriptoinDailyMealItem");
   // print(payload["selected_count"]);
+
+
+  List<MealIngredient> ingredients = [];
+
+  if(payload["ingredients"] != null && payload["ingredients"] is! String ){
+    payload["ingredients"].forEach((element) {
+      if(element != null){
+        ingredients.add(mapMealIngredient(element));
+      }
+    });
+  }
   return SubscriptoinDailyMealItem(
     id: payload["id"] ?? -1,
     arabicName: payload["arabic_name"]!=null && payload["arabic_name"] != false?payload["arabic_name"] : "",
     name: payload["name"]!=null && payload["name"] != false?payload["name"] : "",
     description: payload["description"]!=null && payload["description"] != false?payload["description"] : "",
     arabicDescription: payload["arabic_description"]!=null && payload["arabic_description"] != false?payload["arabic_description"] : "",
-
+    ingredients:ingredients,
     calories: payload["calories"] ?? 0.0,
     carbs: payload["carbs"] ?? 0.0,
     fat: payload["fat"] ?? 0.0,
@@ -61,5 +74,34 @@ SubscriptoinDailyMealItem mapSubscriptoinDailyMealItem(dynamic payload) {
     isDislike: payload["is_dislike"] ?? false,
     image :payload["image"]!= null && payload["image"]!= ""?payload["image"].toString():ASSETS_SAMPLEFOOD,
     tags :payload["tags"]!= null && payload["tags"]!= ""?payload["tags"].toString():"",
+  );
+}
+
+
+
+class MealIngredient {
+
+  final String imageUrl;
+  final String name;
+  final String arabicName;
+
+  MealIngredient({
+    required this.imageUrl,
+    required this.name,
+    required this.arabicName,
+  });
+
+
+}
+
+MealIngredient mapMealIngredient(dynamic payload){
+
+  print("mapMealIngredient");
+  print(payload);
+
+  return MealIngredient(
+      imageUrl :payload["image"]!= null && payload["image"]!= ""?payload["image"].toString():ASSETS_SAMPLEFOOD,
+      name :payload["name"]!= null && payload["name"]!= false?payload["name"] :"",
+      arabicName :payload["arabic_name"]!= null && payload["arabic_name"]!= false?payload["arabic_name"] :""
   );
 }

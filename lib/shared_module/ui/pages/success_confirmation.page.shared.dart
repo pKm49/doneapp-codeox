@@ -205,7 +205,7 @@ class _SuccessConfirmationPage_SharedState
                         Image.asset(
                           assetUrl,
                           width: screenwidth * .5,
-                        ),
+                        )
                       ],
                     ),
                     addVerticalSpace(APPSTYLE_SpaceLarge),

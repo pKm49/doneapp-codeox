@@ -249,41 +249,46 @@ class MySubscriptionController extends GetxController {
   DateTime getDate(DateTime d) => DateTime(d.year, d.month, d.day);
 
   Future<void> getMealsByDate(  DateTime tSelectedDay,bool isNavigationRequired ) async {
-   if(isSubscriptionDay(tSelectedDay)){
-     selectedDate.value = tSelectedDay;
+    print("getMealsByDate triggered");
+    print(tSelectedDay);
+    if(!isMealsFetching.value){
+      if(isSubscriptionDay(tSelectedDay)){
+        selectedDate.value = tSelectedDay;
 
-     if( getDayStatus(tSelectedDay) != VALIDSUBSCRIPTIONDAY_STATUS.offDay
+        if( getDayStatus(tSelectedDay) != VALIDSUBSCRIPTIONDAY_STATUS.offDay
 
-         && !isMealsFetching.value){
+            && !isMealsFetching.value){
 
 
-       final SharedPreferences prefs = await SharedPreferences.getInstance();
-       final String? tMobile = prefs.getString('mobile');
-       if (tMobile != null && tMobile != '') {
-         isMealsFetching.value = true;
-         if(isNavigationRequired){
-           Get.toNamed(AppRouteNames.mealSelectionRoute);
-         }
-         final f = new DateFormat('yyyy-MM-dd');
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          final String? tMobile = prefs.getString('mobile');
+          if (tMobile != null && tMobile != '') {
+            isMealsFetching.value = true;
+            if(isNavigationRequired){
+              Get.toNamed(AppRouteNames.mealSelectionRoute);
+            }
+            final f = new DateFormat('yyyy-MM-dd');
 
-         var mySubsHttpService = MySubsHttpService();
-         subscriptoinMealConfig.value =  await mySubsHttpService.getMealsByDay(tMobile,f.format(selectedDate.value));
+            var mySubsHttpService = MySubsHttpService();
+            subscriptoinMealConfig.value =  await mySubsHttpService.getMealsByDay(tMobile,f.format(selectedDate.value));
 
-         initializeMealSelection(f.format(selectedDate.value));
-         isMealsFetching.value = false;
+            initializeMealSelection(f.format(selectedDate.value));
+            isMealsFetching.value = false;
 
-       } else {
-         showSnackbar(Get.context!, "couldnt_load_profiledata".tr, "error");
-         showSnackbar(Get.context!, "login_message".tr, "error");
-         Get.offAllNamed(AppRouteNames.loginRoute);
-       }
+          } else {
+            showSnackbar(Get.context!, "couldnt_load_profiledata".tr, "error");
+            showSnackbar(Get.context!, "login_message".tr, "error");
+            Get.offAllNamed(AppRouteNames.loginRoute);
+          }
 
-     }else{
-       subscriptoinMealConfig.value = mapSubscriptoinMealConfig({},  "");
-       selectedMealConfig.value = mapSubscriptoinMealConfig({},  "");
-       Get.toNamed(AppRouteNames.mealSelectionRoute);
-     }
-   }
+        }else{
+          subscriptoinMealConfig.value = mapSubscriptoinMealConfig({},  "");
+          selectedMealConfig.value = mapSubscriptoinMealConfig({},  "");
+          Get.toNamed(AppRouteNames.mealSelectionRoute);
+        }
+      }
+
+    }
 
   }
 
@@ -429,6 +434,9 @@ class MySubscriptionController extends GetxController {
   }
 
   addOrRemoveMeal(int index, int categoryId, int mealId, int count){
+    print("addOrRemoveMeal");
+    print(mealId);
+    print(count);
     double currentSelectedCalories = selectedMealConfig.value.recommendedCalories;
     List<SubscriptoinDailyMeal> meals = [];
     for (var element in subscriptoinMealConfig.value.meals) {

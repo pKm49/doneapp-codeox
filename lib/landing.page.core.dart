@@ -1,3 +1,4 @@
+import 'package:doneapp/feature_modules/e_shop/ui/meals_list.page.eshop.dart';
 import 'package:doneapp/feature_modules/my_subscription/ui/pages/meal_calendar.page.my_subscription.dart';
 import 'package:doneapp/feature_modules/profile/controllers/profile.controller.dart';
 import 'package:doneapp/feature_modules/profile/ui/pages/my_profile.page.profile.dart';
@@ -113,6 +114,7 @@ class _LandingPage_CoreState extends State<LandingPage_Core>
                     activeIcon: Icon(Ionicons.restaurant, size: APPSTYLE_FontSize24),
                     label: "menu".tr,
                   ),
+
                   BottomNavigationBarItem(
                     icon: Icon(Ionicons.settings_outline, size: APPSTYLE_FontSize24),
                     activeIcon: Icon(Ionicons.settings, size: APPSTYLE_FontSize24),

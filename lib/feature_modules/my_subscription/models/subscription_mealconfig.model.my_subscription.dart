@@ -15,8 +15,8 @@ class SubscriptoinMealConfig {
 }
 
 SubscriptoinMealConfig mapSubscriptoinMealConfig(dynamic payload, String date) {
-  print("getMealsByDay response");
-
+  print("mapSubscriptoinMealConfig response");
+  print(payload["subscription_recommended_calories"]);
   List<SubscriptoinDailyMeal> meals = [];
 
   if(payload["meals"] != null && payload["meals"] is! String ){
@@ -28,7 +28,8 @@ SubscriptoinMealConfig mapSubscriptoinMealConfig(dynamic payload, String date) {
           if(element["item_count"] > 0){
             meals.add(mapSubscriptoinDailyMeal(element));
           }
-        }      }
+        }
+      }
     });
   }
 
