@@ -18,10 +18,7 @@ class _GifSplashPage_CoreState extends State<GifSplashPage_Core> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    Future.delayed(const Duration(seconds: 2), () async {
-      sharedController.setInitialScreen();
-    });
+    sharedController.setInitialScreen();
 
   }
 

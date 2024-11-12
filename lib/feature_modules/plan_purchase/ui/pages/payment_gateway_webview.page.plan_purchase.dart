@@ -78,8 +78,8 @@ class _PaymentGatewayWebView_PlanPurchaseState extends State<PaymentGatewayWebVi
                 },
                 onUpdateVisitedHistory: (InAppWebViewController controller, Uri? url, bool? flag) {
 
-                  // if(url.toString().contains("https://erp.donekw.com/subscription/payment/status") ){
-                  if(url.toString().contains("http://146.190.2.55:9879/subscription/payment/status") ){
+                  if(url.toString().contains("https://erp.donekw.com/subscription/payment/status") ){
+                  // if(url.toString().contains("http://146.190.2.55:9879/subscription/payment/status") ){
                     isConfirmationReached = true;
                     setState(() {
 
