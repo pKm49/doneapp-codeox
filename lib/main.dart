@@ -64,9 +64,17 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final sharedController = Get.find<SharedController>();
+    sharedController.getAccessToken();
+  }
+
   @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
     CoreTranslationController.initLanguages();
     appThemeManager.addListener(themeListener);
     Get.put(SharedController());
@@ -88,6 +96,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     appThemeManager.removeListener(themeListener);
     super.dispose();
   }

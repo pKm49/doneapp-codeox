@@ -21,7 +21,7 @@ getRequest(endpoint, parameters) async {
     ]);
 
     final httpResponse = await http
-        .get(Uri.http(env.apiEndPoint, "$endpoint"),params: json.decode(json.encode(parameters)));
+        .get(Uri.https(env.apiEndPoint, "$endpoint"),params: json.decode(json.encode(parameters)));
 
     print("getRequest response received");
     print(httpResponse.body);
@@ -69,12 +69,12 @@ postRequest(endpoint, body) async {
       // print("update_customer_profile contains update_customer_profile");
 
       httpResponse = await http.post(
-          Uri.http(env.apiEndPoint, "$endpoint"),
+          Uri.https(env.apiEndPoint, "$endpoint"),
           params:endpoint.toString().contains('update_customer_profile')? json.decode(json.encode(body)) : null
       );
     }else{
       httpResponse = await http.post(
-          Uri.http(env.apiEndPoint, "$endpoint"),
+          Uri.https(env.apiEndPoint, "$endpoint"),
           body:endpoint.toString().contains('update_customer_profile')?null: json.encode(body)
       );
     }
@@ -125,7 +125,7 @@ patchRequest(endpoint, body) async {
     ]);
 
    var httpResponse = await http.patch(
-        Uri.http(env.apiEndPoint, "$endpoint"),
+        Uri.https(env.apiEndPoint, "$endpoint"),
         body:endpoint.toString().contains('update_customer_profile')?null: json.encode(body)
     );
 
@@ -174,7 +174,7 @@ deleteRequest(endpoint,parameters) async {
     ]);
 
     final httpResponse =
-    await http.delete(Uri.http(env.apiEndPoint, "/$endpoint"),params: json.decode(json.encode(parameters)));
+    await http.delete(Uri.https(env.apiEndPoint, "/$endpoint"),params: json.decode(json.encode(parameters)));
 
     var httpResponseBody = json.decode(httpResponse.body);
 

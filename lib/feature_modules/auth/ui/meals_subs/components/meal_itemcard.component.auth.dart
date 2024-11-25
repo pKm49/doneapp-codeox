@@ -148,7 +148,7 @@ class _MealItemCardComponent_AuthState extends State<MealItemCardComponent_Auth>
                       ? widget.subscriptoinDailyMealItem
                       .arabicName
                       : widget.subscriptoinDailyMealItem
-                      .name} - ${widget.subscriptoinDailyMealItem.rating}⭐ (${widget.subscriptoinDailyMealItem.rating_count})',
+                      .name} - ${widget.subscriptoinDailyMealItem.rating}⭐',
                   maxLines: 2,
                   textAlign: TextAlign.center,
                   style: getBodyMediumStyle(
