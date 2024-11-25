@@ -7,6 +7,7 @@ class SubscriptionPlan {
   final String name;
   final String arabicName;
   final  String durationType;
+  final  String offerDescription;
   final  String days;
   final double price;
   final double strikePrice;
@@ -25,6 +26,7 @@ class SubscriptionPlan {
     required this.carbohydrates,
     required this.protein,
     required this.dayAvailability,
+    required this.offerDescription,
   });
 
 
@@ -82,6 +84,7 @@ SubscriptionPlan mapSubscriptionItem(dynamic payload ){
     arabicName: payload["arabic_name"]!=null && payload["arabic_name"] != false?payload["arabic_name"] : "",
     durationType :payload["duration_type"]??"Week",
     days :payload["days_count"]!=null?payload["days_count"].toString():"0",
+    offerDescription :payload["offer_description"]!=null?payload["offer_description"].toString():"",
   );
 
 }

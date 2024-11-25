@@ -37,6 +37,7 @@ class _HomePage_CoreState extends State<HomePage_Core> {
 
   @override
   Widget build(BuildContext context) {
+
     double screenwidth = MediaQuery.of(context).size.width;
     double screenheight = MediaQuery.of(context).size.height;
 
@@ -53,7 +54,7 @@ class _HomePage_CoreState extends State<HomePage_Core> {
         decoration: BoxDecoration(
           image: DecorationImage(
             alignment: Alignment(-.2, 0),
-            image: AssetImage(ASSETS_HOME_BG),
+            image: NetworkImage(sharedController.userData.value.appBackground),
             fit: BoxFit.cover,
           ),
         ),

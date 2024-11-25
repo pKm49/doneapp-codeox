@@ -120,6 +120,7 @@ class ProfileController extends GetxController {
       String message = await profileHttpService.updateProfileData(
           UserData(
             id: userData.value.id,
+            appBackground: "",
             gender:  gender.value,
             height: userData.value.height,
             birthday: birthDayController.value.text,

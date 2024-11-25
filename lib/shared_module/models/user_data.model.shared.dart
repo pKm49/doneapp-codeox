@@ -3,6 +3,7 @@ import 'package:doneapp/shared_module/models/general_item.model.shared.dart';
 import 'package:intl/intl.dart';
 
 class UserData {
+
   final int id;
   final String customerCode;
   final String firstName;
@@ -22,7 +23,7 @@ class UserData {
   final String subscriptionName;
   final String subscriptionNameArabic;
   final String shift;
-
+  final String appBackground;
 
   UserData(
       {required this.id,
@@ -43,7 +44,10 @@ class UserData {
         required this.subscriptionEndDate,
         required this.subscriptionName,
         required this.subscriptionNameArabic,
-        required this.subscriptionRemainingDays });
+        required this.subscriptionRemainingDays,
+        required this.appBackground
+
+      });
 
   Map toJson(){
     return profilePictureUrl==""? {
@@ -112,6 +116,7 @@ UserData mapUserData(dynamic payload) {
     firstNameArabic: payload["first_name_arabic"]!=null && payload["first_name_arabic"] != false?payload["first_name_arabic"] : "",
     lastName: payload["last_name"]!=null && payload["last_name"] != false?payload["last_name"] : "",
     lastNameArabic: payload["last_name_arabic"]!=null && payload["last_name_arabic"] != false?payload["last_name_arabic"] : "",
+    appBackground: payload["app_background"]!=null && payload["app_background"] != false?payload["app_background"] : "",
 
     gender: payload["gender"] != null ? payload["gender"].toString() : "",
     birthday: payload["date_of_birth"] != null ? payload["date_of_birth"].toString() : "",
