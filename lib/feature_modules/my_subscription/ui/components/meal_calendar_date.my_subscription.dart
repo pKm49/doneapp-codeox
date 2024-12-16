@@ -145,7 +145,7 @@ class MealCalendarDateComponent_MySubscription extends StatelessWidget {
                 visible: (isTodayTomorrow(dateTime)) &&
                     status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected
                     &&  (isMonthDay && isSubscriptionDay)  ,
-                child: SvgPicture.asset(ASSETS_FOODPLATE,height: 13,color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_WhatsappGreen)
+                child: SvgPicture.asset(ASSETS_FOODPLATE,height: 13,color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_Grey60)
             ),
             Visibility(
               visible: (isTodayTomorrow(dateTime))&&
@@ -153,8 +153,8 @@ class MealCalendarDateComponent_MySubscription extends StatelessWidget {
                   &&  (isMonthDay && isSubscriptionDay) ,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
-                child: Text("meal-selected_single".tr,style: getLabelSmallStyle(context).copyWith(
-                    color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_WhatsappGreen
+                child: Text("meal-preparing_single".tr,style: getLabelSmallStyle(context).copyWith(
+                    color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_Grey60
                 ),),
               ),
             ),

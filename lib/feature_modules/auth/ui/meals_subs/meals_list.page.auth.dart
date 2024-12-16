@@ -206,7 +206,7 @@ class _MealsListPage_AuthState
                                           crossAxisCount: 2,
                                           mainAxisSpacing: 0,
                                           crossAxisSpacing: APPSTYLE_SpaceMedium,
-                                          mainAxisExtent: screenheight * 0.35),
+                                          mainAxisExtent: screenheight * 0.38),
                                       itemBuilder: (context, indx) {
                                         return MealItemCardComponent_Auth(
                                             isSelectable: true,

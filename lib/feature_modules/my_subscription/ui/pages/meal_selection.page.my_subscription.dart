@@ -370,7 +370,7 @@ class _MealSelectionPage_MySubscriptionState
                                         crossAxisCount: 2,
                                         mainAxisSpacing: 0,
                                         crossAxisSpacing: APPSTYLE_SpaceSmall,
-                                        mainAxisExtent: screenheight * 0.35),
+                                        mainAxisExtent: screenheight * 0.38),
                                     itemBuilder: (context, indx) {
                                       return MealSelectionItemCardSelectedComponent_MySubscription(
                                           isSelectable: true,
@@ -574,7 +574,7 @@ class _MealSelectionPage_MySubscriptionState
                                         crossAxisCount: 2,
                                         mainAxisSpacing: 0,
                                         crossAxisSpacing: APPSTYLE_SpaceMedium,
-                                        mainAxisExtent: screenheight * 0.35),
+                                        mainAxisExtent: screenheight * 0.4),
                                     itemBuilder: (context, indx) {
                                       return MealSelectionItemCardSelectedComponent_MySubscription(
                                           isSelectable: true,

@@ -178,7 +178,7 @@ class MealCalendarDateMealSelectionComponent_MySubscription extends StatelessWid
                           status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected ,
                       child:  Padding(
                         padding: const EdgeInsets.only(bottom: APPSTYLE_SpaceExtraSmall),
-                        child: SvgPicture.asset(ASSETS_FOODPLATE,height: 13,color:  isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_WhatsappGreen),
+                        child: SvgPicture.asset(ASSETS_FOODPLATE,height: 13,color:  isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_Grey60),
                       )
                   ),
                   Visibility(
@@ -186,8 +186,8 @@ class MealCalendarDateMealSelectionComponent_MySubscription extends StatelessWid
                         status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected ,
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
-                      child: Text("meal-selected_single".tr,style: getLabelSmallStyle(context).copyWith(
-                          color:  isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_WhatsappGreen
+                      child: Text("meal-preparing_single".tr,style: getLabelSmallStyle(context).copyWith(
+                          color:  isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_Grey60
                       ),),
                     ),
                   ),

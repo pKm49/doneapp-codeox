@@ -230,6 +230,7 @@
       "delivered_single": "Delivered",
       "meal-selected": "Meals selected successfully for the day",
       "meal-selected_single": "Selected",
+      "meal-preparing_single": "Preparing",
       "meal-not-selected": "Meals not selected for the day, please select",
       "meal-not-selected_single": "Select",
       "item_count": "1 Item",
@@ -281,6 +282,7 @@
       "confirm_selection_message": "Are you sure to select this meal? This item contains ingredients you marked as 'Dislike'",
       "confirm_selection_message_calory": "Are you sure to select this meal? This selection will exceed your overall calorie limit",
       "rate_meal": "Rate Meal",
+      "rating": "Rating",
       "rate": "Rate",
       "rating_saved": "Submitted Succesfully",
       "order_reference": "Order Reference",
@@ -528,6 +530,7 @@
       "off-day_single": "عطلة",
       "freezed_single": "متوقف مؤقتًا",
       "meal-selected_single": "مختارة",
+      "meal-preparing_single": "طبخ",
       "meal-not-selected_single": "يختار",
 
       "off-day": "لا يعمل، Dietdone مغلق لهذا اليوم.",
@@ -586,6 +589,7 @@
       "confirm_selection_message": "هل أنت متأكد من اختيار هذه الوجبة؟ يحتوي هذا العنصر على المكونات التي قمت بوضع علامة \"لا تحبها\".",
       "confirm_selection_message_calory": "هل أنت متأكد من اختيار هذه الوجبة؟ سيتجاوز هذا الاختيار الحد الإجمالي للسعرات الحرارية",
 
+      "rating": "تصنيف",
       "rate_meal": "قيم الوجبه",
       "rate": "التقييم",
       "rating_saved": "تم تقديم التقديم بنجاح",

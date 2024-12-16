@@ -274,6 +274,7 @@ class ProfileController extends GetxController {
   }
 
   updateAllergies(bool isRegisterComplete) async {
+
     if(! isAllergiesUpdating.value && allergies.isNotEmpty){
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final String? tMobile = prefs.getString('mobile');

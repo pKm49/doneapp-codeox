@@ -116,7 +116,7 @@ class _MealItemCardComponent_AuthState extends State<MealItemCardComponent_Auth>
           children: [
             Column(
               crossAxisAlignment:
-              CrossAxisAlignment.center,
+              CrossAxisAlignment.start,
               mainAxisAlignment:
               MainAxisAlignment
                   .spaceBetween,
@@ -148,9 +148,9 @@ class _MealItemCardComponent_AuthState extends State<MealItemCardComponent_Auth>
                       ? widget.subscriptoinDailyMealItem
                       .arabicName
                       : widget.subscriptoinDailyMealItem
-                      .name} - ${widget.subscriptoinDailyMealItem.rating}⭐',
+                      .name}  ',
                   maxLines: 2,
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.start,
                   style: getBodyMediumStyle(
                       context)
                       .copyWith(
@@ -158,19 +158,7 @@ class _MealItemCardComponent_AuthState extends State<MealItemCardComponent_Auth>
                       color:
                       APPSTYLE_Grey80),
                 ),
-                Visibility(
-                  visible: widget.subscriptoinDailyMealItem.tags !="",
-                  child: Text( widget.subscriptoinDailyMealItem.tags,
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                    style: getLabelSmallStyle(
-                        context)
-                        .copyWith(
-                        fontWeight: APPSTYLE_FontWeightBold,
-                        color:
-                        APPSTYLE_PrimaryColor),
-                  ),
-                ),
+
                 Row(
                   children: [
                     Expanded(
@@ -222,7 +210,53 @@ class _MealItemCardComponent_AuthState extends State<MealItemCardComponent_Auth>
                         )),
                   ],
                 ),
+                Row(
+                  children: [
 
+                    Expanded(
+                        child: FittedBox(
+                          alignment: Alignment.centerLeft,
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                              'rating'.tr,
+                              style: getLabelLargeStyle(
+                                  context) ),
+                        )),
+
+                    addHorizontalSpace(
+                        APPSTYLE_SpaceSmall),
+
+                    Expanded(
+                        child: FittedBox(
+                          alignment: Alignment.centerRight,
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                              '${widget.subscriptoinDailyMealItem.rating} ',
+                              style: getLabelLargeStyle(
+                                  context) ),
+                        )),
+                  ],
+                ),
+                Visibility(
+                  visible: widget.subscriptoinDailyMealItem.tags !="",
+                  child: Container(
+                    padding: APPSTYLE_LargePaddingHorizontal,
+                    decoration: BoxDecoration(
+                      color: APPSTYLE_PrimaryColor,
+                      borderRadius: BorderRadius.circular(APPSTYLE_BorderRadiusExtraSmall),
+                    ),
+                    child: Text( widget.subscriptoinDailyMealItem.tags,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      style: getLabelSmallStyle(
+                          context)
+                          .copyWith(
+                          fontWeight: APPSTYLE_FontWeightBold,
+                          color:
+                          APPSTYLE_BackgroundWhite),
+                    ),
+                  ),
+                ),
               ],
             ),
             Column(
