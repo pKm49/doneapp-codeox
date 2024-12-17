@@ -127,11 +127,11 @@ class MealCalendarDateComponent_MySubscription extends StatelessWidget {
 
             // Meal Selected
             Visibility(
-                visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ) &&  (isMonthDay && isSubscriptionDay) ,
+                visible:!isTodayTomorrow(dateTime) &&  (status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ) &&  (isMonthDay && isSubscriptionDay) ,
                 child: SvgPicture.asset(ASSETS_FOODPLATE,height: 13,color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_WhatsappGreen)
             ),
             Visibility(
-              visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ) &&  (isMonthDay && isSubscriptionDay) ,
+              visible: !isTodayTomorrow(dateTime) && (status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ) &&  (isMonthDay && isSubscriptionDay) ,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text("meal-selected_single".tr,style: getLabelSmallStyle(context).copyWith(
@@ -143,13 +143,13 @@ class MealCalendarDateComponent_MySubscription extends StatelessWidget {
             // Today And Tomorrow
             Visibility(
                 visible: (isTodayTomorrow(dateTime)) &&
-                    status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected
+                    (status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected || status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected)
                     &&  (isMonthDay && isSubscriptionDay)  ,
                 child: SvgPicture.asset(ASSETS_FOODPLATE,height: 13,color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_Grey60)
             ),
             Visibility(
               visible: (isTodayTomorrow(dateTime))&&
-                  status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected
+                  (status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected || status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected)
                   &&  (isMonthDay && isSubscriptionDay) ,
               child: FittedBox(
                 fit: BoxFit.scaleDown,

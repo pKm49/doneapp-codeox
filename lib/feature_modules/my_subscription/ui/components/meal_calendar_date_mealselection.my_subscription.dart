@@ -156,14 +156,14 @@ class MealCalendarDateMealSelectionComponent_MySubscription extends StatelessWid
 
                   // Meal Selected
                   Visibility(
-                      visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ) ,
+                      visible: (!isTodayTomorrow(date) && status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ) ,
                       child:  Padding(
                         padding: const EdgeInsets.only(bottom: APPSTYLE_SpaceExtraSmall),
                         child: SvgPicture.asset(ASSETS_FOODPLATE,height: 13,color:  isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_WhatsappGreen),
                       )
                   ),
                   Visibility(
-                    visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ) ,
+                    visible: (!isTodayTomorrow(date) &&status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ) ,
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text("meal-selected_single".tr,style: getLabelSmallStyle(context).copyWith(
@@ -175,7 +175,7 @@ class MealCalendarDateMealSelectionComponent_MySubscription extends StatelessWid
                   // Today And Tomorrow
                   Visibility(
                       visible: (isTodayTomorrow(date)) &&
-                          status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected ,
+                          ( status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected  ||  status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ) ,
                       child:  Padding(
                         padding: const EdgeInsets.only(bottom: APPSTYLE_SpaceExtraSmall),
                         child: SvgPicture.asset(ASSETS_FOODPLATE,height: 13,color:  isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_Grey60),
@@ -183,7 +183,7 @@ class MealCalendarDateMealSelectionComponent_MySubscription extends StatelessWid
                   ),
                   Visibility(
                     visible: (isTodayTomorrow(date)) &&
-                        status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected ,
+                        ( status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected  ||  status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ) ,
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text("meal-preparing_single".tr,style: getLabelSmallStyle(context).copyWith(
