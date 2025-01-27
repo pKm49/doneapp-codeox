@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>CFBundleDevelopmentRegion</key>
+		<string>$(DEVELOPMENT_LANGUAGE)</string>
+		<key>CFBundleDisplayName</key>
+		<string>Dietdone</string>
+		<key>CFBundleExecutable</key>
+		<string>$(EXECUTABLE_NAME)</string>
+		<key>CFBundleIdentifier</key>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+		<key>CFBundleInfoDictionaryVersion</key>
+		<string>6.0</string>
+		<key>CFBundleName</key>
+		<string>dietdone</string>
+		<key>CFBundlePackageType</key>
+		<string>APPL</string>
+		<key>CFBundleShortVersionString</key>
+		<string>$(FLUTTER_BUILD_NAME)</string>
+		<key>CFBundleSignature</key>
+		<string>????</string>
+		<key>CFBundleVersion</key>
+		<string>$(FLUTTER_BUILD_NUMBER)</string>
+		<key>LSRequiresIPhoneOS</key>
+		<true/>
+		<key>NSCameraUsageDescription</key>
+        <string>Please allow Dietdone to use your camera to add your profile photo. We need this to snap a fresh profile pic on the spot. We only use access for profile customization. See our privacy policy for more information.</string>
+        <key>NSLocationWhenInUseUsageDescription</key>
+        <string>Please allow Dietdone to access your location to accurately fetch your address. We need this to reach you for delivering the food. We only use access for navigation. See our privacy policy for more information.</string>
+        <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+        <string>Please allow Dietdone to access your location to accurately fetch your address. We need this to reach you for delivering the food. We only use access for navigation. See our privacy policy for more information.</string>
+        <key>NSPhotoLibraryUsageDescription</key>
+        <string>Please allow Dietdone to access your photos to upload your profile photo. We need this to choose an existing image to represent you. We only use access for profile customization.See our privacy policy for more information.</string>
+        <key>PermissionGroupNotification</key>
+        <string>Please allow Dietdone to send you notifications to share important updates and exciting news!</string>
+        <key>AppsFlyerFramework</key>
+         <dict>
+         <key>isDebug</key>
+         <false/> <!-- Set to false for production -->
+         <key>appID</key>
+         <string>6738683868</string>
+         <key>devKey</key>
+          <string>buSCFfzm94UJt9qjgkajo4</string>
+          </dict>
+        <key>UIBackgroundModes</key>
+        <array>
+            <string>fetch</string>
+            <string>remote-notification</string>
+        </array>
+		<key>UILaunchStoryboardName</key>
+		<string>LaunchScreen</string>
+		<key>UIMainStoryboardFile</key>
+		<string>Main</string>
+		<key>UISupportedInterfaceOrientations</key>
+		<array>
+			<string>UIInterfaceOrientationPortrait</string>
+			<string>UIInterfaceOrientationLandscapeLeft</string>
+			<string>UIInterfaceOrientationLandscapeRight</string>
+		</array>
+		<key>UISupportedInterfaceOrientations~ipad</key>
+		<array>
+			<string>UIInterfaceOrientationPortrait</string>
+			<string>UIInterfaceOrientationPortraitUpsideDown</string>
+			<string>UIInterfaceOrientationLandscapeLeft</string>
+			<string>UIInterfaceOrientationLandscapeRight</string>
+		</array>
+		<key>FirebaseScreenReportingEnabled</key>
+        <true/>
+        <key>FirebaseAppDelegateProxyEnabled</key>
+        <true/>
+        <key>ITSAppUsesNonExemptEncryption</key>
+        <false/>
+		<key>CADisableMinimumFrameDurationOnPhone</key>
+		<true/>
+		<key>UIApplicationSupportsIndirectInputEvents</key>
+		<true/>
+		<key>UIStatusBarHidden</key>
+		<false/>
+		<key>NSAppTransportSecurity</key>
+        <dict>
+            <key>NSAllowsArbitraryLoadsUsageDescription</key>
+            <dict/>
+            <key>NSAllowsArbitraryLoads</key>
+            <true/>
+        </dict>
+	</dict>
+</plist>
