@@ -1,25 +1,27 @@
-import 'package:dietdone/shared_module/constants/available_languages.shared.constant.dart';
-import 'package:dietdone/shared_module/constants/style_params.constants.shared.dart';
-import 'package:dietdone/shared_module/constants/widget_styles.constants.shared.dart';
-import 'package:dietdone/shared_module/controllers/controller.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/widget_generator.service.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
+import 'package:doneapp/shared_module/constants/available_languages.shared.constant.dart';
+import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
+import 'package:doneapp/shared_module/controllers/controller.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
 class LanguagePreviewButtonComponentShared extends StatelessWidget {
+
   Color textColor;
 
   LanguagePreviewButtonComponentShared({super.key, required this.textColor});
 
   final sharedController = Get.find<SharedController>();
 
+
   @override
   Widget build(BuildContext context) {
     double screenwidth = MediaQuery.of(context).size.width;
     return InkWell(
-      onTap: () {
+      onTap: (){
         Get.bottomSheet(
           Container(
             width: screenwidth,
@@ -32,16 +34,15 @@ class LanguagePreviewButtonComponentShared extends StatelessWidget {
               ),
             ),
             padding: APPSTYLE_LargePaddingAll,
-            child: Column(
+            child:  Column(
               children: [
-                Text("app_language".tr, style: getHeadlineLargeStyle(context)),
+                Text("app_language".tr,style: getHeadlineLargeStyle(context)),
                 addVerticalSpace(APPSTYLE_SpaceExtraSmall),
                 const Divider(),
                 addVerticalSpace(APPSTYLE_SpaceExtraSmall),
                 Row(
                   children: [
-                    Expanded(
-                        child: SizedBox(
+                    Expanded(child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
@@ -49,11 +50,11 @@ class LanguagePreviewButtonComponentShared extends StatelessWidget {
                           Navigator.pop(context);
                         },
                         style: getElevatedButtonStyle(context).copyWith(
-                            padding:
-                                MaterialStateProperty.all<EdgeInsetsGeometry>(
-                                    const EdgeInsets.symmetric(
-                                        horizontal: APPSTYLE_SpaceLarge,
-                                        vertical: APPSTYLE_SpaceSmall))),
+                            padding:  MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                const EdgeInsets.symmetric(
+                                    horizontal: APPSTYLE_SpaceLarge,
+                                    vertical:APPSTYLE_SpaceSmall))
+                        ),
                         child: Text("عربي",
                             style: getHeadlineMediumStyle(context).copyWith(
                                 color: APPSTYLE_BackgroundWhite,
@@ -62,20 +63,20 @@ class LanguagePreviewButtonComponentShared extends StatelessWidget {
                       ),
                     )),
                     addHorizontalSpace(APPSTYLE_SpaceMedium),
-                    Expanded(
-                        child: SizedBox(
+                    Expanded(child: SizedBox(
                       width: double.infinity,
                       child: OutlinedButton(
+
                         onPressed: () {
                           sharedController.changeLanguage('en', false);
                           Navigator.pop(context);
                         },
                         style: getElevatedButtonStyle(context).copyWith(
-                            padding:
-                                MaterialStateProperty.all<EdgeInsetsGeometry>(
-                                    const EdgeInsets.symmetric(
-                                        horizontal: APPSTYLE_SpaceLarge,
-                                        vertical: APPSTYLE_SpaceSmall))),
+                            padding:  MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                const EdgeInsets.symmetric(
+                                    horizontal: APPSTYLE_SpaceLarge,
+                                    vertical:APPSTYLE_SpaceSmall))
+                        ),
                         child: Text("English",
                             style: getHeadlineMediumStyle(context).copyWith(
                                 color: APPSTYLE_PrimaryColor,
@@ -83,14 +84,15 @@ class LanguagePreviewButtonComponentShared extends StatelessWidget {
                             textAlign: TextAlign.center),
                       ),
                     )),
+
                   ],
                 )
               ],
             ),
           ),
         );
-
-        //   AlertDialog(
+        
+      //   AlertDialog(
         //           title: Text("app_language".tr),
         //           actions: [
         //             TextButton(
@@ -110,19 +112,20 @@ class LanguagePreviewButtonComponentShared extends StatelessWidget {
       },
       child: Container(
         padding: const EdgeInsets.symmetric(
-            vertical: APPSTYLE_SpaceExtraSmall,
-            horizontal: APPSTYLE_SpaceSmall),
+          vertical: APPSTYLE_SpaceExtraSmall,
+          horizontal: APPSTYLE_SpaceSmall
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(Ionicons.globe_outline, color: textColor),
+            Icon(Ionicons.globe_outline,color: textColor),
             addHorizontalSpace(APPSTYLE_SpaceSmall),
-            Text(
-              Localizations.localeOf(context).languageCode.toString() == 'ar'
-                  ? 'ع'
-                  : 'Eng',
-              style: getBodyMediumStyle(context).copyWith(color: textColor),
-            ),
+            Text(Localizations.localeOf(context)
+                .languageCode
+                .toString() ==
+                'ar'?'ع':'Eng',style: getBodyMediumStyle(context).copyWith(
+              color: textColor
+            ),),
             // Expanded(
             //   flex: 1,
             //   child: InkWell(

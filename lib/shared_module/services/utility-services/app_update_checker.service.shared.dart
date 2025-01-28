@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dietdone/main.dart';
-import 'package:dietdone/shared_module/constants/style_params.constants.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
+import 'package:doneapp/main.dart';
+import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -12,7 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:in_app_update/in_app_update.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:dietdone/env.dart' as env;
+import 'package:doneapp/env.dart' as env;
 
 class AppUpdateChecker {
   Future<bool> checkStatus() async {

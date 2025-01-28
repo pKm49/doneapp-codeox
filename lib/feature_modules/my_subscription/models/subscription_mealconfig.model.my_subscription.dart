@@ -1,4 +1,4 @@
-import 'package:dietdone/feature_modules/my_subscription/models/subscription_dailymeal.model.my_subscription.dart';
+import 'package:doneapp/feature_modules/my_subscription/models/subscription_dailymeal.model.my_subscription.dart';
 
 class SubscriptoinMealConfig {
   final String date;

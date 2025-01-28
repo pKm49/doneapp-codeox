@@ -1,4 +1,4 @@
-import 'package:dietdone/shared_module/models/general_item.model.shared.dart';
+import 'package:doneapp/shared_module/models/general_item.model.shared.dart';
 
 class QueryResponse {
   List<GeneralItem> categories = [];

@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'package:dietdone/shared_module/constants/asset_urls.constants.shared.dart';
-import 'package:dietdone/shared_module/models/app_translation.model.shared.dart';
+import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
+import 'package:doneapp/shared_module/models/app_translation.model.shared.dart';
 import 'package:flutter/services.dart';
- import 'package:get/get.dart';
+import 'package:get/get.dart';
 
 class CoreTranslationController extends Translations {
-
   @override
   Map<String, Map<String, String>> get keys => {};
 
@@ -26,7 +25,6 @@ class CoreTranslationController extends Translations {
     });
     return keys;
   }
-
 }
 
 // Localizations.localeOf(context).languageCode.toString() to get current local

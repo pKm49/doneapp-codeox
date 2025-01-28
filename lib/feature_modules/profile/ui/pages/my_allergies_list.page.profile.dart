@@ -1,9 +1,9 @@
-import 'package:dietdone/feature_modules/profile/controllers/profile.controller.dart';
-import 'package:dietdone/shared_module/constants/style_params.constants.shared.dart';
-import 'package:dietdone/shared_module/constants/widget_styles.constants.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/widget_generator.service.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
-import 'package:dietdone/shared_module/ui/components/custom_back_button.component.shared.dart';
+import 'package:doneapp/feature_modules/profile/controllers/profile.controller.dart';
+import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
+import 'package:doneapp/shared_module/ui/components/custom_back_button.component.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
@@ -39,6 +39,8 @@ class _MyAllergiesListPage_ProfileState
     });
     isRegisterComplete = getArguments[0];
     profileController.updateAllergyDislikePurpose(isRegisterComplete);
+
+
   }
 
   @override
@@ -57,8 +59,7 @@ class _MyAllergiesListPage_ProfileState
           title: Row(
             children: [
               Visibility(
-                  visible: !profileController
-                      .isAllregyDislikeForRegisterComplete.value,
+                  visible: !profileController.isAllregyDislikeForRegisterComplete.value,
                   child: CustomBackButton(isPrimaryMode: false)),
               Expanded(
                 child: FittedBox(
@@ -82,26 +83,25 @@ class _MyAllergiesListPage_ProfileState
                   children: [
                     addVerticalSpace(APPSTYLE_SpaceSmall),
                     Visibility(
-                        visible:
-                            profileController.isIngredientsFetching.value ||
-                                profileController.isAllergiesFetching.value,
+                        visible:   profileController.isIngredientsFetching.value ||
+                              profileController.isAllergiesFetching.value,
                         child: Padding(
-                          padding: APPSTYLE_LargePaddingHorizontal,
-                          child: Shimmer.fromColors(
-                            baseColor: APPSTYLE_Grey20,
-                            highlightColor: APPSTYLE_Grey40,
-                            child: Container(
-                              height: 50,
-                              width: screenwidth,
-                              decoration:
-                                  APPSTYLE_BorderedContainerExtraSmallDecoration
-                                      .copyWith(
-                                border: null,
-                                color: APPSTYLE_Grey20,
-                              ),
-                            ),
+                      padding: APPSTYLE_LargePaddingHorizontal,
+                      child: Shimmer.fromColors(
+                        baseColor: APPSTYLE_Grey20,
+                        highlightColor: APPSTYLE_Grey40,
+                        child: Container(
+                          height: 50,
+                          width: screenwidth  ,
+                          decoration:
+                              APPSTYLE_BorderedContainerExtraSmallDecoration
+                                  .copyWith(
+                            border: null,
+                            color: APPSTYLE_Grey20,
                           ),
-                        )),
+                        ),
+                      ),
+                    )),
                     Visibility(
                       visible: !profileController.isIngredientsFetching.value &&
                           !profileController.isAllergiesFetching.value,
@@ -110,37 +110,34 @@ class _MyAllergiesListPage_ProfileState
                         child: TextFormField(
                             controller: searchController,
                             decoration: InputDecoration(
-                                icon: Icon(Ionicons.search),
+                              icon: Icon(Ionicons.search),
                                 labelText: 'search_ingredients'.tr)),
                       ),
                     ),
                     addVerticalSpace(APPSTYLE_SpaceMedium),
                     Visibility(
-                      visible: profileController.isIngredientsFetching.value ||
-                          profileController.isAllergiesFetching.value,
+                      visible:  profileController.isIngredientsFetching.value ||
+                           profileController.isAllergiesFetching.value,
                       child: Expanded(
                         child: Padding(
-                          padding: APPSTYLE_LargePaddingHorizontal.copyWith(
-                              top: APPSTYLE_SpaceMedium),
+                          padding: APPSTYLE_LargePaddingHorizontal.copyWith(top: APPSTYLE_SpaceMedium),
                           child: ListView.builder(
                             itemCount: 20,
                             itemBuilder: (BuildContext context, int index) {
                               return Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom: APPSTYLE_SpaceMedium),
+                                padding: const EdgeInsets.only(bottom: APPSTYLE_SpaceMedium),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Shimmer.fromColors(
                                       baseColor: APPSTYLE_Grey20,
                                       highlightColor: APPSTYLE_Grey40,
                                       child: Container(
                                         height: 25,
-                                        width: screenwidth * .4,
+                                        width: screenwidth*.4  ,
                                         decoration:
-                                            APPSTYLE_BorderedContainerExtraSmallDecoration
-                                                .copyWith(
+                                        APPSTYLE_BorderedContainerExtraSmallDecoration
+                                            .copyWith(
                                           border: null,
                                           color: APPSTYLE_Grey20,
                                         ),
@@ -151,10 +148,10 @@ class _MyAllergiesListPage_ProfileState
                                       highlightColor: APPSTYLE_Grey40,
                                       child: Container(
                                         height: 25,
-                                        width: 25,
+                                        width: 25  ,
                                         decoration:
-                                            APPSTYLE_BorderedContainerExtraSmallDecoration
-                                                .copyWith(
+                                        APPSTYLE_BorderedContainerExtraSmallDecoration
+                                            .copyWith(
                                           border: null,
                                           color: APPSTYLE_Grey20,
                                         ),
@@ -169,29 +166,26 @@ class _MyAllergiesListPage_ProfileState
                       ),
                     ),
                     Visibility(
-                      visible: !profileController.isIngredientsFetching.value &&
+                      visible:   !profileController.isIngredientsFetching.value &&
                           !profileController.isAllergiesFetching.value,
                       child: Expanded(
                         child: Padding(
                           padding: APPSTYLE_LargePaddingHorizontal,
                           child: ListView.builder(
-                            itemCount:
-                                profileController.ingredientsToShow.length,
+                            itemCount: profileController.ingredientsToShow.length,
                             itemBuilder: (BuildContext context, int index) {
                               return Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                       Localizations.localeOf(context)
-                                                  .languageCode
-                                                  .toString() ==
-                                              'ar'
+                                          .languageCode
+                                          .toString() ==
+                                          'ar'
                                           ? profileController
-                                              .ingredientsToShow[index]
-                                              .arabicName
+                                          .ingredientsToShow[index].arabicName
                                           : profileController
-                                              .ingredientsToShow[index].name,
+                                          .ingredientsToShow[index].name,
                                       style: getBodyMediumStyle(context)),
                                   Checkbox(
                                       checkColor: APPSTYLE_BackgroundOffWhite,
@@ -200,7 +194,7 @@ class _MyAllergiesListPage_ProfileState
                                           .map((element) => element.id)
                                           .toList()
                                           .contains(profileController
-                                              .ingredientsToShow[index].id),
+                                          .ingredientsToShow[index].id),
                                       onChanged: (value) {
                                         profileController.updateAllergyValues(
                                             profileController
@@ -214,8 +208,9 @@ class _MyAllergiesListPage_ProfileState
                       ),
                     ),
                     addVerticalSpace(APPSTYLE_SpaceMedium),
+
                     Visibility(
-                      visible: !profileController.isIngredientsFetching.value &&
+                      visible:  !profileController.isIngredientsFetching.value &&
                           !profileController.isAllergiesFetching.value,
                       child: Container(
                         width: screenwidth - (APPSTYLE_SpaceLarge * 2),
@@ -243,10 +238,9 @@ class _MyAllergiesListPage_ProfileState
                                     margin: EdgeInsets.only(
                                         right: APPSTYLE_SpaceSmall,
                                         bottom: APPSTYLE_SpaceSmall),
-                                    padding:
-                                        APPSTYLE_ExtraSmallPaddingAll.copyWith(
-                                            right: APPSTYLE_SpaceSmall,
-                                            left: APPSTYLE_SpaceSmall),
+                                    padding: APPSTYLE_ExtraSmallPaddingAll.copyWith(
+                                        right: APPSTYLE_SpaceSmall,
+                                        left: APPSTYLE_SpaceSmall),
                                     child: Wrap(
                                       children: [
                                         Text(
@@ -273,7 +267,7 @@ class _MyAllergiesListPage_ProfileState
                     ),
                     addVerticalSpace(APPSTYLE_SpaceMedium),
                     Visibility(
-                      visible: !profileController.isIngredientsFetching.value &&
+                      visible:  !profileController.isIngredientsFetching.value &&
                           !profileController.isAllergiesFetching.value,
                       child: Padding(
                         padding: EdgeInsets.symmetric(
@@ -283,28 +277,20 @@ class _MyAllergiesListPage_ProfileState
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () {
-                              if (!profileController
-                                      .isAllergiesUpdating.value &&
-                                  profileController.allergies.isNotEmpty) {
-                                profileController.updateAllergies(
-                                    profileController
-                                        .isAllregyDislikeForRegisterComplete
-                                        .value);
+                              if(!profileController.isAllergiesUpdating.value && profileController.allergies.isNotEmpty){
+                                  profileController.updateAllergies(profileController.isAllregyDislikeForRegisterComplete.value);
                               }
                             },
                             style: getElevatedButtonStyle(context),
                             child: profileController.isAllergiesUpdating.value
                                 ? LoadingAnimationWidget.staggeredDotsWave(
+                              color: APPSTYLE_BackgroundWhite,
+                              size: 24,
+                            ):  Text("update".tr,
+                                style: getHeadlineMediumStyle(context).copyWith(
                                     color: APPSTYLE_BackgroundWhite,
-                                    size: 24,
-                                  )
-                                : Text("update".tr,
-                                    style: getHeadlineMediumStyle(context)
-                                        .copyWith(
-                                            color: APPSTYLE_BackgroundWhite,
-                                            fontWeight:
-                                                APPSTYLE_FontWeightBold),
-                                    textAlign: TextAlign.center),
+                                    fontWeight: APPSTYLE_FontWeightBold),
+                                textAlign: TextAlign.center),
                           ),
                         ),
                       ),

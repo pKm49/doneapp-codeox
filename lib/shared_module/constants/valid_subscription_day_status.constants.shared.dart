@@ -1,4 +1,4 @@
-import 'package:dietdone/shared_module/models/subscription_day_status.model.shared.dart';
+import 'package:doneapp/shared_module/models/subscription_day_status.model.shared.dart';
 
 SubscriptionDayStatus VALIDSUBSCRIPTIONDAY_STATUS = SubscriptionDayStatus(
     offDay: 'off-day',

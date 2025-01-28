@@ -1,25 +1,25 @@
-import 'package:dietdone/feature_modules/address/models/shipping_address.model.address.dart';
-import 'package:dietdone/feature_modules/e_shop/controllers/controller.eshop.dart';
-import 'package:dietdone/shared_module/constants/asset_urls.constants.shared.dart';
-import 'package:dietdone/shared_module/constants/style_params.constants.shared.dart';
-import 'package:dietdone/shared_module/constants/widget_styles.constants.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/widget_generator.service.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
+import 'package:doneapp/feature_modules/address/models/shipping_address.model.address.dart';
+import 'package:doneapp/feature_modules/e_shop/controllers/controller.eshop.dart';
+import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
 class AddressCardComponentEshop extends StatelessWidget {
-   Address shippingAddress;
+  Address shippingAddress;
   GestureTapCallback onSelected;
   int selectedId;
   AddressCardComponentEshop(
       {super.key,
       required this.shippingAddress,
       required this.selectedId,
-      required this.onSelected });
-   final addressController = Get.find<EshopController>();
+      required this.onSelected});
+  final addressController = Get.find<EshopController>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +27,18 @@ class AddressCardComponentEshop extends StatelessWidget {
     print("selectedId");
     print(selectedId);
     return Obx(
-      ()=> InkWell(
+      () => InkWell(
         onTap: onSelected,
         child: Container(
           decoration: APPSTYLE_ShadowedContainerSmallDecoration.copyWith(
             color: APPSTYLE_BackgroundWhite,
-            border:Border.all(color:addressController.addressId.value==shippingAddress.id? APPSTYLE_PrimaryColor:Colors.transparent, width:addressController.addressId.value==shippingAddress.id? 1:0) ,
+            border: Border.all(
+                color: addressController.addressId.value == shippingAddress.id
+                    ? APPSTYLE_PrimaryColor
+                    : Colors.transparent,
+                width: addressController.addressId.value == shippingAddress.id
+                    ? 1
+                    : 0),
             boxShadow: [
               const BoxShadow(
                 color: APPSTYLE_Grey80Shadow24,
@@ -42,7 +48,8 @@ class AddressCardComponentEshop extends StatelessWidget {
             ],
           ),
           padding: APPSTYLE_MediumPaddingAll,
-          margin: APPSTYLE_LargePaddingAll.copyWith(top: APPSTYLE_SpaceSmall,bottom: APPSTYLE_SpaceSmall),
+          margin: APPSTYLE_LargePaddingAll.copyWith(
+              top: APPSTYLE_SpaceSmall, bottom: APPSTYLE_SpaceSmall),
           width: screenwidth,
           child: Wrap(
             direction: Axis.vertical,
@@ -53,15 +60,19 @@ class AddressCardComponentEshop extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-
                     Expanded(
-                      child:shippingAddress.nickname.trim()!=''?
-                      Text(shippingAddress.nickname,style: getHeadlineMediumStyle(context),textAlign:
-                      Localizations.localeOf(context)
-                          .languageCode
-                          .toString() ==
-                          'ar'? TextAlign.start : TextAlign.end,):
-                      Container(),
+                      child: shippingAddress.nickname.trim() != ''
+                          ? Text(
+                              shippingAddress.nickname,
+                              style: getHeadlineMediumStyle(context),
+                              textAlign: Localizations.localeOf(context)
+                                          .languageCode
+                                          .toString() ==
+                                      'ar'
+                                  ? TextAlign.start
+                                  : TextAlign.end,
+                            )
+                          : Container(),
                     ),
                   ],
                 ),
@@ -75,21 +86,14 @@ class AddressCardComponentEshop extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                          "${Localizations.localeOf(context)
-                              .languageCode
-                              .toString() ==
-                              'ar'?shippingAddress.areaNameArabic:shippingAddress.areaName}, "
-                              " ${shippingAddress.street} ${'street'.tr}, "
-                              "Block ${Localizations.localeOf(context)
-                              .languageCode
-                              .toString() ==
-                              'ar'?shippingAddress.blockNameArabic:shippingAddress.blockName}, "
-                              "${shippingAddress.jedha.trim()!='' ?('${shippingAddress.jedha} '):''}${shippingAddress.jedha.trim()!=''?('${'jedha'.tr},'):''}"
-                              "${shippingAddress.houseNumber !=-1?'house_number'.tr:''} : ${shippingAddress.houseNumber!=-1 ?shippingAddress.houseNumber:''}"
-                              "${shippingAddress.floorNumber !=-1?(', ${'floor_number'.tr} : '):''} ${shippingAddress.floorNumber!=-1 ?shippingAddress.floorNumber:''}"
-                              "${shippingAddress.apartmentNo !=-1? (', ${'flat_number'.tr} : '):''} ${shippingAddress.apartmentNo!=-1 ?shippingAddress.apartmentNo:''}"
-                              "${shippingAddress.comments.trim()!=''? (', ${'comments'.tr} : '):'' } ${shippingAddress.comments.trim()!=''?shippingAddress.comments:''}",
-
+                          "${Localizations.localeOf(context).languageCode.toString() == 'ar' ? shippingAddress.areaNameArabic : shippingAddress.areaName}, "
+                          " ${shippingAddress.street} ${'street'.tr}, "
+                          "Block ${Localizations.localeOf(context).languageCode.toString() == 'ar' ? shippingAddress.blockNameArabic : shippingAddress.blockName}, "
+                          "${shippingAddress.jedha.trim() != '' ? ('${shippingAddress.jedha} ') : ''}${shippingAddress.jedha.trim() != '' ? ('${'jedha'.tr},') : ''}"
+                          "${shippingAddress.houseNumber != -1 ? 'house_number'.tr : ''} : ${shippingAddress.houseNumber != -1 ? shippingAddress.houseNumber : ''}"
+                          "${shippingAddress.floorNumber != -1 ? (', ${'floor_number'.tr} : ') : ''} ${shippingAddress.floorNumber != -1 ? shippingAddress.floorNumber : ''}"
+                          "${shippingAddress.apartmentNo != -1 ? (', ${'flat_number'.tr} : ') : ''} ${shippingAddress.apartmentNo != -1 ? shippingAddress.apartmentNo : ''}"
+                          "${shippingAddress.comments.trim() != '' ? (', ${'comments'.tr} : ') : ''} ${shippingAddress.comments.trim() != '' ? shippingAddress.comments : ''}",
                           style: getBodyMediumStyle(context)
                               .copyWith(color: APPSTYLE_Grey40)),
                     ),

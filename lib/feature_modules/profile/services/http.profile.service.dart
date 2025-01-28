@@ -1,10 +1,10 @@
-import 'package:dietdone/feature_modules/profile/constants/http_request_endpoints.constants.profile.dart';
-import 'package:dietdone/feature_modules/profile/models/referral_data.profile.model.dart';
-import 'package:dietdone/shared_module/models/general_item.model.shared.dart';
-import 'package:dietdone/shared_module/models/http_response.model.shared.dart';
-import 'package:dietdone/shared_module/models/user_data.model.shared.dart';
-import 'package:dietdone/shared_module/services/http-services/http_request_handler.service.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
+import 'package:doneapp/feature_modules/profile/constants/http_request_endpoints.constants.profile.dart';
+import 'package:doneapp/feature_modules/profile/models/referral_data.profile.model.dart';
+import 'package:doneapp/shared_module/models/general_item.model.shared.dart';
+import 'package:doneapp/shared_module/models/http_response.model.shared.dart';
+import 'package:doneapp/shared_module/models/user_data.model.shared.dart';
+import 'package:doneapp/shared_module/services/http-services/http_request_handler.service.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:get/get.dart';
 
 class ProfileHttpService {

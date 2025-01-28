@@ -1,6 +1,6 @@
-import 'package:dietdone/shared_module/constants/style_params.constants.shared.dart';
-import 'package:dietdone/shared_module/constants/widget_styles.constants.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/widget_generator.service.shared.dart';
+import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -13,7 +13,8 @@ class MealItemsLoader_Eshop extends StatelessWidget {
     double screenheight = MediaQuery.of(context).size.height;
 
     return Padding(
-      padding: APPSTYLE_LargePaddingHorizontal.copyWith(top: APPSTYLE_SpaceMedium),
+      padding:
+          APPSTYLE_LargePaddingHorizontal.copyWith(top: APPSTYLE_SpaceMedium),
       child: GridView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
@@ -24,7 +25,7 @@ class MealItemsLoader_Eshop extends StatelessWidget {
             crossAxisSpacing: APPSTYLE_SpaceMedium,
             mainAxisExtent: screenheight * 0.3),
         itemBuilder: (context, indx) {
-          return  Container(
+          return Container(
             height: screenheight * .4,
             padding: APPSTYLE_MediumPaddingAll,
             color: APPSTYLE_Grey20,
@@ -37,18 +38,13 @@ class MealItemsLoader_Eshop extends StatelessWidget {
                   baseColor: APPSTYLE_Grey20,
                   highlightColor: APPSTYLE_Grey40,
                   child: Container(
-                      decoration:
-                      APPSTYLE_BorderedContainerDarkMediumDecoration
+                      decoration: APPSTYLE_BorderedContainerDarkMediumDecoration
                           .copyWith(
-                          borderRadius:
-                          BorderRadius.circular(
-                              APPSTYLE_BorderRadiusSmall),
-                          color:
-                          APPSTYLE_BackgroundWhite,
-                          border: Border.all(
-                              color:
-                              APPSTYLE_PrimaryColorBg,
-                              width: 3)),
+                              borderRadius: BorderRadius.circular(
+                                  APPSTYLE_BorderRadiusSmall),
+                              color: APPSTYLE_BackgroundWhite,
+                              border: Border.all(
+                                  color: APPSTYLE_PrimaryColorBg, width: 3)),
                       padding: APPSTYLE_SmallPaddingAll,
                       width: screenwidth * .3,
                       height: screenwidth * .3,
@@ -60,12 +56,10 @@ class MealItemsLoader_Eshop extends StatelessWidget {
                   highlightColor: APPSTYLE_Grey40,
                   child: Container(
                     decoration:
-                    APPSTYLE_ShadowedContainerExtraSmallDecoration
-                        .copyWith(
-                        borderRadius:
-                        BorderRadius.circular(
-                            APPSTYLE_BlurRadiusSmall),
-                        color: APPSTYLE_Grey20),
+                        APPSTYLE_ShadowedContainerExtraSmallDecoration.copyWith(
+                            borderRadius:
+                                BorderRadius.circular(APPSTYLE_BlurRadiusSmall),
+                            color: APPSTYLE_Grey20),
                     height: 20,
                     width: screenwidth * .25,
                   ),
@@ -76,12 +70,10 @@ class MealItemsLoader_Eshop extends StatelessWidget {
                   highlightColor: APPSTYLE_Grey40,
                   child: Container(
                     decoration:
-                    APPSTYLE_ShadowedContainerExtraSmallDecoration
-                        .copyWith(
-                        borderRadius:
-                        BorderRadius.circular(
-                            APPSTYLE_BlurRadiusSmall),
-                        color: APPSTYLE_Grey20),
+                        APPSTYLE_ShadowedContainerExtraSmallDecoration.copyWith(
+                            borderRadius:
+                                BorderRadius.circular(APPSTYLE_BlurRadiusSmall),
+                            color: APPSTYLE_Grey20),
                     height: 20,
                     width: screenwidth * .25,
                   ),

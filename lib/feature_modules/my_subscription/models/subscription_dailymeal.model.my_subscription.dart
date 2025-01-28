@@ -1,4 +1,4 @@
-import 'package:dietdone/feature_modules/my_subscription/models/subscription_dailymeal_item.model.my_subscription.dart';
+import 'package:doneapp/feature_modules/my_subscription/models/subscription_dailymeal_item.model.my_subscription.dart';
 
 class SubscriptoinDailyMeal {
   final int id;

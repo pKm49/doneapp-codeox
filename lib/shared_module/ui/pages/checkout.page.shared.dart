@@ -1,16 +1,16 @@
 import 'dart:ffi';
 import 'dart:ui';
 
-import 'package:dietdone/feature_modules/plan_purchase/controllers/plan_purchase.controller.dart';
-import 'package:dietdone/shared_module/constants/style_params.constants.shared.dart';
-import 'package:dietdone/shared_module/constants/widget_styles.constants.shared.dart';
-import 'package:dietdone/shared_module/controllers/controller.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/date_conversion.service.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/widget_generator.service.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
-import 'package:dietdone/shared_module/ui/components/custom_back_button.component.shared.dart';
-import 'package:dietdone/shared_module/ui/components/language_preview_button.component.shared.dart';
+import 'package:doneapp/feature_modules/plan_purchase/controllers/plan_purchase.controller.dart';
+import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
+import 'package:doneapp/shared_module/controllers/controller.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/date_conversion.service.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
+import 'package:doneapp/shared_module/ui/components/custom_back_button.component.shared.dart';
+import 'package:doneapp/shared_module/ui/components/language_preview_button.component.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';

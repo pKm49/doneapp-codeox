@@ -1,5 +1,5 @@
-import 'package:dietdone/shared_module/constants/style_params.constants.shared.dart';
-import 'package:dietdone/shared_module/constants/widget_styles.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -22,8 +22,8 @@ class MealSelectionTitleLoader extends StatelessWidget {
             highlightColor: APPSTYLE_Grey40,
             child: Container(
               decoration:
-                  APPSTYLE_BorderedContainerExtraSmallDecoration.copyWith(
-                      color: APPSTYLE_Grey20),
+              APPSTYLE_BorderedContainerExtraSmallDecoration
+                  .copyWith(color: APPSTYLE_Grey20),
               height: 30,
               width: screenwidth * .3,
             ),
@@ -33,8 +33,8 @@ class MealSelectionTitleLoader extends StatelessWidget {
             highlightColor: APPSTYLE_Grey40,
             child: Container(
               decoration:
-                  APPSTYLE_BorderedContainerExtraSmallDecoration.copyWith(
-                      color: APPSTYLE_Grey20),
+              APPSTYLE_BorderedContainerExtraSmallDecoration
+                  .copyWith(color: APPSTYLE_Grey20),
               height: 30,
               width: screenwidth * .2,
             ),

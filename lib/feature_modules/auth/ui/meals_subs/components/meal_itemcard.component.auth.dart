@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:dietdone/feature_modules/auth/models/meal_item.model.auth.dart';
-import 'package:dietdone/feature_modules/my_subscription/models/subscription_dailymeal.model.my_subscription.dart';
-import 'package:dietdone/feature_modules/my_subscription/models/subscription_dailymeal_item.model.my_subscription.dart';
-import 'package:dietdone/feature_modules/my_subscription/services/meal_selection.helper.services.dart';
-import 'package:dietdone/shared_module/constants/style_params.constants.shared.dart';
-import 'package:dietdone/shared_module/constants/widget_styles.constants.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/widget_generator.service.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
+import 'package:doneapp/feature_modules/auth/models/meal_item.model.auth.dart';
+import 'package:doneapp/feature_modules/my_subscription/models/subscription_dailymeal.model.my_subscription.dart';
+import 'package:doneapp/feature_modules/my_subscription/models/subscription_dailymeal_item.model.my_subscription.dart';
+import 'package:doneapp/feature_modules/my_subscription/services/meal_selection.helper.services.dart';
+import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';

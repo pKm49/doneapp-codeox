@@ -1,15 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:dietdone/shared_module/services/http-services/http.service.shared.dart';
+import 'package:doneapp/shared_module/services/http-services/http.service.shared.dart';
 import 'package:http/src/base_request.dart';
 import 'package:http/src/base_response.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:http_interceptor/models/interceptor_contract.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:dietdone/env.dart' as env;
+import 'package:doneapp/env.dart' as env;
 
 class AppHttpInterceptor implements InterceptorContract {
-
   @override
   Future<BaseRequest> interceptRequest({required BaseRequest request}) async {
     try {
@@ -22,12 +21,10 @@ class AppHttpInterceptor implements InterceptorContract {
       if (Bearer != null && Bearer != "") {
         request.headers["Authorization"] = "Bearer $Bearer";
       }
-
     } catch (e) {
       print(e);
     }
     return request;
-
   }
 
   @override
@@ -35,50 +32,45 @@ class AppHttpInterceptor implements InterceptorContract {
       {required BaseResponse response}) async {
     // TODO: implement interceptResponse
     try {
-
       if (response is Response) {
         // print("httpResponseBody");
         // print(response.body);
         var httpResponseBody = json.decode(response.body.toString());
 
         if (httpResponseBody['payload'] != null) {
-
           if (httpResponseBody['payload'] is String &&
               httpResponseBody["payload"].toString().contains('UNAUTHORIZED')) {
             var sharedHttpService = new SharedHttpService();
             await sharedHttpService.getAccessToken();
           } else {
-            if(httpResponseBody['payload'] is! String){
-              if(httpResponseBody['payload'].length>0){
+            if (httpResponseBody['payload'] is! String) {
+              if (httpResponseBody['payload'].length > 0) {
                 if (httpResponseBody['payload'][0]['access_token'] != null) {
                   var sharedPreferences = await SharedPreferences.getInstance();
-                  sharedPreferences.setString("access_token",
-                      httpResponseBody['payload'][0]['access_token'].toString());
+                  sharedPreferences.setString(
+                      "access_token",
+                      httpResponseBody['payload'][0]['access_token']
+                          .toString());
                 }
               }
             }
-
-
           }
         }
       }
-    } catch (e,stc) {
+    } catch (e, stc) {
       print(e);
       print(stc);
     }
     return response;
-
   }
 
-   @override
+  @override
   Future<bool> shouldInterceptRequest() {
-     return Future.value(true);
-
+    return Future.value(true);
   }
 
   @override
   Future<bool> shouldInterceptResponse() {
     return Future.value(true);
-
   }
 }

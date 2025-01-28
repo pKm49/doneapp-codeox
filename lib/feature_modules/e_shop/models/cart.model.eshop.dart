@@ -1,4 +1,4 @@
-import 'package:dietdone/shared_module/constants/asset_urls.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 
 class Cart {
   final String orderReference;

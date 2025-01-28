@@ -1,8 +1,8 @@
-import 'package:dietdone/feature_modules/auth/models/login_credential.model.auth.dart';
-import 'package:dietdone/feature_modules/auth/services/http.services.auth.dart';
-import 'package:dietdone/shared_module/constants/app_route_names.constants.shared.dart';
-import 'package:dietdone/shared_module/controllers/controller.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
+import 'package:doneapp/feature_modules/auth/models/login_credential.model.auth.dart';
+import 'package:doneapp/feature_modules/auth/services/http.services.auth.dart';
+import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
+import 'package:doneapp/shared_module/controllers/controller.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';

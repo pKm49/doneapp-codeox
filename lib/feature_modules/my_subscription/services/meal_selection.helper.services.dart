@@ -1,6 +1,6 @@
-import 'package:dietdone/shared_module/constants/asset_urls.constants.shared.dart';
-import 'package:dietdone/shared_module/constants/style_params.constants.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/calendar_utilities.service.shared.dart';
+import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/calendar_utilities.service.shared.dart';
 import 'package:flutter/material.dart';
 
 String getCalendarDayText(int index) {

@@ -1,26 +1,24 @@
- 
-import 'package:dietdone/env.dart' as env;
-import 'package:dietdone/feature_modules/plan_purchase/models/payment_data.model.plan_purchase.dart';
-import 'package:dietdone/shared_module/constants/default_values.constants.shared.dart';
-import 'package:dietdone/shared_module/constants/http_request_endpoints.constants.shared.dart';
-import 'package:dietdone/shared_module/models/http_response.model.shared.dart';
-import 'package:dietdone/shared_module/models/my_subscription.model.shared.dart';
-import 'package:dietdone/shared_module/models/notification.model.shared.dart';
-import 'package:dietdone/shared_module/models/payment_gateway_data.model.shared.dart';
-import 'package:dietdone/shared_module/models/sendotp_credential.model.auth.dart';
-import 'package:dietdone/shared_module/models/user_data.model.shared.dart';
-import 'package:dietdone/shared_module/services/http-services/http_request_handler.service.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
+import 'package:doneapp/env.dart' as env;
+import 'package:doneapp/feature_modules/plan_purchase/models/payment_data.model.plan_purchase.dart';
+import 'package:doneapp/shared_module/constants/default_values.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/http_request_endpoints.constants.shared.dart';
+import 'package:doneapp/shared_module/models/http_response.model.shared.dart';
+import 'package:doneapp/shared_module/models/my_subscription.model.shared.dart';
+import 'package:doneapp/shared_module/models/notification.model.shared.dart';
+import 'package:doneapp/shared_module/models/payment_gateway_data.model.shared.dart';
+import 'package:doneapp/shared_module/models/sendotp_credential.model.auth.dart';
+import 'package:doneapp/shared_module/models/user_data.model.shared.dart';
+import 'package:doneapp/shared_module/services/http-services/http_request_handler.service.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:get/get.dart';
 
 class SharedHttpService {
-  
   getAccessToken() async {
     Map<String, dynamic> params = {};
     params["client_id"] = env.clientId;
     params["client_secret"] = env.clientSecret;
-    AppHttpResponse response = await getRequest(
-        SharedHttpRequestEndpoint_GetAccessToken, params);
+    AppHttpResponse response =
+        await getRequest(SharedHttpRequestEndpoint_GetAccessToken, params);
     print("getAccessToken");
     print(response.data);
     return;
@@ -37,7 +35,7 @@ class SharedHttpService {
         return mapUserData(response.data[0]);
       }
       return mapUserData({});
-    } catch  (e,st){
+    } catch (e, st) {
       print(e);
       print(st);
       return mapUserData({});
@@ -45,44 +43,40 @@ class SharedHttpService {
   }
 
   Future<List<MySubscription>> getMySubscriptions(String mobile) async {
-
-    try{
-
-      AppHttpResponse response =
-      await getRequest(SharedHttpRequestEndpoint_GetCustomerSubscriptions+mobile,null);
+    try {
+      AppHttpResponse response = await getRequest(
+          SharedHttpRequestEndpoint_GetCustomerSubscriptions + mobile, null);
 
       List<MySubscription> tempMealCategories = [];
       if (response.statusCode == 200 && response.data != null) {
         for (var i = 0; i < response.data.length; i++) {
           MySubscription mySubscription = mapMySubscription(response.data[i]);
-          if(mySubscription.status=='in_progress'){
+          if (mySubscription.status == 'in_progress') {
             tempMealCategories.add(mapMySubscription(response.data[i]));
           }
         }
       }
 
       return tempMealCategories;
-
-    }catch  (e,st){
+    } catch (e, st) {
       print(e);
       print(st);
       return [];
     }
   }
 
-
   Future<List<AppNotification>> getNotifications(String mobile) async {
     try {
       List<AppNotification> notifications = [];
-      AppHttpResponse response =
-          await getRequest(SharedHttpRequestEndpoint_GetNotifications+"$mobile", null);
+      AppHttpResponse response = await getRequest(
+          SharedHttpRequestEndpoint_GetNotifications + "$mobile", null);
       if (response.statusCode == 200 && response.data != null) {
         for (var i = 0; i < response.data.length; i++) {
           notifications.add(mapAppNotification(response.data[i]));
         }
       }
       return notifications;
-    } catch  (e,st){
+    } catch (e, st) {
       print(e);
       print(st);
       return [];
@@ -94,9 +88,9 @@ class SharedHttpService {
       Map<String, dynamic> body = {};
       body["device_token"] = deviceToken;
       AppHttpResponse response =
-      await postRequest(SharedHttpRequestEndpoint_RemoveDeviceToken, body);
+          await postRequest(SharedHttpRequestEndpoint_RemoveDeviceToken, body);
       return response.statusCode == 200;
-    } catch  (e,st){
+    } catch (e, st) {
       print(e);
       print(st);
       return false;
@@ -112,7 +106,7 @@ class SharedHttpService {
           await postRequest(SharedHttpRequestEndpoint_SaveDeviceToken, body);
 
       return response.statusCode == 200;
-    } catch  (e,st){
+    } catch (e, st) {
       print(e);
       print(st);
       return false;
@@ -120,15 +114,15 @@ class SharedHttpService {
   }
 
   Future<bool> sendOtp(SendOTPCredential sendOTPCredential) async {
+    try {
+      AppHttpResponse response = await postRequest(
+          SharedHttpRequestEndpoint_SendOTP, sendOTPCredential.toJson());
 
-    try{
-      AppHttpResponse response = await postRequest(SharedHttpRequestEndpoint_SendOTP, sendOTPCredential.toJson());
-
-      if(response.statusCode != 200){
+      if (response.statusCode != 200) {
         showSnackbar(Get.context!, response.message, "error");
       }
       return response.statusCode == 200;
-    }catch  (e,st){
+    } catch (e, st) {
       print(e);
       print(st);
       showSnackbar(Get.context!, "something_wrong".tr, "error");
@@ -137,20 +131,19 @@ class SharedHttpService {
   }
 
   Future<bool> verifyOtp(String mobile, String otp) async {
-
-    try{
+    try {
       Map<String, dynamic> params = {};
-      params["mobile"]=mobile;
-      params["otp"]=otp;
+      params["mobile"] = mobile;
+      params["otp"] = otp;
 
       AppHttpResponse response =
-      await getRequest(SharedHttpRequestEndpoint_VerifyOTP,params);
+          await getRequest(SharedHttpRequestEndpoint_VerifyOTP, params);
 
-      if(response.statusCode != 200){
+      if (response.statusCode != 200) {
         showSnackbar(Get.context!, response.message, "error");
       }
       return response.statusCode == 200;
-    }catch  (e,st){
+    } catch (e, st) {
       print(e);
       print(st);
       showSnackbar(Get.context!, "something_wrong".tr, "error");
@@ -158,16 +151,15 @@ class SharedHttpService {
     }
   }
 
- Future<String> getSupportNumber() async {
-
-    try{
+  Future<String> getSupportNumber() async {
+    try {
       AppHttpResponse response =
-          await getRequest(SharedHttpRequestEndpoint_GetSupportNumber,null);
-      if(response.statusCode == 200){
+          await getRequest(SharedHttpRequestEndpoint_GetSupportNumber, null);
+      if (response.statusCode == 200) {
         return response.data;
       }
       return DefaultSupportNumber;
-    }catch  (e,st){
+    } catch (e, st) {
       print(e);
       print(st);
       return DefaultSupportNumber;
@@ -178,11 +170,11 @@ class SharedHttpService {
     try {
       Map<String, dynamic> body = {};
       body["mobile"] = mobile;
-      AppHttpResponse response =
-      await postRequest(SharedHttpRequestEndpoint_BookDietitianAppointment, body);
+      AppHttpResponse response = await postRequest(
+          SharedHttpRequestEndpoint_BookDietitianAppointment, body);
 
       return response.statusCode == 200;
-    } catch (e,st){
+    } catch (e, st) {
       print(e);
       print(st);
       showSnackbar(Get.context!, "something_wrong".tr, "error");
@@ -191,40 +183,34 @@ class SharedHttpService {
   }
 
   Future<bool> activateSubscription(int subscriptionId) async {
-
-    try{
+    try {
       Map<String, dynamic> params = {};
-      params["subscription_id"]=subscriptionId;
-      AppHttpResponse response =
-      await postRequest(SharedHttpRequestEndpoint_ActivateSubscription, params);
+      params["subscription_id"] = subscriptionId;
+      AppHttpResponse response = await postRequest(
+          SharedHttpRequestEndpoint_ActivateSubscription, params);
 
       return response.statusCode == 200;
-
-    }catch  (e,st){
+    } catch (e, st) {
       print(e);
       print(st);
       return false;
     }
   }
 
-
   Future<PaymentCompletionData> getPaymentLink(int subscriptionId) async {
-
-    try{
+    try {
       Map<String, dynamic> params = {};
-      AppHttpResponse response =
-      await getRequest('$SharedHttpRequestEndpoint_GetPaymentLink/$subscriptionId',params );
+      AppHttpResponse response = await getRequest(
+          '$SharedHttpRequestEndpoint_GetPaymentLink/$subscriptionId', params);
 
       if (response.statusCode == 200 && response.data != null) {
-
         return mapPaymentCompletionData(response.data[0]);
-      }else{
-        showSnackbar(Get.context!, response.message , "error");
+      } else {
+        showSnackbar(Get.context!, response.message, "error");
       }
 
       return mapPaymentCompletionData({});
-
-    }catch  (e,st){
+    } catch (e, st) {
       print(e);
       print(st);
       return mapPaymentCompletionData({});
@@ -232,26 +218,23 @@ class SharedHttpService {
   }
 
   Future<bool> checkOrderStatus(String referenceId) async {
-
-    try{
+    try {
       Map<String, dynamic> params = {};
-      params["reference"]=referenceId;
+      params["reference"] = referenceId;
       AppHttpResponse response =
-      await getRequest(SharedHttpRequestEndpoint_CheckOrderStatus, params);
+          await getRequest(SharedHttpRequestEndpoint_CheckOrderStatus, params);
 
       if (response.statusCode == 200 && response.data != null) {
-        if(response.data[0]['payment_status'] !=null){
+        if (response.data[0]['payment_status'] != null) {
           return response.data[0]['payment_status'] == "paid";
         }
       }
 
       return false;
-
-    }catch  (e,st){
+    } catch (e, st) {
       print(e);
       print(st);
       return false;
     }
   }
-
 }

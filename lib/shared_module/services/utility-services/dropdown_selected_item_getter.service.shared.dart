@@ -1,4 +1,4 @@
-import 'package:dietdone/shared_module/models/general_item.model.shared.dart';
+import 'package:doneapp/shared_module/models/general_item.model.shared.dart';
 
 getSelectedItem(int itemId, List<GeneralItem> items) {
   if (itemId == -1 || items.isEmpty) {

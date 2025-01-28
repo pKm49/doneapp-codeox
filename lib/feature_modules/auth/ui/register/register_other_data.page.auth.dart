@@ -1,26 +1,26 @@
-import 'package:dietdone/feature_modules/auth/controllers/register.controller.auth.dart';
-import 'package:dietdone/shared_module/constants/app_route_names.constants.shared.dart';
- import 'package:dietdone/shared_module/constants/style_params.constants.shared.dart';
-import 'package:dietdone/shared_module/constants/valid_phoneverification_modes.constants.shared.dart';
-import 'package:dietdone/shared_module/constants/widget_styles.constants.shared.dart';
- import 'package:dietdone/shared_module/services/utility-services/form_validator.service.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/widget_generator.service.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
-import 'package:dietdone/shared_module/ui/components/custom_curve_shape.component.shared.dart';
-import 'package:dietdone/shared_module/ui/components/custom_back_button.component.shared.dart';
-import 'package:dietdone/shared_module/ui/components/language_preview_button.component.shared.dart';
+import 'package:doneapp/feature_modules/auth/controllers/register.controller.auth.dart';
+import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/valid_phoneverification_modes.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/form_validator.service.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
+import 'package:doneapp/shared_module/ui/components/custom_curve_shape.component.shared.dart';
+import 'package:doneapp/shared_module/ui/components/custom_back_button.component.shared.dart';
+import 'package:doneapp/shared_module/ui/components/language_preview_button.component.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RegisterOtherDataPage_Auth extends StatelessWidget {
   RegisterOtherDataPage_Auth({super.key});
 
-  RegisterController registerController =  Get.put(RegisterController());
-  final GlobalKey<FormState> registerEnglishNameFormKey = GlobalKey<FormState>();
+  RegisterController registerController = Get.put(RegisterController());
+  final GlobalKey<FormState> registerEnglishNameFormKey =
+      GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-
     double screenheight = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -28,7 +28,7 @@ class RegisterOtherDataPage_Auth extends StatelessWidget {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: APPSTYLE_PrimaryColor,
-          scrolledUnderElevation:0.0,
+          scrolledUnderElevation: 0.0,
           elevation: 0.0,
           title: Row(
             children: [
@@ -36,17 +36,17 @@ class RegisterOtherDataPage_Auth extends StatelessWidget {
             ],
           ),
           actions: [
-            LanguagePreviewButtonComponentShared(textColor:APPSTYLE_BackgroundWhite),
+            LanguagePreviewButtonComponentShared(
+                textColor: APPSTYLE_BackgroundWhite),
             addHorizontalSpace(APPSTYLE_SpaceLarge)
           ],
         ),
         body: SafeArea(
           child: Obx(
-                ()=> Container(
+            () => Container(
               height: screenheight,
               child: Column(
                 children: [
-
                   Expanded(
                     child: Form(
                       key: registerEnglishNameFormKey,
@@ -59,7 +59,8 @@ class RegisterOtherDataPage_Auth extends StatelessWidget {
                           Padding(
                             padding: APPSTYLE_LargePaddingHorizontal,
                             child: TextFormField(
-                              controller: registerController.firstNameArabicTextEditingController.value,
+                              controller: registerController
+                                  .firstNameArabicTextEditingController.value,
                               // validator: (email) =>
                               //     checkIfArabicNameValid(email, 'first_name_ar',false),
                               decoration: InputDecoration(
@@ -71,7 +72,8 @@ class RegisterOtherDataPage_Auth extends StatelessWidget {
                                       padding: const EdgeInsets.only(left: 8.0),
                                       child: Text(
                                         "*",
-                                        style: TextStyle(color: APPSTYLE_GuideRed),
+                                        style:
+                                            TextStyle(color: APPSTYLE_GuideRed),
                                       ),
                                     )
                                   ],
@@ -84,23 +86,23 @@ class RegisterOtherDataPage_Auth extends StatelessWidget {
                           Padding(
                             padding: APPSTYLE_LargePaddingHorizontal,
                             child: TextFormField(
-                              controller: registerController.lastNameArabicTextEditingController.value,
+                              controller: registerController
+                                  .lastNameArabicTextEditingController.value,
                               // validator: (email) =>
                               //     checkIfArabicNameValid(email, 'last_name_ar',false),
                               decoration: InputDecoration(
                                 hintText: 'last_name_ar_hint'.tr,
-                                label: Row(
-                                  children: [
-                                    Text('last_name_ar'.tr),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Text(
-                                        "*",
-                                        style: TextStyle(color: APPSTYLE_GuideRed),
-                                      ),
-                                    )
-                                  ]
-                                ),
+                                label: Row(children: [
+                                  Text('last_name_ar'.tr),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: Text(
+                                      "*",
+                                      style:
+                                          TextStyle(color: APPSTYLE_GuideRed),
+                                    ),
+                                  )
+                                ]),
                                 isDense: true,
                               ),
                             ),
@@ -109,8 +111,10 @@ class RegisterOtherDataPage_Auth extends StatelessWidget {
                           Padding(
                             padding: APPSTYLE_LargePaddingHorizontal,
                             child: TextFormField(
-                              controller: registerController.emailTextEditingController.value,
-                              validator: (email) => checkIfEmailFormValid(email),
+                              controller: registerController
+                                  .emailTextEditingController.value,
+                              validator: (email) =>
+                                  checkIfEmailFormValid(email),
                               decoration: InputDecoration(
                                 hintText: 'enter_email'.tr,
                                 label: Row(
@@ -120,7 +124,8 @@ class RegisterOtherDataPage_Auth extends StatelessWidget {
                                       padding: const EdgeInsets.only(left: 8.0),
                                       child: Text(
                                         "*",
-                                        style: TextStyle(color: APPSTYLE_GuideRed),
+                                        style:
+                                            TextStyle(color: APPSTYLE_GuideRed),
                                       ),
                                     )
                                   ],
@@ -133,8 +138,8 @@ class RegisterOtherDataPage_Auth extends StatelessWidget {
                           Padding(
                             padding: APPSTYLE_LargePaddingHorizontal,
                             child: TextFormField(
-                              controller: registerController.passwordTextEditingController.value,
-
+                              controller: registerController
+                                  .passwordTextEditingController.value,
                               validator: (password) =>
                                   checkIfPasswordFieldValid(password),
                               decoration: InputDecoration(
@@ -146,7 +151,8 @@ class RegisterOtherDataPage_Auth extends StatelessWidget {
                                       padding: const EdgeInsets.only(left: 8.0),
                                       child: Text(
                                         "*",
-                                        style: TextStyle(color: APPSTYLE_GuideRed),
+                                        style:
+                                            TextStyle(color: APPSTYLE_GuideRed),
                                       ),
                                     )
                                   ],
@@ -159,11 +165,15 @@ class RegisterOtherDataPage_Auth extends StatelessWidget {
                           Padding(
                             padding: APPSTYLE_LargePaddingHorizontal,
                             child: TextFormField(
-                              controller: registerController.confirmPasswordTextEditingController.value,
-
+                              controller: registerController
+                                  .confirmPasswordTextEditingController.value,
                               validator: (confirm_password) =>
                                   checkIfConfirmPasswordFieldValid(
-                                      confirm_password,registerController.passwordTextEditingController.value.text),
+                                      confirm_password,
+                                      registerController
+                                          .passwordTextEditingController
+                                          .value
+                                          .text),
                               decoration: InputDecoration(
                                 hintText: 're_enter_password'.tr,
                                 label: Row(
@@ -173,7 +183,8 @@ class RegisterOtherDataPage_Auth extends StatelessWidget {
                                       padding: const EdgeInsets.only(left: 8.0),
                                       child: Text(
                                         "*",
-                                        style: TextStyle(color: APPSTYLE_GuideRed),
+                                        style:
+                                            TextStyle(color: APPSTYLE_GuideRed),
                                       ),
                                     )
                                   ],
@@ -182,24 +193,24 @@ class RegisterOtherDataPage_Auth extends StatelessWidget {
                               ),
                             ),
                           ),
-                          addVerticalSpace(APPSTYLE_SpaceLarge ),
-
+                          addVerticalSpace(APPSTYLE_SpaceLarge),
                         ],
                       ),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: APPSTYLE_SpaceLarge,vertical: APPSTYLE_SpaceSmall),
+                        horizontal: APPSTYLE_SpaceLarge,
+                        vertical: APPSTYLE_SpaceSmall),
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
                           FocusManager.instance.primaryFocus?.unfocus();
-                          if (registerEnglishNameFormKey.currentState!.validate() ) {
+                          if (registerEnglishNameFormKey.currentState!
+                              .validate()) {
                             handleSubmit();
                           }
-
                         },
                         style: getElevatedButtonStyle(context),
                         child: Text("continue".tr,
@@ -218,10 +229,7 @@ class RegisterOtherDataPage_Auth extends StatelessWidget {
   }
 
   void handleSubmit() {
-    Get
-        .toNamed(
-        AppRouteNames
-            .otpVerificationMobileInputRoute,
+    Get.toNamed(AppRouteNames.otpVerificationMobileInputRoute,
         arguments: [VALIDPHONEVERIFICATION_MODES.register]);
   }
 }

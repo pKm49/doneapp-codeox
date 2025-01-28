@@ -1,11 +1,11 @@
-import 'package:dietdone/feature_modules/my_subscription/constants/http_request_endpoints.constants.my_subscription.dart';
-import 'package:dietdone/shared_module/models/subscription_date.model.my_subscription.dart';
-import 'package:dietdone/feature_modules/my_subscription/models/subscription_mealconfig.model.my_subscription.dart';
-import 'package:dietdone/shared_module/constants/default_values.constants.shared.dart';
-import 'package:dietdone/shared_module/models/http_response.model.shared.dart';
-import 'package:dietdone/shared_module/services/http-services/http_request_handler.service.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/date_conversion.service.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
+import 'package:doneapp/feature_modules/my_subscription/constants/http_request_endpoints.constants.my_subscription.dart';
+import 'package:doneapp/shared_module/models/subscription_date.model.my_subscription.dart';
+import 'package:doneapp/feature_modules/my_subscription/models/subscription_mealconfig.model.my_subscription.dart';
+import 'package:doneapp/shared_module/constants/default_values.constants.shared.dart';
+import 'package:doneapp/shared_module/models/http_response.model.shared.dart';
+import 'package:doneapp/shared_module/services/http-services/http_request_handler.service.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/date_conversion.service.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:get/get.dart';
 
 class MySubsHttpService {
@@ -91,7 +91,6 @@ class MySubsHttpService {
       if (response.statusCode != 200) {
         showSnackbar(Get.context!, response.message, "error");
       }
-      print(params);
       return response.statusCode == 200;
     } catch (e, st) {
       print(e);

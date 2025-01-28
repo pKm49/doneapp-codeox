@@ -1,16 +1,16 @@
-import 'package:dietdone/feature_modules/address/models/shipping_address.model.address.dart';
-import 'package:dietdone/shared_module/constants/asset_urls.constants.shared.dart';
-import 'package:dietdone/shared_module/constants/style_params.constants.shared.dart';
-import 'package:dietdone/shared_module/constants/widget_styles.constants.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/widget_generator.service.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
+import 'package:doneapp/feature_modules/address/models/shipping_address.model.address.dart';
+import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
 class AddressCardComponentShared extends StatelessWidget {
-   Address shippingAddress;
+  Address shippingAddress;
   GestureTapCallback onDeleteSelected;
   GestureTapCallback onEditSelected;
 
@@ -49,20 +49,27 @@ class AddressCardComponentShared extends StatelessWidget {
               children: [
                 InkWell(
                     onTap: onDeleteSelected,
-                    child: Icon(Ionicons.trash_bin_outline,color: APPSTYLE_GuideRed,)),
-
+                    child: Icon(
+                      Ionicons.trash_bin_outline,
+                      color: APPSTYLE_GuideRed,
+                    )),
                 addHorizontalSpace(APPSTYLE_SpaceSmall),
                 InkWell(
                     onTap: onEditSelected,
                     child: Icon(Ionicons.create_outline)),
                 Expanded(
-                  child:shippingAddress.nickname.trim()!=''?
-                  Text(shippingAddress.nickname,style: getHeadlineMediumStyle(context),textAlign:
-                  Localizations.localeOf(context)
-                      .languageCode
-                      .toString() ==
-                      'ar'? TextAlign.start : TextAlign.end,):
-                  Container(),
+                  child: shippingAddress.nickname.trim() != ''
+                      ? Text(
+                          shippingAddress.nickname,
+                          style: getHeadlineMediumStyle(context),
+                          textAlign: Localizations.localeOf(context)
+                                      .languageCode
+                                      .toString() ==
+                                  'ar'
+                              ? TextAlign.start
+                              : TextAlign.end,
+                        )
+                      : Container(),
                 ),
               ],
             ),
@@ -76,21 +83,14 @@ class AddressCardComponentShared extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                      "${Localizations.localeOf(context)
-                          .languageCode
-                          .toString() ==
-                          'ar'?shippingAddress.areaNameArabic:shippingAddress.areaName}, "
-                          " ${shippingAddress.street} ${'street'.tr}, "
-                          "Block ${Localizations.localeOf(context)
-                          .languageCode
-                          .toString() ==
-                          'ar'?shippingAddress.blockNameArabic:shippingAddress.blockName}, "
-                          "${shippingAddress.jedha.trim()!='' ?('${shippingAddress.jedha} '):''}${shippingAddress.jedha.trim()!=''?('${'jedha'.tr},'):''}"
-                          "${shippingAddress.houseNumber !=-1?'house_number'.tr:''} : ${shippingAddress.houseNumber!=-1 ?shippingAddress.houseNumber:''}"
-                          "${shippingAddress.floorNumber !=-1?(', ${'floor_number'.tr} : '):''} ${shippingAddress.floorNumber!=-1 ?shippingAddress.floorNumber:''}"
-                          "${shippingAddress.apartmentNo !=-1? (', ${'flat_number'.tr} : '):''} ${shippingAddress.apartmentNo!=-1 ?shippingAddress.apartmentNo:''}"
-                          "${shippingAddress.comments.trim()!=''? (', ${'comments'.tr} : '):'' } ${shippingAddress.comments.trim()!=''?shippingAddress.comments:''}",
-
+                      "${Localizations.localeOf(context).languageCode.toString() == 'ar' ? shippingAddress.areaNameArabic : shippingAddress.areaName}, "
+                      " ${shippingAddress.street} ${'street'.tr}, "
+                      "Block ${Localizations.localeOf(context).languageCode.toString() == 'ar' ? shippingAddress.blockNameArabic : shippingAddress.blockName}, "
+                      "${shippingAddress.jedha.trim() != '' ? ('${shippingAddress.jedha} ') : ''}${shippingAddress.jedha.trim() != '' ? ('${'jedha'.tr},') : ''}"
+                      "${shippingAddress.houseNumber != -1 ? 'house_number'.tr : ''} : ${shippingAddress.houseNumber != -1 ? shippingAddress.houseNumber : ''}"
+                      "${shippingAddress.floorNumber != -1 ? (', ${'floor_number'.tr} : ') : ''} ${shippingAddress.floorNumber != -1 ? shippingAddress.floorNumber : ''}"
+                      "${shippingAddress.apartmentNo != -1 ? (', ${'flat_number'.tr} : ') : ''} ${shippingAddress.apartmentNo != -1 ? shippingAddress.apartmentNo : ''}"
+                      "${shippingAddress.comments.trim() != '' ? (', ${'comments'.tr} : ') : ''} ${shippingAddress.comments.trim() != '' ? shippingAddress.comments : ''}",
                       style: getBodyMediumStyle(context)
                           .copyWith(color: APPSTYLE_Grey40)),
                 ),

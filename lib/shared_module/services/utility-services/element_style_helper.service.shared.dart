@@ -1,4 +1,4 @@
-import 'package:dietdone/shared_module/constants/style_params.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:flutter/material.dart';
 
 class ElementStyleHelpers {

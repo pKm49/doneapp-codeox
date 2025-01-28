@@ -1,5 +1,5 @@
-import 'package:dietdone/shared_module/constants/asset_urls.constants.shared.dart';
-import 'package:dietdone/shared_module/controllers/controller.shared.dart';
+import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
+import 'package:doneapp/shared_module/controllers/controller.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +11,7 @@ class GifSplashPage_Core extends StatefulWidget {
 }
 
 class _GifSplashPage_CoreState extends State<GifSplashPage_Core> {
+
   final sharedController = Get.find<SharedController>();
 
   @override
@@ -18,6 +19,7 @@ class _GifSplashPage_CoreState extends State<GifSplashPage_Core> {
     // TODO: implement initState
     super.initState();
     sharedController.setInitialScreen();
+
   }
 
   @override

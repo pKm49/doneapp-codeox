@@ -1,4 +1,4 @@
-import 'package:dietdone/feature_modules/auth/services/default_profilepic_base64.dart';
+import 'package:doneapp/feature_modules/auth/services/default_profilepic_base64.dart';
 import 'package:intl/intl.dart';
 
 class RegisterCredential {

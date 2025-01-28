@@ -2,8 +2,9 @@ import UIKit
 import Flutter
 import flutter_local_notifications
 import FirebaseCore
+import FirebaseMessaging
 
-@UIApplicationMain
+@main
 @objc class AppDelegate: FlutterAppDelegate {
   override func application(
     _ application: UIApplication,
@@ -11,6 +12,17 @@ import FirebaseCore
   ) -> Bool {
 
         FirebaseApp.configure()
+      UNUserNotificationCenter.current().requestAuthorization(
+            options: [.alert, .badge, .sound]
+          ) { granted, _ in
+            print("Permission granted: \(granted)")
+          }
+          
+
+          
+          // Register for remote notifications
+          application.registerForRemoteNotifications()
+      
       FlutterLocalNotificationsPlugin.setPluginRegistrantCallback { (registry) in
         GeneratedPluginRegistrant.register(with: registry)}
 

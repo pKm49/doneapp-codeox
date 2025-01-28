@@ -1,7 +1,7 @@
-import 'package:dietdone/feature_modules/plan_purchase/models/plan.model.plan_purchase.dart';
-import 'package:dietdone/shared_module/constants/style_params.constants.shared.dart';
-import 'package:dietdone/shared_module/constants/widget_styles.constants.shared.dart';
-import 'package:dietdone/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
+import 'package:doneapp/feature_modules/plan_purchase/models/plan.model.plan_purchase.dart';
+import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rotated_corner_decoration/rotated_corner_decoration.dart';

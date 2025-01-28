@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:dietdone/shared_module/services/notification-services/push_notification.service.shared.dart';
+import 'package:doneapp/shared_module/services/notification-services/push_notification.service.shared.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:dietdone/firebase_options.dart';
+import 'package:doneapp/firebase_options.dart';
 
 class PushNotificationController {
   Future<void> setupInteractedMessage() async {

@@ -1,7 +1,7 @@
-import 'package:dietdone/feature_modules/plan_purchase/controllers/plan_purchase.controller.dart';
-import 'package:dietdone/shared_module/constants/style_params.constants.shared.dart';
-import 'package:dietdone/shared_module/controllers/controller.shared.dart';
-import 'package:dietdone/shared_module/ui/components/confirm_dialogue.component.shared.dart';
+import 'package:doneapp/feature_modules/plan_purchase/controllers/plan_purchase.controller.dart';
+import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
+import 'package:doneapp/shared_module/controllers/controller.shared.dart';
+import 'package:doneapp/shared_module/ui/components/confirm_dialogue.component.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
