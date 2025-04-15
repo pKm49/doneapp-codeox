@@ -37,23 +37,25 @@ class SharedController extends GetxController {
   var isPaymentGatewayLoading = false.obs;
   var isOrderDetailsFetching = false.obs;
   var paymentGatewayIsLoading = false.obs;
-  var paymentCompletionData =  mapPaymentCompletionData({}).obs;
+  var paymentCompletionData = mapPaymentCompletionData({}).obs;
 
-  Rx<TextEditingController> mobileTextEditingController = TextEditingController().obs;
+  Rx<TextEditingController> mobileTextEditingController =
+      TextEditingController().obs;
 
   @override
   void onInit() {
     super.onInit();
   }
 
-  Future<bool> getAccessToken()async{
-    print(    "getAccessToken called called");
+  Future<bool> getAccessToken() async {
+    print("getAccessToken called called");
     var sharedHttpService = SharedHttpService();
     await sharedHttpService.getAccessToken();
     return true;
   }
 
   Future<void> setInitialScreen() async {
+    print("initial");
     var sharedHttpService = SharedHttpService();
     await sharedHttpService.getAccessToken();
     getSupportNumber();
@@ -62,8 +64,11 @@ class SharedController extends GetxController {
     AppUpdateChecker appUpdateChecker = AppUpdateChecker();
 
     bool isUpdateAvailable = await appUpdateChecker.checkStatus();
+    print(isUpdateAvailable);
+    print("isUpdateAvailable");
 
     if (!isUpdateAvailable) {
+      print("update not available");
       final SharedPreferences prefs = await SharedPreferences.getInstance();
 
       final String? tSelectedLanguage = prefs.getString('selectedLanguage');
@@ -96,41 +101,36 @@ class SharedController extends GetxController {
           Get.toNamed(AppRouteNames.welcomeScreenRoute);
         }
       } else {
-
         Get.toNamed(AppRouteNames.welcomeScreenRoute);
       }
     }
   }
 
-  changeMobile(String mobile){
+  changeMobile(String mobile) {
     mobileTextEditingController.value.text = mobile;
   }
 
   Future<void> refetchUserData() async {
-     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? tMobile = prefs.getString('mobile');
 
     if (tMobile != null && tMobile != '') {
       mobile.value = tMobile;
 
-    try{
-      var sharedHttpService = SharedHttpService();
-      isUserDataFetching.value = true;
-      mobile.value = tMobile;
+      try {
+        var sharedHttpService = SharedHttpService();
+        isUserDataFetching.value = true;
+        mobile.value = tMobile;
 
-      userData.value = await sharedHttpService.getProfileData(tMobile);
-      mySubscriptions.value =
-          await sharedHttpService.getMySubscriptions(mobile.value);
-      isUserDataFetching.value = false;
-
-
-    }catch(e,st){
-
-      print(e);
-      print(st);
-      isUserDataFetching.value = false ;
-    }
-
+        userData.value = await sharedHttpService.getProfileData(tMobile);
+        mySubscriptions.value =
+            await sharedHttpService.getMySubscriptions(mobile.value);
+        isUserDataFetching.value = false;
+      } catch (e, st) {
+        print(e);
+        print(st);
+        isUserDataFetching.value = false;
+      }
     }
   }
 
@@ -146,22 +146,22 @@ class SharedController extends GetxController {
   }
 
   fetchUserData(String targetRoute, String tMobile) async {
-    try{
+    try {
       var sharedHttpService = SharedHttpService();
       isUserDataFetching.value = true;
       mobile.value = tMobile;
 
       userData.value = await sharedHttpService.getProfileData(tMobile);
       mySubscriptions.value =
-      await sharedHttpService.getMySubscriptions(mobile.value);
+          await sharedHttpService.getMySubscriptions(mobile.value);
       isUserDataFetching.value = false;
 
       if (userData.value.id != -1) {
         saveDeviceToken();
         if (targetRoute != "") {
-          if(targetRoute==AppRouteNames.dislikeAuditRoute){
-            Get.offAllNamed(targetRoute,arguments: [true]);
-          }else{
+          if (targetRoute == AppRouteNames.dislikeAuditRoute) {
+            Get.offAllNamed(targetRoute, arguments: [true]);
+          } else {
             showSnackbar(Get.context!, "successfully_loggedin".tr, "info");
             Get.offAllNamed(targetRoute);
           }
@@ -171,33 +171,27 @@ class SharedController extends GetxController {
           showSnackbar(Get.context!, "something_wrong".tr, "error");
         }
       }
-    }catch(e,st){
-
+    } catch (e, st) {
       print(e);
       print(st);
       Future.delayed(const Duration(milliseconds: 10));
       refetchUserData();
     }
-
   }
 
   Future<void> handleLogout() async {
-
     userData.value = mapUserData({});
     notifications.value = [];
-    saveAuthTokenAndMobileToSharedPreference("","");
+    saveAuthTokenAndMobileToSharedPreference("", "");
     Get.offAllNamed(AppRouteNames.loginRoute);
     removeToken();
-
   }
 
   Future<void> removeToken() async {
     var sharedHttpService = SharedHttpService();
     String deviceToken = await getFirebaseMessagingToken();
-   await sharedHttpService.removeDeviceToken(deviceToken);
-
+    await sharedHttpService.removeDeviceToken(deviceToken);
   }
-
 
   Future<String> getFirebaseMessagingToken() async {
     try {
@@ -223,12 +217,11 @@ class SharedController extends GetxController {
     }
   }
 
-
   Future<void> getCustomerSubscriptions() async {
     isSubscriptionsFetching.value = true;
     var sharedHttpService = SharedHttpService();
     mySubscriptions.value =
-    await sharedHttpService.getMySubscriptions(userData.value.mobile);
+        await sharedHttpService.getMySubscriptions(userData.value.mobile);
     isSubscriptionsFetching.value = false;
   }
 
@@ -238,13 +231,13 @@ class SharedController extends GetxController {
     notifications.value =
         await sharedHttpService.getNotifications(userData.value.mobile);
     isNotificationsFetching.value = false;
+
   }
 
   sendOtp(bool isResetPassword, bool isNavigationRequired) async {
-
-    if(mobileTextEditingController.value.text.toString().length<7){
+    if (mobileTextEditingController.value.text.toString().length < 7) {
       showSnackbar(Get.context!, "enter_valid_mobile".tr, "error");
-    }else{
+    } else {
       // showSnackbar(Get.context!, "otp_sent".tr, "info");
       // Get.toNamed(AppRouteNames.otpVerificationOtpInputRoute,
       //     arguments: [
@@ -252,24 +245,26 @@ class SharedController extends GetxController {
       //       VALIDPHONEVERIFICATION_MODES.register]);
       isOtpSending.value = true;
       var sharedHttpService = new SharedHttpService();
-      bool isSuccess = await sharedHttpService.sendOtp(
-          SendOTPCredential(mobile: "+965${mobileTextEditingController.value.text}", isResetPassword: isResetPassword));
+      bool isSuccess = await sharedHttpService.sendOtp(SendOTPCredential(
+          mobile: "+965${mobileTextEditingController.value.text}",
+          isResetPassword: isResetPassword));
       isOtpSending.value = false;
 
-      if(isSuccess){
+      if (isSuccess) {
         showSnackbar(Get.context!, "otp_sent".tr, "info");
-        Get.toNamed(AppRouteNames.otpVerificationOtpInputRoute,
-            arguments: [
-              isResetPassword? VALIDPHONEVERIFICATION_MODES.reset_password:
-              VALIDPHONEVERIFICATION_MODES.register]);
+        Get.toNamed(AppRouteNames.otpVerificationOtpInputRoute, arguments: [
+          isResetPassword
+              ? VALIDPHONEVERIFICATION_MODES.reset_password
+              : VALIDPHONEVERIFICATION_MODES.register
+        ]);
       }
     }
   }
 
-  verifyOtp (String otp, bool isResetPassword) async {
-    if(otp.length!=6){
+  verifyOtp(String otp, bool isResetPassword) async {
+    if (otp.length != 6) {
       showSnackbar(Get.context!, "enter_valid_otp".tr, "error");
-    }else{
+    } else {
       // showSnackbar(Get.context!, "otp_verified_success".tr, "info");
       // if(isResetPassword){
       //   Get.offNamed(AppRouteNames.resetPasswordNewpasswordRoute,
@@ -288,17 +283,18 @@ class SharedController extends GetxController {
 
       isOtpVerifying.value = true;
       var sharedHttpService = new SharedHttpService();
-      bool isVerificationSuccess = await sharedHttpService.verifyOtp( "+965${mobileTextEditingController.value.text}",otp);
+      bool isVerificationSuccess = await sharedHttpService.verifyOtp(
+          "+965${mobileTextEditingController.value.text}", otp);
       isOtpVerifying.value = false;
 
-      if(isVerificationSuccess){
+      if (isVerificationSuccess) {
         showSnackbar(Get.context!, "otp_verified".tr, "info");
 
-        if(isResetPassword){
-          Get.offNamed(AppRouteNames.resetPasswordNewpasswordRoute,arguments: [mobileTextEditingController.value.text]);
-        }else{
-
-          Get.toNamed(AppRouteNames.otpVerificationSuccessRoute,arguments: [
+        if (isResetPassword) {
+          Get.offNamed(AppRouteNames.resetPasswordNewpasswordRoute,
+              arguments: [mobileTextEditingController.value.text]);
+        } else {
+          Get.toNamed(AppRouteNames.otpVerificationSuccessRoute, arguments: [
             ASSETS_SUCCESSMARK,
             "otp_verified",
             "otp_verified_message",
@@ -306,20 +302,18 @@ class SharedController extends GetxController {
             true,
             AppRouteNames.addressAuditRoute,
             mobileTextEditingController.value.text
-          ]) ;
+          ]);
         }
       }
-
     }
-
   }
 
   getSupportNumber() async {
     var sharedHttpService = SharedHttpService();
-    String tSupoortNumber = await sharedHttpService.getSupportNumber( );
-    if(tSupoortNumber !=""){
+    String tSupoortNumber = await sharedHttpService.getSupportNumber();
+    if (tSupoortNumber != "") {
       supportNumber.value = tSupoortNumber;
-    }else{
+    } else {
       supportNumber.value = DefaultSupportNumber;
     }
   }
@@ -327,82 +321,88 @@ class SharedController extends GetxController {
   bookDietitionAppointment() async {
     isAppointmentBooking.value = true;
     var sharedHttpService = SharedHttpService();
-    bool isSuccess = await sharedHttpService.bookDietitionAppointment(userData.value.mobile);
+    bool isSuccess =
+        await sharedHttpService.bookDietitionAppointment(userData.value.mobile);
     isAppointmentBooking.value = false;
 
-    if(isSuccess){
-      showSnackbar(Get.context!, "appointment_booking_request_recieved_successfully".tr, "info");
-      showSnackbar(Get.context!, "our_rep_will_contact".tr, "info");}
+    if (isSuccess) {
+      showSnackbar(Get.context!,
+          "appointment_booking_request_recieved_successfully".tr, "info");
+      showSnackbar(Get.context!, "our_rep_will_contact".tr, "info");
+    }
   }
 
   void activatePlan(int subscriptionId) async {
-    if(!isPlanActivating.value){
-      if(subscriptionId != -1){
+    if (!isPlanActivating.value) {
+      if (subscriptionId != -1) {
         isPlanActivating.value = true;
         var sharedHttpService = SharedHttpService();
-        bool isSuccess = await sharedHttpService
-            .activateSubscription(subscriptionId);
+        bool isSuccess =
+            await sharedHttpService.activateSubscription(subscriptionId);
         isPlanActivating.value = false;
-        if(isSuccess){
+        if (isSuccess) {
           showSnackbar(Get.context!, "plan_activated_successfully".tr, "info");
           fetchUserData("", userData.value.mobile);
-        }else{
+        } else {
           showSnackbar(Get.context!, "something_wrong".tr, "error");
         }
-
       }
     }
-
-
   }
 
   void getPaymentLink(int subscriptionId) async {
     // showSnackbar(Get.context!, "customer_support_message".tr, "error");
 
-    if(!isOrderDetailsFetching.value){
-      if(subscriptionId != -1){
+    if (!isOrderDetailsFetching.value) {
+      if (subscriptionId != -1) {
         isOrderDetailsFetching.value = true;
         var sharedHttpService = SharedHttpService();
-         paymentCompletionData.value =  await sharedHttpService.getPaymentLink( subscriptionId);
+        paymentCompletionData.value =
+            await sharedHttpService.getPaymentLink(subscriptionId);
         isOrderDetailsFetching.value = false;
 
         if (paymentCompletionData.value.transactionUrl == "" ||
             paymentCompletionData.value.orderReference == "") {
           showSnackbar(Get.context!, "customer_support_message".tr, "error");
-        } else{
+        } else {
           Get.toNamed(AppRouteNames.paymentCompleteCheckoutRoute);
         }
       }
     }
-
-
   }
-
 
   void checkOrderStatus() async {
     isPaymentGatewayLoading.value = true;
     var sharedHttpService = SharedHttpService();
-    bool isSuccess =  await sharedHttpService.checkOrderStatus( paymentCompletionData.value.paymentReference);
+    bool isSuccess = await sharedHttpService
+        .checkOrderStatus(paymentCompletionData.value.paymentReference);
 
     if (!isSuccess) {
       isPaymentGatewayLoading.value = false;
       showSnackbar(Get.context!, "payment_capture_error".tr, "error");
     } else {
       showSnackbar(Get.context!, "payment_capture_success".tr, "info");
-      List<MySubscription> myUnPaidSubs = mySubscriptions.where((p0) => p0.status=='not paid').toList();
-      if(myUnPaidSubs.isNotEmpty){
-        activatePlan( paymentCompletionData.value.subscriptionId);
+      List<MySubscription> myUnPaidSubs =
+          mySubscriptions.where((p0) => p0.status == 'not paid').toList();
+      if (myUnPaidSubs.isNotEmpty) {
+        activatePlan(paymentCompletionData.value.subscriptionId);
       }
-      Get.toNamed(AppRouteNames.otpVerificationSuccessRoute,arguments: [
-        ASSETS_SUCCESSMARK,"subscription_success","subscription_success_info",
-        'home',false,AppRouteNames.homeRoute,""
-      ]) ;
+      Get.toNamed(AppRouteNames.otpVerificationSuccessRoute, arguments: [
+        ASSETS_SUCCESSMARK,
+        "subscription_success",
+        "subscription_success_info",
+        'home',
+        false,
+        AppRouteNames.homeRoute,
+        ""
+      ]);
     }
   }
 
   void changePaymentGatewayLoading(bool status) {
     paymentGatewayIsLoading.value = status;
   }
+
   paymentGatewayGoback(bool status) {
     Get.back(result: status);
   }
@@ -414,5 +414,4 @@ class SharedController extends GetxController {
       paymentCompletionData.value.paymentStatusUrl,
     ])?.then((value) => checkOrderStatus());
   }
-
 }

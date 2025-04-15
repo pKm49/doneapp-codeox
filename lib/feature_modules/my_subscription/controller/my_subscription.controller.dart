@@ -1,3 +1,4 @@
+import 'package:doneapp/feature_modules/my_subscription/models/buffer_response.dart';
 import 'package:doneapp/feature_modules/my_subscription/models/subscription_dailymeal.model.my_subscription.dart';
 import 'package:doneapp/feature_modules/my_subscription/models/subscription_dailymeal_item.model.my_subscription.dart';
 import 'package:doneapp/shared_module/models/subscription_date.model.my_subscription.dart';
@@ -14,6 +15,12 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MySubscriptionController extends GetxController {
+@override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    getBufferTime();
+  }
   var isSubscriptionDatesLoading = false.obs;
   var subscriptionDates = <SubscriptoinDate>[].obs;
   var currentMonth = DateTime(DateTime.now().year, DateTime.now().month, 1).obs;
@@ -36,7 +43,21 @@ class MySubscriptionController extends GetxController {
   var itemScrollController = ItemScrollController();
   var isRatingSubmitting = false.obs;
   var currentSelectedRating = (1).obs;
+int? bufferBeforeFourThirty;
+int? bufferAfterFourThirty;
+int? bufferAfterFourThirtyWednesday;
+int? bufferBeforeFourThirtyWednesday;
 
+
+  void getBufferTime()async{
+    var mySubsHttpService = MySubsHttpService();
+    BufferDetailsResponse response= await mySubsHttpService.getBufferTime();
+    bufferBeforeFourThirty=response.payload?.bufferBefore430??48;
+    bufferAfterFourThirty=response.payload?.bufferAfter430??72;
+    bufferAfterFourThirtyWednesday=response.payload?.wednesdayBufferAfter430??96;
+    bufferBeforeFourThirtyWednesday=response.payload?.wednesdayBufferBefore430??72;
+
+  }
   getSubscriptionDates(bool setDate, bool getSubs) async {
     if (!isSubscriptionDatesLoading.value) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();

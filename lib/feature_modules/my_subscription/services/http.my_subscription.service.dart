@@ -8,6 +8,8 @@ import 'package:doneapp/shared_module/services/utility-services/date_conversion.
 import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:get/get.dart';
 
+import '../models/buffer_response.dart';
+
 class MySubsHttpService {
   Future<List<SubscriptoinDate>> getSubscriptionDates(String mobile) async {
     try {
@@ -132,6 +134,43 @@ class MySubsHttpService {
       return response.statusCode == 200;
     } catch (e) {
       return false;
+    }
+  }
+  Future<BufferDetailsResponse> getBufferTime() async {
+    try {
+      Map<String, dynamic> params = {};
+
+      AppHttpResponse response = await getRequest(
+          MySubscriptionHttpRequestEndpoint_BufferTime, params);
+
+      if (response.statusCode == 200 && response.data != null) {
+        // Ensure the response is a Map
+        if (response.data is! Map) {
+          print("❌ Invalid response format: ${response.data.runtimeType}");
+          return BufferDetailsResponse();
+        }
+
+        // Handle different response structures
+        if (response.data.containsKey("payload")) {
+          return BufferDetailsResponse.fromJson(response.data);
+        } else {
+          // Wrap the response if it doesn't have the standard structure
+          Map<String, dynamic> wrappedResponse = {
+            "statusOk": true,
+            "statusCode": 200,
+            "message": [],
+            "payload": response.data,
+            "error": []
+          };
+          return BufferDetailsResponse.fromJson(wrappedResponse);
+        }
+      }
+
+      return BufferDetailsResponse();
+    } catch (e, st) {
+      print("❌ Error getting buffer time: $e");
+      print(st);
+      return BufferDetailsResponse();
     }
   }
 }

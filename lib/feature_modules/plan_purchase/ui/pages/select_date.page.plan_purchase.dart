@@ -1,4 +1,3 @@
-
 import 'package:doneapp/feature_modules/plan_purchase/controllers/plan_purchase.controller.dart';
 import 'package:doneapp/feature_modules/plan_purchase/ui/components/calendar_date.component.plan_purchase.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
@@ -14,6 +13,8 @@ import 'package:doneapp/shared_module/ui/components/custom_back_button.component
 import 'package:doneapp/shared_module/ui/components/custom_curve_shape.component.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 import 'package:ionicons/ionicons.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -25,539 +26,353 @@ class SelectInitialDatePage_PlanPurchase extends StatefulWidget {
 }
 
 class _SelectInitialDatePage_PlanPurchaseState extends State<SelectInitialDatePage_PlanPurchase> {
-
   final planPurchaseController = Get.find<PlanPurchaseController>();
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState(); 
+  // Helper method for date selection logic
+  bool isDateSelectable(DateTime date) {
+    final kuwaitTimeZone = tz.getLocation('Asia/Kuwait');
+
+    // Convert both dates to midnight Kuwait time for fair comparison
+    DateTime selectedDate = tz.TZDateTime(
+        kuwaitTimeZone,
+        date.year,
+        date.month,
+        date.day,
+        0, 0, 0, 0  // Explicitly set to midnight
+    );
+
+    DateTime minDate = tz.TZDateTime(
+        kuwaitTimeZone,
+        planPurchaseController.minimumPossibleDate.value.year,
+        planPurchaseController.minimumPossibleDate.value.month,
+        planPurchaseController.minimumPossibleDate.value.day,
+        0, 0, 0, 0  // Explicitly set to midnight
+    );
+
+    bool isEqualOrAfterMin = selectedDate.isAtSameMomentAs(minDate) ||
+        selectedDate.isAfter(minDate);
+    bool notOffDay = !isOffDay(date);
+
+    return isEqualOrAfterMin && notOffDay;
+  }
+
+  // Handle date selection
+  void handleDateTap(DateTime date) {
+    final kuwaitTimeZone = tz.getLocation('Asia/Kuwait');
+
+    // Convert both dates to midnight Kuwait time for fair comparison
+    DateTime selectedDate = tz.TZDateTime(
+        kuwaitTimeZone,
+        date.year,
+        date.month,
+        date.day,
+        0, 0, 0, 0  // Explicitly set to midnight
+    );
+
+    DateTime minDate = tz.TZDateTime(
+        kuwaitTimeZone,
+        planPurchaseController.minimumPossibleDate.value.year,
+        planPurchaseController.minimumPossibleDate.value.month,
+        planPurchaseController.minimumPossibleDate.value.day,
+        0, 0, 0, 0  // Explicitly set to midnight
+    );
+
+    print("\n🔍 Date Selection:");
+    print("Raw selected date: ${date.toString()}");
+    print("Converted selected date: $selectedDate");
+    print("Minimum date: $minDate");
+
+    if ((selectedDate.isAtSameMomentAs(minDate) || selectedDate.isAfter(minDate))
+        && !isOffDay(date)) {
+      print("✅ Date is valid, setting selected date");
+      // Use the original date for setting, not the timezone converted one
+      planPurchaseController.setSelectedDate(date);
+    } else {
+      print("❌ Date is invalid or is an off day");
+      print("Is before min date: ${selectedDate.isBefore(minDate)}");
+      print("Is off day: ${isOffDay(date)}");
+    }
+  }
+
+  // Build calendar day component
+  Widget buildCalendarDay(DateTime date, bool isMonthDay) {
+    return Expanded(
+      flex: 1,
+      child: InkWell(
+        onTap: () => handleDateTap(date),
+        child: CalendarDateComponent_PlanPurchase(
+            isSelected: isSameDay(planPurchaseController.selectedDate.value, date),
+            isOffDay: isOffDay(date),
+            isSubscriptionDay: isDateSelectable(date),
+            borderColor: Colors.transparent,
+            isMonthDay: isMonthDay,
+            dateText: date.day < 10 ? '0${date.day}' : date.day.toString()
+        ),
+      ),
+    );
+  }
+
+  // Build week row
+  Widget buildWeekRow(List<DateTime> weekDays) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 30 + (APPSTYLE_SpaceExtraSmall * 2),
+      child: Row(
+        children: weekDays.map((date) => buildCalendarDay(
+            date,
+            date.month == planPurchaseController.currentMonth.value.month
+        )).toList(),
+      ),
+    );
+  }
+
+  // Build week day header
+  Widget buildWeekDayHeader(String day) {
+    return Expanded(
+      flex: 1,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+            day.tr,
+            textAlign: TextAlign.center,
+            style: getBodyMediumStyle(context).copyWith(color: APPSTYLE_Grey80)
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-
     double screenwidth = MediaQuery.of(context).size.width;
 
-    return   Scaffold(
-
+    return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: APPSTYLE_PrimaryColorBg,
-        scrolledUnderElevation:0.0,
+        scrolledUnderElevation: 0.0,
         elevation: 0.0,
         title: Row(
           children: [
             CustomBackButton(isPrimaryMode: false),
           ],
         ),
-        actions: [
-
-        ],
+        actions: [],
       ),
-      body: SafeArea(child: Container(
-        child:Obx(
-              ()=> Column(
+      body: SafeArea(
+        child: Container(
+          child: Obx(() => Column(
             children: [
               CustomCurveShapeComponent_Shared(
                 color: APPSTYLE_PrimaryColorBg,
-                title: "select_starting_date".tr ,
+                title: "select_starting_date".tr,
               ),
               Expanded(
-                child:  Column(
-                    children: [
-                      Expanded(
-                        child: GestureDetector(
-                          onHorizontalDragEnd: (DragEndDetails details) {
-                            if (details.primaryVelocity! < 0) {
-                              Localizations.localeOf(context)
-                                  .languageCode
-                                  .toString() ==
-                                  'ar'?
-                              planPurchaseController.previousMonth():
-                              planPurchaseController.nextMonth();
-                            } else if (details.primaryVelocity! > 0) {
-                              Localizations.localeOf(context)
-                                  .languageCode
-                                  .toString() ==
-                                  'ar'?
-                              planPurchaseController.nextMonth():
-                              planPurchaseController.previousMonth();
-                            }
-                          } ,
-                          child: Container(
-                            decoration: APPSTYLE_ShadowedContainerSmallDecoration.copyWith(
-                                boxShadow:  [
-                                  const BoxShadow(
-                                    color: APPSTYLE_Grey80Shadow24,
-                                    offset: Offset(1.0, 1.0),
-                                    blurRadius: 2,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onHorizontalDragEnd: (DragEndDetails details) {
+                          if (details.primaryVelocity! < 0) {
+                            Localizations.localeOf(context).languageCode == 'ar'
+                                ? planPurchaseController.previousMonth()
+                                : planPurchaseController.nextMonth();
+                          } else if (details.primaryVelocity! > 0) {
+                            Localizations.localeOf(context).languageCode == 'ar'
+                                ? planPurchaseController.nextMonth()
+                                : planPurchaseController.previousMonth();
+                          }
+                        },
+                        child: Container(
+                          decoration: APPSTYLE_ShadowedContainerSmallDecoration.copyWith(
+                              boxShadow: [
+                                const BoxShadow(
+                                  color: APPSTYLE_Grey80Shadow24,
+                                  offset: Offset(1.0, 1.0),
+                                  blurRadius: 2,
+                                ),
+                              ],
+                              border: Border.all(color: Colors.transparent, width: .2),
+                              color: APPSTYLE_Grey20
+                          ),
+                          margin: APPSTYLE_LargePaddingAll.copyWith(top: 0),
+                          padding: APPSTYLE_MediumPaddingAll,
+                          width: screenwidth - (APPSTYLE_SpaceLarge * 2),
+                          child: ListView(
+                            children: [
+                              // Month navigation
+                              Row(
+                                children: [
+                                  InkWell(
+                                    onTap: () => planPurchaseController.previousMonth(),
+                                    child: Container(
+                                      padding: APPSTYLE_ExtraSmallPaddingAll,
+                                      decoration: APPSTYLE_BorderedContainerExtraSmallDecoration
+                                          .copyWith(color: APPSTYLE_BackgroundWhite),
+                                      child: Icon(
+                                          Localizations.localeOf(context).languageCode == 'ar'
+                                              ? Ionicons.chevron_forward
+                                              : Ionicons.chevron_back,
+                                          color: Colors.black
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                      child: Container(
+                                        child: Text(
+                                          getFormattedCurrentMonth(planPurchaseController.currentMonth.value),
+                                          textAlign: TextAlign.center,
+                                          style: getHeadlineMediumStyle(context).copyWith(
+                                              color: APPSTYLE_PrimaryColorBg,
+                                              fontWeight: APPSTYLE_FontWeightBold
+                                          ),
+                                        ),
+                                      )
+                                  ),
+                                  InkWell(
+                                    onTap: () => planPurchaseController.nextMonth(),
+                                    child: Container(
+                                      padding: APPSTYLE_ExtraSmallPaddingAll,
+                                      decoration: APPSTYLE_BorderedContainerExtraSmallDecoration
+                                          .copyWith(color: APPSTYLE_BackgroundWhite),
+                                      child: Icon(
+                                          Localizations.localeOf(context).languageCode == 'ar'
+                                              ? Ionicons.chevron_back
+                                              : Ionicons.chevron_forward,
+                                          color: Colors.black
+                                      ),
+                                    ),
                                   ),
                                 ],
-                                border: Border.all(
-                                    color: Colors.transparent, width: .2),
-                                color: APPSTYLE_Grey20),
-                            margin: APPSTYLE_LargePaddingAll.copyWith(top: 0),
-                            padding: APPSTYLE_MediumPaddingAll  ,
-                            width: screenwidth-(APPSTYLE_SpaceLarge*2),
-                            child: ListView(
-                              children: [
+                              ),
+                              addVerticalSpace(APPSTYLE_SpaceLarge),
 
-                                // Month change arrows and current month title
-                                Row(
+                              // Week day headers
+                              Container(
+                                width: screenwidth,
+                                height: 35,
+                                child: Row(
                                   children: [
-                                    InkWell(
-                                      onTap: () {
-                                        planPurchaseController.previousMonth();
-
-                                      },
-                                      child: Container(
-                                          padding: APPSTYLE_ExtraSmallPaddingAll,
-                                          decoration:
-                                          APPSTYLE_BorderedContainerExtraSmallDecoration
-                                              .copyWith(color: APPSTYLE_BackgroundWhite),
-                                          child: Icon(Localizations.localeOf(context)
-                                              .languageCode
-                                              .toString() ==
-                                              'ar'?Ionicons.chevron_forward:Ionicons.chevron_back,
-                                              color: Colors.black)),
-                                    ),
-                                    Expanded(
-                                        child: Container(
-                                          child: Text(
-                                            getFormattedCurrentMonth( planPurchaseController.currentMonth.value ),
-                                            textAlign: TextAlign.center,
-                                            style: getHeadlineMediumStyle(context)
-                                                .copyWith(
-                                                color: APPSTYLE_PrimaryColorBg,
-                                                fontWeight: APPSTYLE_FontWeightBold),
-                                          ),
-                                        )),
-                                    InkWell(
-                                      onTap: () {
-                                        planPurchaseController.nextMonth();
-                                      },
-                                      child: Container(
-                                          padding: APPSTYLE_ExtraSmallPaddingAll,
-                                          decoration:
-                                          APPSTYLE_BorderedContainerExtraSmallDecoration
-                                              .copyWith(color: APPSTYLE_BackgroundWhite),
-                                          child: Icon(Localizations.localeOf(context)
-                                              .languageCode
-                                              .toString() ==
-                                              'ar'?Ionicons.chevron_back:Ionicons.chevron_forward,
-                                              color: Colors.black)),
-                                    ),
+                                    buildWeekDayHeader('sun'),
+                                    buildWeekDayHeader('mon'),
+                                    buildWeekDayHeader('tue'),
+                                    buildWeekDayHeader('wed'),
+                                    buildWeekDayHeader('thu'),
+                                    buildWeekDayHeader('fri'),
+                                    buildWeekDayHeader('sat'),
                                   ],
                                 ),
-                                addVerticalSpace(APPSTYLE_SpaceLarge),
-                                // week day names
-                                Container(
-                                  width: screenwidth,
-                                  height:  35,
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: FittedBox(
-                                          fit: BoxFit.scaleDown,
-                                          child: Text( 'sun'.tr,
-                                              textAlign: TextAlign.center,
-                                              style: getBodyMediumStyle(context)
-                                                  .copyWith(color: APPSTYLE_Grey80)),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: FittedBox(
-                                          fit: BoxFit.scaleDown,
-                                          child: Text( 'mon'.tr,
-                                              textAlign: TextAlign.center,
-                                              style: getBodyMediumStyle(context)
-                                                  .copyWith(color: APPSTYLE_Grey80)),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: FittedBox(
-                                          fit: BoxFit.scaleDown,
-                                          child: Text( 'tue'.tr,
-                                              textAlign: TextAlign.center,
-                                              style: getBodyMediumStyle(context)
-                                                  .copyWith(color: APPSTYLE_Grey80)),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: FittedBox(
-                                          fit: BoxFit.scaleDown,
-                                          child: Text( 'wed'.tr,
-                                              textAlign: TextAlign.center,
-                                              style: getBodyMediumStyle(context)
-                                                  .copyWith(color: APPSTYLE_Grey80)),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: FittedBox(
-                                          fit: BoxFit.scaleDown,
-                                          child: Text( 'thu'.tr,
-                                              textAlign: TextAlign.center,
-                                              style: getBodyMediumStyle(context)
-                                                  .copyWith(color: APPSTYLE_Grey80)),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: FittedBox(
-                                          fit: BoxFit.scaleDown,
-                                          child: Text( 'fri'.tr,
-                                              textAlign: TextAlign.center,
-                                              style: getBodyMediumStyle(context)
-                                                  .copyWith(color: APPSTYLE_Grey80)),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: FittedBox(
-                                          fit: BoxFit.scaleDown,
-                                          child: Text( 'sat'.tr,
-                                              textAlign: TextAlign.center,
-                                              style: getBodyMediumStyle(context)
-                                                  .copyWith(color: APPSTYLE_Grey80)),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                addVerticalSpace(APPSTYLE_SpaceSmall),
+                              ),
+                              addVerticalSpace(APPSTYLE_SpaceSmall),
 
+                              // Calendar weeks
+                              buildWeekRow(planPurchaseController.firstWeekDays),
+                              addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                              buildWeekRow(planPurchaseController.secondWeekDays),
+                              addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                              buildWeekRow(planPurchaseController.thirdWeekDays),
+                              addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                              buildWeekRow(planPurchaseController.fourthWeekDays),
+                              addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                              buildWeekRow(planPurchaseController.fifthWeekDays),
+                              addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                              buildWeekRow(planPurchaseController.sixthWeekDays),
 
-                                //calendar starts here
+                              addVerticalSpace(APPSTYLE_SpaceMedium),
+                              Divider(),
+                              addVerticalSpace(APPSTYLE_SpaceSmall),
 
-                                Container(
-                                  width: screenwidth,
-                                  height: 30 + (APPSTYLE_SpaceExtraSmall * 2),
-                                  child: Row(
-                                    children: [
-                                      for(var i=0;i<planPurchaseController.firstWeekDays.length;i++)
-                                        Expanded(
-                                          flex: 1,
-                                          child: InkWell(
-                                            onTap: () {
-
-                                              if(planPurchaseController.firstWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                  && !isOffDay(planPurchaseController.firstWeekDays[i])){
-                                                planPurchaseController.setSelectedDate(planPurchaseController.firstWeekDays[i]);
-                                              }
-                                            },
-                                            child: CalendarDateComponent_PlanPurchase(
-                                                isSelected:isSameDay(planPurchaseController.selectedDate.value, planPurchaseController.firstWeekDays[i]),
-                                                isOffDay: isOffDay(planPurchaseController.firstWeekDays[i]) ,
-                                                isSubscriptionDay:planPurchaseController.firstWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                && !isOffDay(planPurchaseController.firstWeekDays[i]),
-                                                borderColor: Colors.transparent,
-                                                isMonthDay:planPurchaseController.firstWeekDays[i].month==
-                                                    planPurchaseController.currentMonth.value.month,
-                                                dateText:
-                                                planPurchaseController.firstWeekDays[i].day<10?
-                                                '0${planPurchaseController.firstWeekDays[i].day}':planPurchaseController.firstWeekDays[i].day.toString()
-                                            ),
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                                addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                                Container(
-                                  width: screenwidth,
-                                  height: 30 + (APPSTYLE_SpaceExtraSmall * 2),
-
-                                  child: Row(
-                                    children: [
-                                      for(var i=0;i<planPurchaseController.secondWeekDays.length;i++)
-                                        Expanded(
-                                          flex: 1,
-                                          child: InkWell(
-                                            onTap: () {
-
-                                              if(planPurchaseController.secondWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                  && !isOffDay(planPurchaseController.secondWeekDays[i])){
-                                                planPurchaseController.setSelectedDate(planPurchaseController.secondWeekDays[i]);
-                                              }
-                                            },
-                                            child: CalendarDateComponent_PlanPurchase(
-                                                isSelected:isSameDay(planPurchaseController.selectedDate.value, planPurchaseController.secondWeekDays[i]),
-                                                isOffDay:isOffDay(planPurchaseController.secondWeekDays[i]),
-                                                isSubscriptionDay:planPurchaseController.secondWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                    && !isOffDay(planPurchaseController.secondWeekDays[i]),
-                                                 borderColor: Colors.transparent,
-                                                isMonthDay:planPurchaseController.secondWeekDays[i].month==
-                                                    planPurchaseController.currentMonth.value.month,
-                                                dateText:
-                                                planPurchaseController.secondWeekDays[i].day<10?
-                                                '0${planPurchaseController.secondWeekDays[i].day}':planPurchaseController.secondWeekDays[i].day.toString()
-                                            ),
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                                addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                                Container(
-                                  width: screenwidth,
-                                  height: 30 + (APPSTYLE_SpaceExtraSmall * 2),
-
-                                  child: Row(
-                                    children: [
-                                      for(var i=0;i<planPurchaseController.thirdWeekDays.length;i++)
-                                        Expanded(
-                                          flex: 1,
-                                          child: InkWell(
-                                            onTap: () {
-                                               if(planPurchaseController.thirdWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                   && !isOffDay(planPurchaseController.thirdWeekDays[i])){
-                                                planPurchaseController.setSelectedDate(planPurchaseController.thirdWeekDays[i]);
-                                              }
-                                            },
-                                            child: CalendarDateComponent_PlanPurchase(
-                                                isSelected:isSameDay(planPurchaseController.selectedDate.value, planPurchaseController.thirdWeekDays[i]),
-                                                isOffDay:isOffDay(planPurchaseController.thirdWeekDays[i]),
-                                                isSubscriptionDay:planPurchaseController.thirdWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                    && !isOffDay(planPurchaseController.thirdWeekDays[i]),
-                                                 borderColor: Colors.transparent,
-                                                isMonthDay:planPurchaseController.thirdWeekDays[i].month==
-                                                    planPurchaseController.currentMonth.value.month,
-                                                dateText:
-                                                planPurchaseController.thirdWeekDays[i].day<10?
-                                                '0${planPurchaseController.thirdWeekDays[i].day}':planPurchaseController.thirdWeekDays[i].day.toString()
-                                            ),
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                                addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                                Container(
-                                  width: screenwidth,
-                                  height: 30 + (APPSTYLE_SpaceExtraSmall * 2),
-
-                                  child: Row(
-                                    children: [
-                                      for(var i=0;i<planPurchaseController.fourthWeekDays.length;i++)
-                                        Expanded(
-                                          flex: 1,
-                                          child: InkWell(
-                                            onTap: () {
-                                               if(planPurchaseController.fourthWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                   && !isOffDay(planPurchaseController.fourthWeekDays[i])){
-                                                planPurchaseController.setSelectedDate(planPurchaseController.fourthWeekDays[i]);
-                                              }
-                                            },
-                                            child: CalendarDateComponent_PlanPurchase(
-                                                isSelected:isSameDay(planPurchaseController.selectedDate.value, planPurchaseController.fourthWeekDays[i]),
-                                                isOffDay:isOffDay(planPurchaseController.fourthWeekDays[i]),
-                                                isSubscriptionDay:planPurchaseController.fourthWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                    && !isOffDay(planPurchaseController.fourthWeekDays[i]),
-                                                 borderColor: Colors.transparent,
-                                                isMonthDay:planPurchaseController.fourthWeekDays[i].month==
-                                                    planPurchaseController.currentMonth.value.month,
-                                                dateText:
-                                                planPurchaseController.fourthWeekDays[i].day<10?
-                                                '0${planPurchaseController.fourthWeekDays[i].day}':planPurchaseController.fourthWeekDays[i].day.toString()
-                                            ),
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                                addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                                Container(
-                                  width: screenwidth,
-                                  height: 30 + (APPSTYLE_SpaceExtraSmall * 2),
-
-                                  child: Row(
-                                    children: [
-                                      for(var i=0;i<planPurchaseController.fifthWeekDays.length;i++)
-                                        Expanded(
-                                          flex: 1,
-                                          child: InkWell(
-                                            onTap: () {
-                                               if(planPurchaseController.fifthWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                   && !isOffDay(planPurchaseController.fifthWeekDays[i])){
-                                                planPurchaseController.setSelectedDate(planPurchaseController.fifthWeekDays[i]);
-                                              }
-                                            },
-                                            child:CalendarDateComponent_PlanPurchase (
-                                                isSelected:isSameDay(planPurchaseController.selectedDate.value, planPurchaseController.fifthWeekDays[i]),
-                                                isOffDay:isOffDay(planPurchaseController.fifthWeekDays[i]),
-                                                isSubscriptionDay:planPurchaseController.fifthWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                    && !isOffDay(planPurchaseController.fifthWeekDays[i]),
-                                                 borderColor: Colors.transparent,
-                                                isMonthDay:planPurchaseController.fifthWeekDays[i].month==
-                                                    planPurchaseController.currentMonth.value.month,
-                                                dateText:
-                                                planPurchaseController.fifthWeekDays[i].day<10?
-                                                '0${planPurchaseController.fifthWeekDays[i].day}':planPurchaseController.fifthWeekDays[i].day.toString()
-                                            ),
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                                addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                                Container(
-                                  width: screenwidth,
-                                  height: 30 + (APPSTYLE_SpaceExtraSmall * 2),
-                                  child: Row(
-
-                                    children: [
-                                      for(var i=0;i<planPurchaseController.sixthWeekDays.length;i++)
-                                        Expanded(
-                                          flex: 1,
-                                          child: InkWell(
-                                            onTap: () {
-                                              if(planPurchaseController.sixthWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                  &&  !isOffDay(planPurchaseController.sixthWeekDays[i])){
-                                                planPurchaseController.setSelectedDate(planPurchaseController.sixthWeekDays[i]);
-                                              }
-                                             },
-                                            child:CalendarDateComponent_PlanPurchase (
-                                                isSelected:isSameDay(planPurchaseController.selectedDate.value, planPurchaseController.sixthWeekDays[i]),
-                                                isOffDay:isOffDay(planPurchaseController.sixthWeekDays[i]) ,
-                                                isSubscriptionDay:planPurchaseController.sixthWeekDays[i].isAfter(planPurchaseController.minimumPossibleDate.value)
-                                                    && !isOffDay(planPurchaseController.sixthWeekDays[i]),
-                                                 borderColor: Colors.transparent,
-                                                isMonthDay:planPurchaseController.sixthWeekDays[i].month==
-                                                    planPurchaseController.currentMonth.value.month,
-                                                dateText:
-                                                planPurchaseController.sixthWeekDays[i].day<10?
-                                                '0${planPurchaseController.sixthWeekDays[i].day}':planPurchaseController.sixthWeekDays[i].day.toString()
-                                            ),
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                ),
-
-                                addVerticalSpace(APPSTYLE_SpaceMedium),
-                                Divider(),
-                                addVerticalSpace(APPSTYLE_SpaceSmall),
-
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        child: Text(
-                                            isSameDay(planPurchaseController.selectedDate.value,DefaultInvalidDate)?
-                                            "select_starting_date".tr:
-                                          getFormattedDate(planPurchaseController.selectedDate.value),
-
+                              // Selected date display
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        isSameDay(planPurchaseController.selectedDate.value, DefaultInvalidDate)
+                                            ? "select_starting_date".tr
+                                            : getFormattedDate(planPurchaseController.selectedDate.value),
                                         style: getHeadlineMediumStyle(context).copyWith(
-                                          color: APPSTYLE_PrimaryColor,
-                                          fontWeight: APPSTYLE_FontWeightBold
-                                        ),),
+                                            color: APPSTYLE_PrimaryColor,
+                                            fontWeight: APPSTYLE_FontWeightBold
+                                        ),
                                       ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
                           ),
                         ),
                       ),
-
-                    ],
-                  ),
-
+                    ),
+                  ],
+                ),
               ),
+
+              // Continue button
               Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: APPSTYLE_SpaceLarge,vertical: APPSTYLE_SpaceSmall),
+                    horizontal: APPSTYLE_SpaceLarge,
+                    vertical: APPSTYLE_SpaceSmall
+                ),
                 child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      if(!planPurchaseController.isDateChecking.value &&
-                      !isSameDay(planPurchaseController.selectedDate.value,DefaultInvalidDate)
-                      ){
+                      if (!planPurchaseController.isDateChecking.value &&
+                          !isSameDay(planPurchaseController.selectedDate.value, DefaultInvalidDate)) {
                         planPurchaseController.checkDateStatus();
-
-                      }else{
-                        if(isSameDay(planPurchaseController.selectedDate.value,DefaultInvalidDate)){
+                      } else {
+                        if (isSameDay(planPurchaseController.selectedDate.value, DefaultInvalidDate)) {
                           showSnackbar(context, "select_starting_date".tr, "error");
                         }
                       }
-                      // Get.toNamed(AppRouteNames.planPurchaseCheckoutRoute);
-
                     },
                     style: getElevatedButtonStyle(context),
-                    child:    planPurchaseController.isDateChecking.value
+                    child: planPurchaseController.isDateChecking.value
                         ? LoadingAnimationWidget.staggeredDotsWave(
                       color: APPSTYLE_BackgroundWhite,
                       size: 24,
-                    ):Text("continue".tr,
+                    )
+                        : Text(
+                        "continue".tr,
                         style: getHeadlineMediumStyle(context).copyWith(
                             color: APPSTYLE_BackgroundWhite,
-                            fontWeight: APPSTYLE_FontWeightBold),
-                        textAlign: TextAlign.center),
+                            fontWeight: APPSTYLE_FontWeightBold
+                        ),
+                        textAlign: TextAlign.center
+                    ),
                   ),
                 ),
               ),
             ],
-          ),
+          )),
         ),
-      )),
+      ),
     );
   }
 
-
-  String getCalendarDayText(int index) {
-    if (index < 7) {
-      return getDayNameByIndex(index);
-    }
-    if (index == 7) {
-      return "31";
-    }
-    if (index < 39) {
-      if ((index - 7) < 10) {
-        return '0${(index - 7).toString()}';
+  // Helper method for off days
+  bool isOffDay(DateTime dateTime) {
+    if (dateTime.year == 2025) {
+      if ((dateTime.month == 3 && dateTime.day == 30)) {
+        return true;
       }
-      return (index - 7).toString();
     }
-    if ((index - 38) < 10) {
-      return '0${(index - 38).toString()}';
+    List<int> days = planPurchaseController.currentSubscription.value.dayAvailability.keys.toList();
+    if (!days.contains(dateTime.weekday)) {
+      return false;
     }
-    return (index - 38).toString();
+
+    if (planPurchaseController.subscriptionDates
+        .where((p0) => isSameDay(p0.date, dateTime))
+        .toList()
+        .isNotEmpty) {
+      return true;
+    }
+
+    return !planPurchaseController.currentSubscription.value.dayAvailability[dateTime.weekday]!;
   }
-
-  getCalendarDayTextColor(int index) {
-    if (index < 7) {
-      return APPSTYLE_Black;
-    }
-    if (index == 7) {
-      return APPSTYLE_Grey40;
-    }
-    if (index > 38) {
-      return APPSTYLE_Grey40;
-    }
-    return APPSTYLE_PrimaryColorBg;
-  }
-
-  isOffDay(DateTime dateTime) {
-   List<int> days = planPurchaseController.currentSubscription.value.dayAvailability.keys.toList();
-   if(!days.contains(dateTime.weekday)){
-     return false;
-   }
-
-   if(planPurchaseController.subscriptionDates.where((p0) => isSameDay(p0.date,dateTime)).toList().isNotEmpty){
-     return true;
-   }
-
-   return  !planPurchaseController.currentSubscription.value.dayAvailability[dateTime.weekday]!;
-  }
-
 }

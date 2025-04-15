@@ -1,3 +1,4 @@
+import 'package:timezone/timezone.dart' as tz;
 
 import 'package:intl/intl.dart';
 
@@ -29,4 +30,15 @@ bool isSameDay(DateTime date1, DateTime date2) {
   } else {
     return false;
   }
+}
+
+tz.TZDateTime getKuwaitDateOnly(DateTime date) {
+  final kuwaitTimeZone = tz.getLocation('Asia/Kuwait');
+  final kuwaitDate = tz.TZDateTime.from(date, kuwaitTimeZone);
+  return tz.TZDateTime(
+    kuwaitTimeZone,
+    kuwaitDate.year,
+    kuwaitDate.month,
+    kuwaitDate.day,
+  );
 }

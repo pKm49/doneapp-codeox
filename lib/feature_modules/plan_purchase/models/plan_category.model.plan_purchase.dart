@@ -1,4 +1,5 @@
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
+import 'package:intl/intl.dart';
 
 class SubscriptionPlanCategory {
   final int id;
@@ -6,6 +7,7 @@ class SubscriptionPlanCategory {
   final String name;
   final String description;
   final String arabicName;
+  final String startDate;
   final String arabicDescription;
   final List<String> mealsConfig;
   final List<String> mealsConfigArabic;
@@ -18,6 +20,7 @@ class SubscriptionPlanCategory {
     required this.description,
     required this.arabicDescription,
     required this.mealsConfig,
+    required this.startDate,
     required this.mealsConfigArabic,
   });
 
@@ -26,6 +29,7 @@ class SubscriptionPlanCategory {
         'imageUrl': imageUrl,
         'name': name,
         'arabic_name': arabicName,
+    'start_date':startDate
       };
 }
 
@@ -62,7 +66,8 @@ SubscriptionPlanCategory mapSubscriptionCategory(dynamic payload) {
           payload["arabic_name"] != null && payload["arabic_name"] != false
               ? payload["arabic_name"]
               : "",
-      description:
+      startDate: payload['start_date'] ??
+          DateFormat('yyyy-MM-dd').format(DateTime.now().add(Duration(days: 2))),      description:
           payload["description"] != null && payload["description"] != false
               ? payload["description"]
               : "",

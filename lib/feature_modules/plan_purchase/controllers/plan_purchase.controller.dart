@@ -15,7 +15,12 @@ import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../my_subscription/models/buffer_response.dart';
+import '../../my_subscription/services/http.my_subscription.service.dart';
 
 class PlanPurchaseController extends GetxController {
   Rx<TextEditingController> couponCodeController = TextEditingController().obs;
@@ -41,6 +46,10 @@ class PlanPurchaseController extends GetxController {
   var isDateChecking = false.obs;
   var isPaymentGatewayLoading = false.obs;
   var paymentGatewayIsLoading = false.obs;
+  int? bufferBeforeFourThirty;
+  int? bufferAfterFourThirty;
+  int? bufferAfterFourThirtyWednesday;
+  int? bufferBeforeFourThirtyWednesday;
 
   var subscriptionDates = <SubscriptoinDate>[].obs;
 
@@ -56,16 +65,157 @@ class PlanPurchaseController extends GetxController {
   var currentMonth = DateTime(DateTime.now().year, DateTime.now().month, 1).obs;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
-    minimumPossibleDate.value = DateTime.now().add(Duration(days: 2));
+    await getBufferTime();
+    setMinimumPossibleDate();
     setCurrentMonthWeekDays();
 
     couponCodeController.value.addListener(() {
       resetCouponCode();
     });
   }
+  void setMinimumPossibleDate() {
+    tz.initializeTimeZones();
+    final kuwaitTimeZone = tz.getLocation('Asia/Kuwait');
+    final nowInKuwait = tz.TZDateTime.now(kuwaitTimeZone);
 
+    print("Current Kuwait time: $nowInKuwait");
+
+    // Create 4:30 AM threshold for today
+    final today430AM = tz.TZDateTime(
+      kuwaitTimeZone,
+      nowInKuwait.year,
+      nowInKuwait.month,
+      nowInKuwait.day,
+      4,
+      30,
+    );
+
+    print("Today's 4:30 AM threshold: $today430AM");
+    print("Is before 4:30 AM? ${nowInKuwait.isBefore(today430AM)}");
+
+    // Calculate days to add based on current time and day
+    Duration durationToAdd;
+    bool isWednesday = nowInKuwait.weekday == 2;
+
+    if (isWednesday) {
+      durationToAdd = nowInKuwait.isBefore(today430AM)
+          ? Duration(hours: bufferBeforeFourThirtyWednesday??72)
+          :  Duration(hours: bufferAfterFourThirtyWednesday??96);
+    } else {
+      durationToAdd = nowInKuwait.isBefore(today430AM)
+          ?  Duration(hours: bufferBeforeFourThirty??48)
+          :  Duration(hours: bufferAfterFourThirty??72);
+    }
+    // Calculate the minimum date
+    final minSelectableDate = nowInKuwait.add(durationToAdd);
+
+    // Create date-only version (midnight) in Kuwait timezone
+    final minSelectableDateOnly = tz.TZDateTime(
+      kuwaitTimeZone,
+      minSelectableDate.year,
+      minSelectableDate.month,
+      minSelectableDate.day,
+    );
+
+    minimumPossibleDate.value = minSelectableDateOnly;
+
+    print("📅 Calculated minimum date: ${minimumPossibleDate.value}");
+  }
+
+  Future<void> getBufferTime()async{
+    var mySubsHttpService = MySubsHttpService();
+    BufferDetailsResponse response= await mySubsHttpService.getBufferTime();
+    bufferBeforeFourThirty=response.payload?.bufferBefore430??48;
+    bufferAfterFourThirty=response.payload?.bufferAfter430??72;
+    bufferAfterFourThirtyWednesday=response.payload?.wednesdayBufferAfter430??96;
+    bufferBeforeFourThirtyWednesday=response.payload?.wednesdayBufferBefore430??72;
+
+  }
+
+  void setMinimumPossibleDateForPlan(String? planStartDate) {
+    tz.initializeTimeZones();
+    final kuwaitTimeZone = tz.getLocation('Asia/Kuwait');
+    final nowInKuwait = tz.TZDateTime.now(kuwaitTimeZone);
+
+    print("\n🕒 Calculating dates:");
+    print("Current Kuwait time: $nowInKuwait");
+    print("Raw plan start date string: $planStartDate");
+
+    // 1. Calculate system minimum date based on 4:30 AM rule
+    final today430AM = tz.TZDateTime(
+      kuwaitTimeZone,
+      nowInKuwait.year,
+      nowInKuwait.month,
+      nowInKuwait.day,
+      4,
+      30,
+    );
+
+    print("Today's 4:30 AM threshold: $today430AM");
+    print("Is before 4:30 AM? ${nowInKuwait.isBefore(today430AM)}");
+
+    Duration durationToAdd;
+    bool isWednesday = nowInKuwait.weekday == 2;
+
+    if (isWednesday) {
+      durationToAdd = nowInKuwait.isBefore(today430AM)
+          ? Duration(hours: bufferBeforeFourThirtyWednesday??72)
+          :  Duration(hours: bufferAfterFourThirtyWednesday??96);
+    } else {
+      durationToAdd = nowInKuwait.isBefore(today430AM)
+          ?  Duration(hours: bufferBeforeFourThirty??48)
+          :  Duration(hours: bufferAfterFourThirty??72);
+    }
+
+    final systemMinDate = tz.TZDateTime(
+        kuwaitTimeZone,
+        nowInKuwait.add(durationToAdd).year,
+        nowInKuwait.add(durationToAdd).month,
+        nowInKuwait.add(durationToAdd).day,
+        0, 0, 0, 0
+    );
+
+    print("System calculated minimum date: $systemMinDate");
+
+    // 2. Parse and validate plan start date
+    if (planStartDate != null && planStartDate.isNotEmpty) {
+      // Remove the UTC conversion and directly parse to Kuwait timezone
+      try {
+        // Parse the date string directly
+        List<int> dateParts = planStartDate.split('-').map(int.parse).toList();
+
+        // Create date in Kuwait timezone
+        DateTime planStartDateTime = tz.TZDateTime(
+            kuwaitTimeZone,
+            dateParts[0],  // year
+            dateParts[1],  // month
+            dateParts[2],  // day
+            0, 0, 0, 0
+        );
+
+        print("Parsed plan start date (Kuwait): $planStartDateTime");
+
+        if (systemMinDate.isAfter(planStartDateTime)) {
+          print("Using system minimum date as it's later than plan start date");
+          minimumPossibleDate.value = systemMinDate;
+        } else {
+          print("Using plan start date as it's later than system minimum date");
+          minimumPossibleDate.value = planStartDateTime;
+        }
+      } catch (e) {
+        print("Error parsing plan start date: $e");
+        print("Using system minimum date due to parsing error");
+        minimumPossibleDate.value = systemMinDate;
+      }
+    } else {
+      print("No plan start date provided, using system minimum date");
+      minimumPossibleDate.value = systemMinDate;
+    }
+
+    print("📅 Final minimum possible date: ${minimumPossibleDate.value}");
+  }
   getSubscriptionDates() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? tMobile = prefs.getString('mobile');
@@ -109,6 +259,7 @@ class PlanPurchaseController extends GetxController {
   }
 
   void changeSubscription(SubscriptionPlan subscription) {
+
     currentSubscription.value = subscription;
     subTotal.value = currentSubscription.value.price;
     discount.value = 0.0;
@@ -142,10 +293,13 @@ class PlanPurchaseController extends GetxController {
   Future<void> checkCouponValidity() async {
     isCouponChecking.value = true;
     isCouponCodeValid.value = false;
+    var sharedPreferences = await SharedPreferences.getInstance();
+    final String? mobile = sharedPreferences.getString('mobile');
+
 
     var planPurchaseHttpService = PlanPurchaseHttpService();
     DiscountData discountData = await planPurchaseHttpService.verifyCoupon(
-        currentSubscription.value.id, couponCodeController.value.text);
+        currentSubscription.value.id, couponCodeController.value.text,mobile??"");
 
     if (!discountData.isValid) {
       isCouponCodeValid.value = false;
@@ -161,7 +315,7 @@ class PlanPurchaseController extends GetxController {
       subTotal.value = discountData.total;
       discount.value = discountData.discount;
       total.value = discountData.grandTotal;
-      showSnackbar(Get.context!, "coupon_code_valid".tr, "info");
+      // showSnackbar(Get.context!, "coupon_code_valid".tr, "info");
     }
     isCouponChecking.value = false;
   }
@@ -301,7 +455,22 @@ class PlanPurchaseController extends GetxController {
   }
 
   void setSelectedDate(DateTime date) {
-    selectedDate.value = date;
+    final kuwaitTimeZone = tz.getLocation('Asia/Kuwait');
+
+    // Convert to Kuwait timezone but preserve the date
+    DateTime kuwaitDate = tz.TZDateTime(
+        kuwaitTimeZone,
+        date.year,
+        date.month,
+        date.day,
+        0, 0, 0, 0
+    );
+
+    print("\n📅 Setting selected date:");
+    print("Original date: $date");
+    print("Kuwait date: $kuwaitDate");
+
+    selectedDate.value = kuwaitDate;
   }
 
   void previousMonth() {

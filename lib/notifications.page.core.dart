@@ -134,32 +134,69 @@ class _NotificationsPage_CoreState extends State<NotificationsPage_Core> {
                             margin:
                                 APPSTYLE_LargePaddingAll.copyWith(bottom: 0),
                             width: screenwidth,
-                            child: Wrap(
-                              direction: Axis.vertical,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  width: screenwidth -
-                                      ((APPSTYLE_SpaceMedium * 2) +
-                                          (APPSTYLE_SpaceLarge * 2)),
-                                  child: Text(
-                                      sharedController
-                                          .notifications[index].message,
-                                      style: getBodyMediumStyle(context)
-                                          .copyWith(color: APPSTYLE_Grey80)),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: double.infinity,
+                                        child: Text(
+                                          sharedController
+                                              .notifications[index].title,
+                                          style: getBodyMediumStyle(context)
+                                              .copyWith(
+                                            color: APPSTYLE_Grey80,
+                                          ),
+                                        ),
+                                      ),
+                                      addVerticalSpace(APPSTYLE_SpaceSmall),
+                                      Container(
+                                        width: double.infinity,
+                                        child: Text(
+                                          sharedController
+                                              .notifications[index].message,
+                                          style: getLabelLargeStyle(context)
+                                              .copyWith(
+                                            color: APPSTYLE_Grey40,
+                                            fontWeight:
+                                                APPSTYLE_FontWeightLight,
+                                          ),
+                                        ),
+                                      ),
+                                      addVerticalSpace(APPSTYLE_SpaceSmall),
+                                      Container(
+                                        width: double.infinity,
+                                        child: Text(
+                                          getFormattedDateTime(sharedController
+                                              .notifications[index].dateTime),
+                                          style: getLabelLargeStyle(context)
+                                              .copyWith(
+                                            color: APPSTYLE_Grey40,
+                                            fontWeight:
+                                                APPSTYLE_FontWeightLight,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                addVerticalSpace(APPSTYLE_SpaceSmall),
-                                Container(
-                                  width: screenwidth -
-                                      ((APPSTYLE_SpaceMedium * 2) +
-                                          (APPSTYLE_SpaceLarge * 2)),
-                                  child: Text(
-                                      getFormattedDateTime(sharedController
-                                          .notifications[index].dateTime),
-                                      style: getLabelLargeStyle(context)
-                                          .copyWith(
-                                              color: APPSTYLE_Grey40,
-                                              fontWeight:
-                                                  APPSTYLE_FontWeightLight)),
+                                SizedBox(
+                                    width:
+                                        APPSTYLE_SpaceMedium), // Add spacing between text and image
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(
+                                      8), // Optional: Add rounded corners
+                                  child: Image.network(
+                                    sharedController.notifications[index].image,
+                                    height: 50,
+                                    width: 50, // Ensure a fixed width
+                                    fit: BoxFit
+                                        .cover, // Prevents overflow by cropping if necessary
+                                  ),
                                 ),
                               ],
                             ),

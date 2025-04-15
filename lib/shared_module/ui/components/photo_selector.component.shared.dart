@@ -132,8 +132,8 @@ class PhotoSelector extends StatelessWidget {
       } else {
         if (await Permission.photos.isPermanentlyDenied) {
           showSnackbar(context, "media_permission_message".tr, "error");
-        } else {
-          showPhotosPermissionDialogue();
+        }else{
+          showPhotosPermissionDialogue( );
         }
       }
     } else if (Platform.isAndroid) {
@@ -141,7 +141,7 @@ class PhotoSelector extends StatelessWidget {
       final int sdkInt = android.version.sdkInt;
       // print("Device is Android");
       // print(sdkInt);
-      if (sdkInt > 32) {
+      if(sdkInt>32){
         // print("sdkInt>32");
 
         if (await Permission.photos.isGranted) {
@@ -152,24 +152,25 @@ class PhotoSelector extends StatelessWidget {
           if (await Permission.photos.isPermanentlyDenied) {
             // print("Permission isPermanentlyDenied");
             showSnackbar(context, "media_permission_message".tr, "error");
-          } else {
+          }else{
             // print("Permission is not PermanentlyDenied");
-            showPhotosPermissionDialogue();
+            showPhotosPermissionDialogue( );
           }
         }
-      } else {
+      }else{
         // print("sdkInt<32");
         if (await Permission.storage.isGranted) {
           openFilePicker();
         } else {
           if (await Permission.storage.isPermanentlyDenied) {
             showSnackbar(context, "media_permission_message".tr, "error");
-          } else {
-            showPhotosPermissionDialogue();
+          }else{
+            showPhotosPermissionDialogue( );
           }
         }
       }
     }
+
   }
 
   Future<void> handleCameraClick(BuildContext context) async {
@@ -177,24 +178,23 @@ class PhotoSelector extends StatelessWidget {
       getPictureFromCamera();
     } else {
       if (await Permission.camera.isPermanentlyDenied) {
-        showSnackbar(Get.context!, "camera_permission_message".tr, "error");
-      } else {
+        showSnackbar(
+            Get.context!, "camera_permission_message".tr, "error");
+      }else{
         showCameraPermissionDialogue();
       }
+
     }
   }
 
   void showPhotosPermissionDialogue() async {
+
     BuildContext context = Get.context!;
 
-    final dialogTitleWidget = Text('photo_access_permission_title'.tr,
-        style: getHeadlineMediumStyle(context).copyWith(
-            color: APPSTYLE_Grey80, fontWeight: APPSTYLE_FontWeightBold));
-    final dialogTextWidget = Text('photo_access_permission_info'.tr,
-        style: getBodyMediumStyle(context));
+    final dialogTitleWidget = Text('photo_access_permission_title'.tr,style: getHeadlineMediumStyle(context).copyWith(color: APPSTYLE_Grey80,fontWeight: APPSTYLE_FontWeightBold));
+    final dialogTextWidget = Text( 'photo_access_permission_info'.tr,style: getBodyMediumStyle(context));
 
-    final updateButtonTextWidget = Text('continue'.tr,
-        style: const TextStyle(color: APPSTYLE_BackgroundWhite));
+    final updateButtonTextWidget = Text('continue'.tr,style: const TextStyle(color: APPSTYLE_BackgroundWhite));
 
     updateAction() async {
       Navigator.pop(context);
@@ -202,39 +202,42 @@ class PhotoSelector extends StatelessWidget {
         final PermissionStatus try1 = await Permission.photos.request();
         if (try1 == PermissionStatus.granted) {
           openFilePicker();
-        } else {
-          showSnackbar(Get.context!, "media_permission_message".tr, "error");
+        }else{
+          showSnackbar(
+              Get.context!, "media_permission_message".tr, "error");
         }
-      } else {
+      }else{
         final AndroidDeviceInfo android = await DeviceInfoPlugin().androidInfo;
         final int sdkInt = android.version.sdkInt;
-        if (sdkInt > 32) {
+        if(sdkInt>32){
           final PermissionStatus try1 = await Permission.photos.request();
           if (try1 == PermissionStatus.granted) {
             openFilePicker();
-          } else {
-            showSnackbar(Get.context!, "media_permission_message".tr, "error");
+          }else{
+            showSnackbar(
+                Get.context!, "media_permission_message".tr, "error");
           }
-        } else {
+        }else{
           final PermissionStatus try1 = await Permission.storage.request();
           if (try1 == PermissionStatus.granted) {
             openFilePicker();
-          } else {
-            showSnackbar(Get.context!, "media_permission_message".tr, "error");
+          }else{
+            showSnackbar(
+                Get.context!, "media_permission_message".tr, "error");
           }
         }
       }
     }
 
     List<Widget> actions = [
+
       ElevatedButton(
-          onPressed: updateAction,
-          style: getElevatedButtonStyle(context).copyWith(
-              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                  const EdgeInsets.symmetric(
-                      horizontal: APPSTYLE_SpaceLarge,
-                      vertical: APPSTYLE_SpaceSmall))),
-          child: updateButtonTextWidget)
+          onPressed:updateAction,
+          style: getElevatedButtonStyle(context).copyWith(padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              const EdgeInsets.symmetric(
+                  horizontal: APPSTYLE_SpaceLarge,
+                  vertical: APPSTYLE_SpaceSmall))),
+          child:  updateButtonTextWidget)
     ];
 
     await showDialog(
@@ -249,48 +252,45 @@ class PhotoSelector extends StatelessWidget {
             onWillPop: () => Future.value(false));
       },
     );
+
   }
 
   void showCameraPermissionDialogue() async {
     BuildContext context = Get.context!;
 
-    final dialogTitleWidget = Text('camera_access_permission_title'.tr,
-        style: getHeadlineMediumStyle(context).copyWith(
-            color: APPSTYLE_Grey80, fontWeight: APPSTYLE_FontWeightBold));
-    final dialogTextWidget = Text(
-      'camera_access_permission_info'.tr,
-      style: getBodyMediumStyle(context),
-    );
+    final dialogTitleWidget = Text('camera_access_permission_title'.tr,style: getHeadlineMediumStyle(context).copyWith(color: APPSTYLE_Grey80,fontWeight: APPSTYLE_FontWeightBold));
+    final dialogTextWidget = Text( 'camera_access_permission_info'.tr,style: getBodyMediumStyle(context),);
 
-    final updateButtonTextWidget = Text('continue'.tr,
-        style: const TextStyle(color: APPSTYLE_BackgroundWhite));
+    final updateButtonTextWidget = Text('continue'.tr,style: const TextStyle(color: APPSTYLE_BackgroundWhite));
 
     updateAction() async {
       Navigator.pop(context);
       final PermissionStatus try1 = await Permission.camera.request();
       if (try1 == PermissionStatus.granted) {
         getPictureFromCamera();
-      } else {
-        showSnackbar(Get.context!, "camera_permission_message".tr, "error");
+      }else{
+        showSnackbar(
+            Get.context!, "camera_permission_message".tr, "error");
       }
+
     }
 
     List<Widget> actions = [
+
       ElevatedButton(
-          onPressed: updateAction,
-          style: getElevatedButtonStyle(context).copyWith(
-              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                  const EdgeInsets.symmetric(
-                      horizontal: APPSTYLE_SpaceLarge,
-                      vertical: APPSTYLE_SpaceSmall))),
-          child: updateButtonTextWidget)
+          onPressed:updateAction,
+          style: getElevatedButtonStyle(context).copyWith(padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              const EdgeInsets.symmetric(
+                  horizontal: APPSTYLE_SpaceLarge,
+                  vertical: APPSTYLE_SpaceSmall))),
+          child:  updateButtonTextWidget)
     ];
 
     await showDialog(
       context: context,
       builder: (BuildContext context) {
         return WillPopScope(
-            child: AlertDialog(
+            child:AlertDialog(
               title: dialogTitleWidget,
               content: dialogTextWidget,
               actions: actions,
@@ -298,5 +298,7 @@ class PhotoSelector extends StatelessWidget {
             onWillPop: () => Future.value(false));
       },
     );
+
   }
+
 }

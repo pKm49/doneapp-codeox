@@ -194,6 +194,9 @@ class _SelectPlanCategoryPage_PlanPurchaseState
                                     child:
                                         SubscriptionPlanCategoryCardComponent_PlanPurchase(
                                       onClick: () {
+                                        print(element.startDate);
+                                        print("element.startDate");
+                                        planPurchaseController.setMinimumPossibleDateForPlan(element.startDate);
                                         planPurchaseController
                                             .changeCategory(element);
                                         Get.toNamed(AppRouteNames
@@ -228,6 +231,11 @@ class _SelectPlanCategoryPage_PlanPurchaseState
                                       planPurchaseController
                                           .subscriptionCategories[0]);
                                 }
+                                print( planPurchaseController.currentCategory.value.startDate);
+                                print( "planPurchaseController.currentCategory.value.startDate");
+                                planPurchaseController.setMinimumPossibleDateForPlan(
+                                    planPurchaseController.currentCategory.value.startDate);
+                                        DateTime.now().add(Duration(days: 2));
                                 Get.toNamed(AppRouteNames
                                     .planPurchaseSubscriptionPlansListRoute);
                               } else {
